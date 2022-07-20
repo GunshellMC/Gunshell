@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class v1_12_2 implements CompatibilityLayer {
+    // https://www.spigotmc.org/threads/raytracing-used-to-check-if-entity-is-behind-blocks.533469/
     @Override
     public Entity getRayTrace(Player player, int range) {
         RayTraceResult rayTraceResult = rayTraceBlocks(player.getEyeLocation(), player.getLocation().getDirection(), range);

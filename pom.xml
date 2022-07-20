@@ -65,6 +65,10 @@
             <id>codemc</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>sweetaurora-maven</id>
+            <url>https://nexus.sweetaurora.tech/repository/hidden/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -91,6 +95,14 @@
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- NMS -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -30,7 +31,7 @@ public class v1_12_R1 implements CompatibilityLayer {
         Location start = player.getEyeLocation();
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
-        RayTraceResult result = rayTraceEntities(player, start, dir, range, 0.2, null);
+        RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, 0.2, null);
         return result.getHitEntity();
     }
 
@@ -39,8 +40,48 @@ public class v1_12_R1 implements CompatibilityLayer {
         Location start = player.getEyeLocation();
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
-        RayTraceResult result = rayTraceEntities(player, start, dir, range, 0.2, null);
+        RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, 0.2, null);
         return result != null ? result.toString() : "No result found";
+    }
+
+    public RayTraceResult rayTrace(Player player, Location start, Vector direction, double maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks, double raySize, Predicate<Entity> filter) {
+        RayTraceResult blockHit = this.rayTraceBlocks(start, direction, maxDistance, fluidCollisionMode, ignorePassableBlocks);
+        Vector startVec = null;
+        double blockHitDistance = maxDistance;
+
+        // limiting the entity search range if we found a block hit:
+        if (blockHit != null) {
+            startVec = start.toVector();
+            blockHitDistance = startVec.distance(blockHit.getHitPosition());
+        }
+
+        RayTraceResult entityHit = this.rayTraceEntities(player, start, direction, blockHitDistance, raySize, filter);
+        if (blockHit == null) {
+            return entityHit;
+        }
+
+        if (entityHit == null) {
+            return blockHit;
+        }
+
+        // Cannot be null as blockHit == null returns above
+        double entityHitDistanceSquared = startVec.distanceSquared(entityHit.getHitPosition());
+        if (entityHitDistanceSquared < (blockHitDistance * blockHitDistance)) {
+            return entityHit;
+        }
+
+        return blockHit;
+    }
+
+    private RayTraceResult rayTraceBlocks(Location start, Vector direction, double maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks) {
+        Vector dir = direction.clone().normalize().multiply(maxDistance);
+        Vec3D startPos = new Vec3D(start.getX(), start.getY(), start.getZ());
+        Vec3D endPos = new Vec3D(start.getX() + dir.getX(), start.getY() + dir.getY(), start.getZ() + dir.getZ());
+
+        CraftWorld craftWorld = (CraftWorld) start.getWorld();
+        MovingObjectPosition nmsHitResult = craftWorld.getHandle().rayTrace(startPos, endPos, ignorePassableBlocks, false, false);
+
+        return new CraftRayTraceResult().fromNMS(start.getWorld(), nmsHitResult);
     }
 
     public RayTraceResult rayTraceEntities(Player player, Location start, Vector direction, double maxDistance, double raySize, Predicate<Entity> filter) {

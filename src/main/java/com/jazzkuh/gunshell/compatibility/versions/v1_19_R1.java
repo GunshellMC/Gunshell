@@ -8,7 +8,7 @@ import org.bukkit.util.RayTraceResult;
 
 public class v1_19_R1 implements CompatibilityLayer {
     @Override
-    public Entity getRayTrace(Player player, int range) {
+    public Entity performRayTrace(Player player, int range) {
         RayTraceResult result = player.getWorld()
                 .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, 0.2, null);
         if (result == null) return null;

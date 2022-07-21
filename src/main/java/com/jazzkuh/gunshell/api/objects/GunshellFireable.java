@@ -27,9 +27,8 @@ public class GunshellFireable implements IGunshellWeapon {
 
         this.name = configuration.getString("name", "NOT_SET");
         this.lore = configuration.getStringList("lore");
-        this.material = Material.getMaterial(configuration.getString("material", "NOT_SET"));
+        this.material = Material.getMaterial(configuration.getString("material", "STICK"));
         this.hideItemFlags = configuration.getBoolean("hideItemFlags", true);
-
     }
 
     @Override

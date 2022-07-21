@@ -24,7 +24,7 @@ import java.util.function.Predicate;
 
 public class v1_12_R1 implements CompatibilityLayer {
     @Override
-    public Entity getRayTrace(Player player, int range) {
+    public Entity performRayTrace(Player player, int range) {
         Location start = player.getEyeLocation();
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 

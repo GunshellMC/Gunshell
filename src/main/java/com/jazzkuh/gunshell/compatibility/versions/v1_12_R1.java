@@ -31,6 +31,7 @@ public class v1_12_R1 implements CompatibilityLayer {
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
         RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, 0.2, null);
+        if (result == null) return null;
         return result.getHitEntity();
     }
 
@@ -95,7 +96,7 @@ public class v1_12_R1 implements CompatibilityLayer {
         Vec3D endPos = new Vec3D(start.getX() + dir.getX(), start.getY() + dir.getY(), start.getZ() + dir.getZ());
 
         CraftWorld craftWorld = (CraftWorld) start.getWorld();
-        MovingObjectPosition nmsHitResult = craftWorld.getHandle().rayTrace(startPos, endPos, ignorePassableBlocks, false, false);
+        MovingObjectPosition nmsHitResult = craftWorld.getHandle().rayTrace(startPos, endPos, false, ignorePassableBlocks, false);
 
         return new CraftRayTraceResult().fromNMS(start.getWorld(), nmsHitResult);
     }

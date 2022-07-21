@@ -47,13 +47,13 @@ public class PlayerInteractListener implements Listener {
 
             double damage = 5;
             if (damage > livingEntity.getHealth()) {
-                EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
-                        EntityDamageByEntityEvent.DamageCause.CUSTOM, damage);
-                Bukkit.getPluginManager().callEvent(entityDamageByEntityEvent);
-                livingEntity.setLastDamageCause(entityDamageByEntityEvent);
                 livingEntity.setHealth(0D);
             } else {
+                EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
+                        EntityDamageByEntityEvent.DamageCause.CUSTOM, 0);
+                livingEntity.damage(0, player);
                 livingEntity.setHealth(livingEntity.getHealth() - damage);
+                livingEntity.setLastDamageCause(entityDamageByEntityEvent);
             }
         }
     }

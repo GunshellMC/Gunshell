@@ -26,7 +26,11 @@ public class PlayerInteractListener implements Listener {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
         if (itemStack.getType() != Material.STICK) return;
         CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
-        Entity entity = compatibilityLayer.getRayTrace(player, 10);
+
+        String rayTraceResult = compatibilityLayer.getRayTraceResult(player, 20);
+        ChatUtils.sendMessage(player, rayTraceResult);
+
+        Entity entity = compatibilityLayer.getRayTrace(player, 20);
         if (entity == null) {
             ChatUtils.sendMessage(player, "&cNo entity found.");
         } else {

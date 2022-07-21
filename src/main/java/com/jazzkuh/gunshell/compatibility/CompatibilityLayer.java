@@ -5,4 +5,5 @@ import org.bukkit.entity.Player;
 
 public interface CompatibilityLayer {
     Entity getRayTrace(Player player, int range);
+    String getRayTraceResult(Player player, int range);
 }

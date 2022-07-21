@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.compatibility.versions;
 
 import com.google.common.base.Preconditions;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
+import net.minecraft.server.v1_12_R1.AxisAlignedBB;
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.Vec3D;
@@ -10,49 +11,78 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class v1_12_R1 implements CompatibilityLayer {
     // https://www.spigotmc.org/threads/raytracing-used-to-check-if-entity-is-behind-blocks.533469/
     @Override
     public Entity getRayTrace(Player player, int range) {
-        RayTraceResult rayTraceResult = rayTraceBlocks(player.getEyeLocation(), player.getLocation().getDirection(), range);
-        if (rayTraceResult == null) return null;
-        return rayTraceResult.getHitEntity();
+        Location start = player.getEyeLocation();
+        Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
+
+        RayTraceResult result = rayTraceEntities(player, start, dir, range, 0.2, null);
+        return result.getHitEntity();
     }
 
-    private RayTraceResult rayTraceBlocks(Location start, Vector direction, double maxDistance) {
-        return this.rayTraceBlocks(start, direction, maxDistance, FluidCollisionMode.NEVER, false);
+    @Override
+    public String getRayTraceResult(Player player, int range) {
+        Location start = player.getEyeLocation();
+        Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
+
+        RayTraceResult result = rayTraceEntities(player, start, dir, range, 0.2, null);
+        return result != null ? result.toString() : "No result found";
     }
 
-    private RayTraceResult rayTraceBlocks(Location start, Vector direction, double maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks) {
+    public RayTraceResult rayTraceEntities(Player player, Location start, Vector direction, double maxDistance, double raySize, Predicate<Entity> filter) {
+        Validate.notNull(start, "Start location is null!");
         start.checkFinite();
 
         Validate.notNull(direction, "Direction is null!");
         direction.checkFinite();
 
         Validate.isTrue(direction.lengthSquared() > 0, "Direction's magnitude is 0!");
-        Validate.notNull(fluidCollisionMode, "Fluid collision mode is null!");
 
         if (maxDistance < 0.0D) {
             return null;
         }
 
-        Vector dir = direction.clone().normalize().multiply(maxDistance);
-        Vec3D startPos = new Vec3D(start.getX(), start.getY(), start.getZ());
-        Vec3D endPos = new Vec3D(start.getX() + dir.getX(), start.getY() + dir.getY(), start.getZ() + dir.getZ());
-        CraftWorld craftWorld = (CraftWorld) start.getWorld();
-        MovingObjectPosition nmsHitResult = craftWorld.getHandle().rayTrace(startPos, endPos, ignorePassableBlocks, false, false);
+        Vector startPos = start.toVector();
+        Collection<Entity> entities = player.getNearbyEntities(maxDistance, maxDistance, maxDistance);
 
-        return new CraftRayTraceResult().fromNMS(start.getWorld(), nmsHitResult);
+        Entity nearestHitEntity = null;
+        RayTraceResult nearestHitResult = null;
+        double nearestDistanceSq = Double.MAX_VALUE;
+
+        for (Entity entity : entities) {
+            CraftEntity craftEntity = (CraftEntity) entity;
+
+            AxisAlignedBB axisAlignedBB = craftEntity.getHandle().getBoundingBox().grow(raySize, raySize, raySize);
+            Vec3D startPosition = new Vec3D(start.getX(), start.getY(), start.getZ());
+            Vec3D endPos = new Vec3D(start.getX() + direction.getX(), start.getY() + direction.getY(), start.getZ() + direction.getZ());
+
+            RayTraceResult hitResult = new CraftRayTraceResult().fromNMS(start.getWorld(), axisAlignedBB.b(startPosition, endPos));
+            if (hitResult != null) {
+                double distanceSq = startPos.distanceSquared(hitResult.getHitPosition());
+
+                if (distanceSq < nearestDistanceSq) {
+                    nearestHitEntity = entity;
+                    nearestHitResult = hitResult;
+                    nearestDistanceSq = distanceSq;
+                }
+            }
+        }
+
+        return (nearestHitEntity == null) ? null : new RayTraceResult(nearestHitResult.getHitPosition(), nearestHitEntity, nearestHitResult.getHitBlockFace());
     }
 
     private static class RayTraceResult {

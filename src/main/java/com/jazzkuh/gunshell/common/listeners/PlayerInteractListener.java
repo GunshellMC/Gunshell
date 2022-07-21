@@ -6,6 +6,7 @@ import com.jazzkuh.gunshell.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -34,7 +35,7 @@ public class PlayerInteractListener implements Listener {
         CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
 
         Entity entity = compatibilityLayer.performRayTrace(player, 20);
-        if (!(entity instanceof LivingEntity)) {
+        if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) {
             ChatUtils.sendMessage(player, "&cNo entity found.");
             return;
         }

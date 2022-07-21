@@ -20,6 +20,12 @@ public class GunshellFireable implements IGunshellWeapon {
     private final @Getter List<String> lore;
     private final @Getter Material material;
     private final @Getter boolean hideItemFlags;
+    private final @Getter String nbtKey;
+    private final @Getter String nbtValue;
+    private final @Getter int customModelData;
+    private final @Getter int damage;
+    private final @Getter int range;
+    private final @Getter double cooldown;
 
     public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -29,6 +35,12 @@ public class GunshellFireable implements IGunshellWeapon {
         this.lore = configuration.getStringList("lore");
         this.material = Material.getMaterial(configuration.getString("material", "STICK"));
         this.hideItemFlags = configuration.getBoolean("hideItemFlags", true);
+        this.nbtKey = configuration.getString("nbt.key");
+        this.nbtValue = configuration.getString("nbt.value");
+        this.customModelData = configuration.getInt("customModelData", 0);
+        this.damage = configuration.getInt("damage", 5);
+        this.range = configuration.getInt("range", 10);
+        this.cooldown = configuration.getDouble("cooldown", 1) * 1000;
     }
 
     @Override
@@ -40,6 +52,7 @@ public class GunshellFireable implements IGunshellWeapon {
                 .setNBT("gunshell_weapon_type", "fireable");
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
+        if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         return itemBuilder;
     }
 

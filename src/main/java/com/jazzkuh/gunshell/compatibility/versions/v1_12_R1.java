@@ -25,7 +25,6 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class v1_12_R1 implements CompatibilityLayer {
-    // https://www.spigotmc.org/threads/raytracing-used-to-check-if-entity-is-behind-blocks.533469/
     @Override
     public Entity getRayTrace(Player player, int range) {
         Location start = player.getEyeLocation();
@@ -44,6 +43,23 @@ public class v1_12_R1 implements CompatibilityLayer {
         return result != null ? result.toString() : "No result found";
     }
 
+    /**
+     * Performs a ray trace.
+     * Unfortunately, the 1.12.2 version of the CraftBukkit API does not have a method for performing a ray trace.
+     * So we backport the code from the 1.13.2 version.
+     * Link: <a href="https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/src/main/java/org/bukkit/craftbukkit/CraftWorld.java">...</a>
+     *
+     * @param player The player to perform the ray trace for.
+     * @param start The start location of the ray trace.
+     * @param direction The direction of the ray trace.
+     * @param maxDistance The maximum distance of the ray trace.
+     * @param fluidCollisionMode The fluid collision mode of the ray trace.
+     * @param ignorePassableBlocks Whether to ignore passable blocks.
+     * @param raySize The size of the ray.
+     * @param filter A filter to apply to the ray trace.
+     * @return The result of the ray trace.
+     */
+    // Start backport from 1.13.2
     public RayTraceResult rayTrace(Player player, Location start, Vector direction, double maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks, double raySize, Predicate<Entity> filter) {
         RayTraceResult blockHit = this.rayTraceBlocks(start, direction, maxDistance, fluidCollisionMode, ignorePassableBlocks);
         Vector startVec = null;
@@ -351,4 +367,5 @@ public class v1_12_R1 implements CompatibilityLayer {
             return new RayTraceResult(hitPosition, hitBlock, hitBlockFace);
         }
     }
+    // End backport from 1.13.2
 }

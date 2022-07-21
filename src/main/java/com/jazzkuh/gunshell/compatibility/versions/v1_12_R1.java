@@ -2,13 +2,16 @@ package com.jazzkuh.gunshell.compatibility.versions;
 
 import com.google.common.base.Preconditions;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
+import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.MovingObjectPosition;
 import net.minecraft.server.v1_12_R1.Vec3D;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlock;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -17,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class v1_12_2 implements CompatibilityLayer {
+public class v1_12_R1 implements CompatibilityLayer {
     // https://www.spigotmc.org/threads/raytracing-used-to-check-if-entity-is-behind-blocks.533469/
     @Override
     public Entity getRayTrace(Player player, int range) {
@@ -31,8 +34,6 @@ public class v1_12_2 implements CompatibilityLayer {
     }
 
     private RayTraceResult rayTraceBlocks(Location start, Vector direction, double maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks) {
-        Validate.notNull(start, "Start location is null!");
-        Validate.isTrue(this.equals(start.getWorld()), "Start location is from different world!");
         start.checkFinite();
 
         Validate.notNull(direction, "Direction is null!");
@@ -51,7 +52,7 @@ public class v1_12_2 implements CompatibilityLayer {
         CraftWorld craftWorld = (CraftWorld) start.getWorld();
         MovingObjectPosition nmsHitResult = craftWorld.getHandle().rayTrace(startPos, endPos, ignorePassableBlocks, false, false);
 
-        return new CraftRayTraceResult().fromNMS(nmsHitResult);
+        return new CraftRayTraceResult().fromNMS(start.getWorld(), nmsHitResult);
     }
 
     private static class RayTraceResult {
@@ -254,18 +255,29 @@ public class v1_12_2 implements CompatibilityLayer {
 
         private CraftRayTraceResult() {}
 
-        public RayTraceResult fromNMS(MovingObjectPosition nmsHitResult) {
+        public RayTraceResult fromNMS(World world, MovingObjectPosition nmsHitResult) {
             if (nmsHitResult == null || nmsHitResult.type == MovingObjectPosition.EnumMovingObjectType.MISS) return null;
 
             Vec3D nmsHitPos = nmsHitResult.pos;
             Vector hitPosition = new Vector(nmsHitPos.x, nmsHitPos.y, nmsHitPos.z);
+            BlockFace hitBlockFace = null;
 
             if (nmsHitResult.type == MovingObjectPosition.EnumMovingObjectType.ENTITY) {
                 Entity hitEntity = nmsHitResult.entity.getBukkitEntity();
                 return new RayTraceResult(hitPosition, hitEntity, null);
             }
 
-            return new RayTraceResult(hitPosition, null, null, null);
+            Block hitBlock = null;
+            BlockPosition nmsBlockPos = null;
+            if (nmsHitResult.type == MovingObjectPosition.EnumMovingObjectType.BLOCK) {
+                hitBlockFace = CraftBlock.notchToBlockFace(nmsHitResult.direction);
+                nmsBlockPos = nmsHitResult.a();
+            }
+            if (nmsBlockPos != null && world != null) {
+                hitBlock = world.getBlockAt(nmsBlockPos.getX(), nmsBlockPos.getY(), nmsBlockPos.getZ());
+            }
+
+            return new RayTraceResult(hitPosition, hitBlock, hitBlockFace);
         }
     }
 }

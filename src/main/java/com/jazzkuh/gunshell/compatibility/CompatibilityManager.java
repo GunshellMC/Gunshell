@@ -12,6 +12,7 @@ public class CompatibilityManager {
     public CompatibilityLayer getCompatibilityLayer() {
         try {
             Class<?> nmsClass = Class.forName("com.jazzkuh.gunshell.compatibility.versions." + version);
+            GunshellPlugin.getInstance().getLogger().info("Using compatibility layer for version " + version);
             return (CompatibilityLayer) nmsClass.getConstructors()[0].newInstance();
         } catch (Exception ignored) {
             GunshellPlugin.getInstance().getLogger().warning("Your server version (" + version + ") is not supported by Gunshell. Loading a fallback compatibility layer.");

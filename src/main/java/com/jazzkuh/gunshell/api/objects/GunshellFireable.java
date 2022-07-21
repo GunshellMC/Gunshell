@@ -36,7 +36,7 @@ public class GunshellFireable implements IGunshellWeapon {
     public ItemBuilder getItem() {
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
-                .lore(ChatUtils.color(lore))
+                .setLore(ChatUtils.color(lore))
                 .setNBT("gunshell_weapon_key", key)
                 .setNBT("gunshell_weapon_type", "fireable");
 

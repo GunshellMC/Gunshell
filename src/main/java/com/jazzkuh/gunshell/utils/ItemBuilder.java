@@ -1,7 +1,6 @@
 package com.jazzkuh.gunshell.utils;
 
 import io.github.bananapuncher714.nbteditor.NBTEditor;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -98,7 +97,7 @@ public class ItemBuilder {
      */
     public ItemBuilder setName(String name) {
         ItemMeta im = is.getItemMeta();
-        im.displayName(ChatUtils.color(name));
+        im.setDisplayName(ChatUtils.color(name));
         is.setItemMeta(im);
         return this;
     }
@@ -185,20 +184,20 @@ public class ItemBuilder {
      *
      * @param lore The lore to set it to.
      */
-    public ItemBuilder lore(List<Component> lore) {
+    public ItemBuilder lore(List<String> lore) {
         ItemMeta im = is.getItemMeta();
-        im.lore(lore);
+        im.setLore(lore);
         is.setItemMeta(im);
         return this;
     }
 
-    public ItemBuilder removeLoreLine(Component line) {
+    public ItemBuilder removeLoreLine(String line) {
         ItemMeta im = is.getItemMeta();
-        List<Component> lore = new ArrayList<>(im.lore());
+        List<String> lore = new ArrayList<>(im.getLore());
         if (!lore.contains(line))
             return this;
         lore.remove(line);
-        im.lore(lore);
+        im.setLore(lore);
         is.setItemMeta(im);
         return this;
     }
@@ -210,11 +209,11 @@ public class ItemBuilder {
      */
     public ItemBuilder removeLoreLine(int index) {
         ItemMeta im = is.getItemMeta();
-        List<Component> lore = new ArrayList<>(im.lore());
+        List<String> lore = new ArrayList<>(im.getLore());
         if (index < 0 || index > lore.size())
             return this;
         lore.remove(index);
-        im.lore(lore);
+        im.setLore(lore);
         is.setItemMeta(im);
         return this;
     }
@@ -226,11 +225,11 @@ public class ItemBuilder {
      */
     public ItemBuilder addLoreLine(String line) {
         ItemMeta im = is.getItemMeta();
-        List<Component> lore = new ArrayList<>();
+        List<String> lore = new ArrayList<>();
         if (im.hasLore())
-            lore = new ArrayList<>(im.lore());
+            lore = new ArrayList<>(im.getLore());
         lore.add(ChatUtils.color(line));
-        im.lore(lore);
+        im.setLore(lore);
         is.setItemMeta(im);
         return this;
     }
@@ -243,9 +242,9 @@ public class ItemBuilder {
      */
     public ItemBuilder addLoreLine(String line, int pos) {
         ItemMeta im = is.getItemMeta();
-        List<Component> lore = new ArrayList<>(im.lore());
+        List<String> lore = new ArrayList<>(im.getLore());
         lore.set(pos, ChatUtils.color(line));
-        im.lore(lore);
+        im.setLore(lore);
         is.setItemMeta(im);
         return this;
     }

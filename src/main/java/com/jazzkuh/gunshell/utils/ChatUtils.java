@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.utils;
 
+import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -17,6 +18,17 @@ public class ChatUtils {
             components.add(color(line));
         }
         return components;
+    }
+
+    public static List<String> color(List<String> lore, PlaceHolder... placeHolders) {
+        List<String> components = new ArrayList<>();
+        for (String line : lore) {
+            for (PlaceHolder placeHolder : placeHolders) {
+                line = line.replaceAll(placeHolder.getPlaceholder(), placeHolder.getValue());
+            }
+            components.add(line);
+        }
+        return color(components);
     }
 
     /**

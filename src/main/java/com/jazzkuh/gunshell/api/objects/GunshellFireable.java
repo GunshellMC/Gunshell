@@ -1,8 +1,11 @@
 package com.jazzkuh.gunshell.api.objects;
 
 import com.jazzkuh.gunshell.api.interfaces.IGunshellWeapon;
+import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
+import com.jazzkuh.gunshell.utils.PluginUtils;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,7 +29,7 @@ public class GunshellFireable implements IGunshellWeapon {
     private final @Getter int damage;
     private final @Getter int range;
     private final @Getter double cooldown;
-    private final @Getter double reloadTime;
+    private final @Getter int reloadTime;
     private final @Getter int maxAmmo;
     private final @Getter String ammunitionKey;
 
@@ -36,15 +39,15 @@ public class GunshellFireable implements IGunshellWeapon {
 
         this.name = configuration.getString("name", "NOT_SET");
         this.lore = configuration.getStringList("lore");
-        this.material = Material.getMaterial(configuration.getString("material", "STICK"));
+        this.material = PluginUtils.getInstance().getMaterial(configuration.getString("material", "STICK"));
         this.hideItemFlags = configuration.getBoolean("hideItemFlags", true);
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
         this.damage = configuration.getInt("damage", 5);
         this.range = configuration.getInt("range", 10);
-        this.cooldown = configuration.getDouble("cooldown", 1) * 1000;
-        this.reloadTime = configuration.getDouble("reloadTime", 1) * 1000;
+        this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
+        this.reloadTime = configuration.getInt("reloadTime", 1) * 20; // Tick based timer
         this.maxAmmo = configuration.getInt("maxAmmo", 8);
         this.ammunitionKey = configuration.getString("ammunitionKey");
     }
@@ -53,7 +56,11 @@ public class GunshellFireable implements IGunshellWeapon {
     public ItemBuilder getItem(int durability) {
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
-                .setLore(ChatUtils.color(lore))
+                .setLore(ChatUtils.color(lore,
+                        new PlaceHolder("Ammo", String.valueOf(this.getMaxAmmo())),
+                        new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())),
+                        new PlaceHolder("Damage", String.valueOf(this.getDamage())),
+                        new PlaceHolder("Durability", String.valueOf(durability))))
                 .setNBT("gunshell_weapon_key", key)
                 .setNBT("gunshell_weapon_type", "fireable")
                 .setNBT("gunshell_weapon_ammo", this.getMaxAmmo())

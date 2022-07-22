@@ -1,0 +1,11 @@
+revolver_ammo:
+    name: "&8Revolver Ammo"
+    lore:
+      - '&6Officieel Minetopia Ammo.'
+      - ''
+      - '&7Ammo: &f<Ammo>'
+    material: IRON_INGOT
+    nbt:
+      key: "mtcustom"
+      value: "revolver_bullets"
+    ammo: 8

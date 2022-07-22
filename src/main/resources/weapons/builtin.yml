@@ -1,1 +1,17 @@
-{}
+revolver:
+    name: "&8Revolver"
+    lore:
+      - '&6Officieel Minetopia Wapen.'
+      - ''
+      - '&7Ammo: &f<Ammo>&8/&f<MaxAmmo>'
+      - '&7Durability: &f<Durability>'
+    material: WOODEN_HOE
+    nbt:
+      key: "mtcustom"
+      value: "revolver_fullmodel"
+    damage: 8
+    range: 16
+    cooldown: 1
+    reloadTime: 1
+    maxAmmo: 5
+    ammunitionKey: "revolver_ammo"

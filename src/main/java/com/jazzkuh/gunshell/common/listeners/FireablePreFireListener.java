@@ -5,16 +5,16 @@ import com.jazzkuh.gunshell.api.events.FireableFireEvent;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -106,7 +106,7 @@ public class FireablePreFireListener implements Listener {
          * Perform the raytrace to find the target
          */
         CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
-        Entity entity = compatibilityLayer.performRayTrace(player, 20);
+        GunshellRayTraceResult rayTraceResult = compatibilityLayer.performRayTrace(player, fireable.getRange());
 
         GunshellPlugin.getInstance().getWeaponCooldownMap().put(cooldownKey, System.currentTimeMillis());
         PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, ammo - 1);
@@ -114,14 +114,29 @@ public class FireablePreFireListener implements Listener {
 
         this.updateFireableItemMeta(itemStack, fireable, ammo - 1);
 
+        ParticleEffect particleEffect = new ParticleEffect(GunshellPlugin.getInstance().getEffectManager());
+        particleEffect.particle = Particle.FLAME;
+        particleEffect.particleSize = 1;
+        particleEffect.particleCount = 8;
+        particleEffect.iterations = 1;
+        particleEffect.particleOffsetX = 0.2F;
+        particleEffect.particleOffsetY = 0.2F;
+        particleEffect.particleOffsetZ = 0.2F;
+        particleEffect.setLocation(PluginUtils.getInstance().getRightHandLocation(player));
+        particleEffect.start();
+
         MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
                 new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))),
                 new PlaceHolder("Ammo", String.valueOf(NBTEditor.getInt(itemStack, GUN_AMMO_KEY))),
                 new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
-        if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) return;
+        if (NBTEditor.getInt(itemStack, DURABILITY_KEY) <= 0) {
+            player.getInventory().removeItem(itemStack);
+        }
 
-        LivingEntity livingEntity = (LivingEntity) entity;
+        if (rayTraceResult.getOptionalLivingEntity().isEmpty()) return;
+
+        LivingEntity livingEntity = rayTraceResult.getOptionalLivingEntity().get();
         if (livingEntity.isDead()) return;
 
         if (livingEntity.getLocation().getWorld() != null) {

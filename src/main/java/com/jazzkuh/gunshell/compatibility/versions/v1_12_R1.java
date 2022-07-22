@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.compatibility.versions;
 
 import com.google.common.base.Preconditions;
+import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.server.v1_12_R1.*;
 import org.apache.commons.lang.Validate;
@@ -12,7 +13,9 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -20,17 +23,27 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class v1_12_R1 implements CompatibilityLayer {
     @Override
-    public Entity performRayTrace(Player player, int range) {
+    public GunshellRayTraceResult performRayTrace(Player player, int range) {
         Location start = player.getEyeLocation();
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
         RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, 0.2, null);
-        if (result == null) return null;
-        return result.getHitEntity();
+        if (result == null) {
+            return new GunshellRayTraceResult(Optional.empty(), false);
+        }
+
+        Entity entity = result.getHitEntity();
+        if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) {
+            return new GunshellRayTraceResult(Optional.empty(), false);
+        }
+        boolean isHeadshot = (result.getHitPosition().getY() - entity.getLocation().getY()) > 1.35;
+        LivingEntity livingEntity = (LivingEntity) entity;
+        return new GunshellRayTraceResult(Optional.of(livingEntity), isHeadshot);
     }
 
     @Override

@@ -5,10 +5,12 @@ import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 import java.util.Optional;
 
@@ -44,5 +46,12 @@ public class PluginUtils {
         }
 
         return null;
+    }
+    public Location getRightHandLocation(Player player) {
+        double yawRightHandDirection = Math.toRadians(-1 * player.getEyeLocation().getYaw() - 45);
+        double x = 0.5 * Math.sin(yawRightHandDirection) + player.getLocation().getX();
+        double y = player.getLocation().getY() + 1;
+        double z = 0.5 * Math.cos(yawRightHandDirection) + player.getLocation().getZ();
+        return new Location(player.getWorld(), x, y, z);
     }
 }

@@ -10,6 +10,7 @@ import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.config.ConfigurationFile;
+import de.slikey.effectlib.EffectManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public final class GunshellPlugin extends JavaPlugin {
 
     private static @Getter @Setter(AccessLevel.PRIVATE) GunshellPlugin instance;
     private static @Getter ConfigurationFile messages;
+    private @Getter @Setter(AccessLevel.PRIVATE) EffectManager effectManager;
     private @Getter @Setter(AccessLevel.PRIVATE) WeaponRegistry weaponRegistry;
     private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityLayer compatibilityLayer;
     private @Getter @Setter HashMap<String, Long> weaponCooldownMap = new HashMap<>();
@@ -35,6 +37,7 @@ public final class GunshellPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         setInstance(this);
+        setEffectManager(new EffectManager(this));
         setCompatibilityLayer(new CompatibilityManager().getCompatibilityLayer());
         new PluginUtils();
 
@@ -52,6 +55,8 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new FireablePreFireListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
 
+        // TODO: Remove this when commands are implemented
+        // TODO: Too lazy to implement commands right now, so I'm just going to do this
         for (Player player : Bukkit.getOnlinePlayers()) {
             ItemStack fireable = this.weaponRegistry.getWeapons().get("revolver").getItemStack(100);
             player.getInventory().addItem(fireable);

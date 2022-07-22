@@ -8,4 +8,4 @@ revolver_ammo:
     nbt:
       key: "mtcustom"
       value: "revolver_bullets"
-    ammo: 8
+    ammo: 5

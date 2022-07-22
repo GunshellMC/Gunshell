@@ -1,8 +1,11 @@
 package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.events.FireableFireEvent;
+import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.utils.ChatUtils;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -31,32 +34,13 @@ public class PlayerInteractListener implements Listener {
         if (!player.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
 
         ItemStack itemStack = player.getInventory().getItemInMainHand();
-        if (itemStack.getType() != Material.STICK) return;
-        CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
 
-        Entity entity = compatibilityLayer.performRayTrace(player, 20);
-        if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) {
-            ChatUtils.sendMessage(player, "&cNo entity found.");
-            return;
-        }
+        if (!NBTEditor.contains(itemStack, "gunshell_weapon_key")) return;
+        String weaponKey = NBTEditor.getString(itemStack, "gunshell_weapon_key");
+        GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
 
-        LivingEntity livingEntity = (LivingEntity) entity;
-        if (livingEntity.isDead()) return;
-        ChatUtils.sendMessage(player, "&aEntity found: " + livingEntity.getType().name());
-        if (livingEntity.getLocation().getWorld() != null) {
-            livingEntity.getLocation().getWorld().playEffect(livingEntity.getEyeLocation(), Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
-        }
-
-        double damage = 5;
-        if (damage > livingEntity.getHealth()) {
-            livingEntity.setHealth(0D);
-        } else {
-            EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
-                    EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK, damage);
-            livingEntity.setHealth(livingEntity.getHealth() - damage);
-
-            livingEntity.setLastDamageCause(entityDamageByEntityEvent);
-            Bukkit.getPluginManager().callEvent(entityDamageByEntityEvent);
-        }
+        FireableFireEvent fireableFireEvent = new FireableFireEvent(player, fireable);
+        if (fireableFireEvent.isCancelled()) return;
+        Bukkit.getPluginManager().callEvent(fireableFireEvent);
     }
 }

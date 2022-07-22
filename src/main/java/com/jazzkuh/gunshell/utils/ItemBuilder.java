@@ -65,7 +65,7 @@ public class ItemBuilder {
         return new ItemBuilder(is);
     }
 
-    public ItemBuilder setNBT(String key, String value) {
+    public ItemBuilder setNBT(String key, Object value) {
         is = NBTEditor.set(is, value, key);
         return this;
     }

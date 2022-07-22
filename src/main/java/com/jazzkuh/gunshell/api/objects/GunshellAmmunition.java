@@ -1,6 +1,5 @@
 package com.jazzkuh.gunshell.api.objects;
 
-import com.jazzkuh.gunshell.api.interfaces.IGunshellWeapon;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GunshellFireable implements IGunshellWeapon {
+public class GunshellAmmunition {
     private final @NotNull @Getter String key;
     private final @NotNull @Getter ConfigurationSection configuration;
 
@@ -23,14 +22,9 @@ public class GunshellFireable implements IGunshellWeapon {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private final @Getter int damage;
-    private final @Getter int range;
-    private final @Getter double cooldown;
-    private final @Getter double reloadTime;
-    private final @Getter int maxAmmo;
-    private final @Getter String ammunitionKey;
+    private final @Getter int ammo;
 
-    public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
+    public GunshellAmmunition(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
         this.configuration = configuration;
 
@@ -41,31 +35,22 @@ public class GunshellFireable implements IGunshellWeapon {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
-        this.damage = configuration.getInt("damage", 5);
-        this.range = configuration.getInt("range", 10);
-        this.cooldown = configuration.getDouble("cooldown", 1) * 1000;
-        this.reloadTime = configuration.getDouble("reloadTime", 1) * 1000;
-        this.maxAmmo = configuration.getInt("maxAmmo", 8);
-        this.ammunitionKey = configuration.getString("ammunitionKey");
+        this.ammo = configuration.getInt("ammo", 8);
     }
 
-    @Override
-    public ItemBuilder getItem(int durability) {
+    public ItemBuilder getItem() {
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
                 .setLore(ChatUtils.color(lore))
-                .setNBT("gunshell_weapon_key", key)
-                .setNBT("gunshell_weapon_type", "fireable")
-                .setNBT("gunshell_weapon_ammo", this.getMaxAmmo())
-                .setNBT("gunshell_weapon_durability", durability);
+                .setNBT("gunshell_ammunition_key", key)
+                .setNBT("gunshell_ammunition_ammo", this.getAmmo());
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         return itemBuilder;
     }
 
-    @Override
-    public ItemStack getItemStack(int durability) {
-        return getItem(durability).toItemStack();
+    public ItemStack getItemStack() {
+        return getItem().toItemStack();
     }
 }

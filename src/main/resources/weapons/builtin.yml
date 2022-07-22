@@ -15,3 +15,6 @@ revolver:
     reloadTime: 1
     maxAmmo: 5
     ammunitionKey: "revolver_ammo"
+    recoilAmount: 2.0
+    knockbackAmount: 0.4
+    selfKnockbackAmount: 0.2

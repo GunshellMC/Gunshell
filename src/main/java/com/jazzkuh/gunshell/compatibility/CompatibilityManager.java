@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 
 public class CompatibilityManager {
-
     private final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName();
     private final @Getter String version = bukkitVersion.substring(bukkitVersion.lastIndexOf('.') + 1);
 

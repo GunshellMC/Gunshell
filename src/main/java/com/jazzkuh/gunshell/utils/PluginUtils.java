@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
@@ -53,5 +55,22 @@ public class PluginUtils {
         double y = player.getLocation().getY() + 1;
         double z = 0.5 * Math.cos(yawRightHandDirection) + player.getLocation().getZ();
         return new Location(player.getWorld(), x, y, z);
+    }
+
+    public void performRecoil(LivingEntity livingEntity, float pitchIncrement, double knockback) {
+        Location location = livingEntity.getLocation();
+        if (pitchIncrement > 0) {
+            float pitch = location.getPitch();
+            location.setPitch(pitch - pitchIncrement);
+
+            // Use a cause other than PLUGIN or COMMAND because essentials sucks lol.
+            Vector playerVelocity = livingEntity.getVelocity();
+            livingEntity.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            livingEntity.setVelocity(playerVelocity);
+        }
+
+        // Apply knockback
+        Vector vector = livingEntity.getLocation().getDirection().normalize().multiply(-knockback).setY(0);
+        livingEntity.setVelocity(vector);
     }
 }

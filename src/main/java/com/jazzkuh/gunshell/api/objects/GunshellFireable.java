@@ -32,6 +32,9 @@ public class GunshellFireable implements IGunshellWeapon {
     private final @Getter int reloadTime;
     private final @Getter int maxAmmo;
     private final @Getter String ammunitionKey;
+    private final @Getter double recoilAmount;
+    private final @Getter double knockbackAmount;
+    private final @Getter double selfKnockbackAmount;
 
     public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -50,6 +53,9 @@ public class GunshellFireable implements IGunshellWeapon {
         this.reloadTime = configuration.getInt("reloadTime", 1) * 20; // Tick based timer
         this.maxAmmo = configuration.getInt("maxAmmo", 8);
         this.ammunitionKey = configuration.getString("ammunitionKey");
+        this.recoilAmount = configuration.getDouble("recoilAmount", 0.0);
+        this.knockbackAmount = configuration.getDouble("knockbackAmount", 0.0);
+        this.selfKnockbackAmount = configuration.getDouble("selfKnockbackAmount", 0.0);
     }
 
     @Override

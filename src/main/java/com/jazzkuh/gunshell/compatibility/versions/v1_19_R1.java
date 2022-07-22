@@ -17,16 +17,24 @@ public class v1_19_R1 implements CompatibilityLayer {
         RayTraceResult result = player.getWorld()
                 .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, 0.2, null);
         if (result == null) {
-            return new GunshellRayTraceResult(Optional.empty(), false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), false);
+        }
+
+        if (result.getHitBlock() != null) {
+            return new GunshellRayTraceResult(Optional.empty(), Optional.of(result.getHitBlock()), false);
+        }
+
+        if (result.getHitEntity() == null) {
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), false);
         }
 
         Entity entity = result.getHitEntity();
         if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) {
-            return new GunshellRayTraceResult(Optional.empty(), false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), false);
         }
         boolean isHeadshot = (result.getHitPosition().getY() - entity.getLocation().getY()) > 1.35;
         LivingEntity livingEntity = (LivingEntity) entity;
-        return new GunshellRayTraceResult(Optional.of(livingEntity), isHeadshot);
+        return new GunshellRayTraceResult(Optional.of(livingEntity), Optional.empty(), isHeadshot);
     }
 
     @Override

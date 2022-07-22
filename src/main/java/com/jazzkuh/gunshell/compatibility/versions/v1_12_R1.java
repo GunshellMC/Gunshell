@@ -34,16 +34,24 @@ public class v1_12_R1 implements CompatibilityLayer {
 
         RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, 0.2, null);
         if (result == null) {
-            return new GunshellRayTraceResult(Optional.empty(), false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), false);
+        }
+
+        if (result.getHitBlock() != null) {
+            return new GunshellRayTraceResult(Optional.empty(), Optional.of(result.getHitBlock()), false);
+        }
+
+        if (result.getHitEntity() == null) {
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), false);
         }
 
         Entity entity = result.getHitEntity();
         if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) {
-            return new GunshellRayTraceResult(Optional.empty(), false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), false);
         }
-        boolean isHeadshot = (result.getHitPosition().getY() - entity.getLocation().getY()) > 1.35;
+        boolean isHeadshot = (result.getHitPosition().getY() - entity.getLocation().getY()) > 1.35 || (player.isSneaking() && (result.getHitPosition().getY() - entity.getLocation().getY()) >  1.1);
         LivingEntity livingEntity = (LivingEntity) entity;
-        return new GunshellRayTraceResult(Optional.of(livingEntity), isHeadshot);
+        return new GunshellRayTraceResult(Optional.of(livingEntity), Optional.empty(), isHeadshot);
     }
 
     @Override

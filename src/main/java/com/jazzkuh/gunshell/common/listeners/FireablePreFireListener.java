@@ -15,6 +15,7 @@ import com.jazzkuh.gunshell.utils.PluginUtils;
 import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -114,6 +115,9 @@ public class FireablePreFireListener implements Listener {
 
         this.updateFireableItemMeta(itemStack, fireable, ammo - 1);
 
+        PluginUtils.getInstance().performRecoil(player,
+                (float) fireable.getRecoilAmount(), fireable.getSelfKnockbackAmount());
+
         ParticleEffect particleEffect = new ParticleEffect(GunshellPlugin.getInstance().getEffectManager());
         particleEffect.particle = Particle.FLAME;
         particleEffect.particleSize = 1;
@@ -134,15 +138,39 @@ public class FireablePreFireListener implements Listener {
             player.getInventory().removeItem(itemStack);
         }
 
+        if (rayTraceResult.getOptionalBlock().isPresent()) {
+            Block block = rayTraceResult.getOptionalBlock().get();
+            block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+        }
         if (rayTraceResult.getOptionalLivingEntity().isEmpty()) return;
 
         LivingEntity livingEntity = rayTraceResult.getOptionalLivingEntity().get();
         if (livingEntity.isDead()) return;
+        if (livingEntity.hasMetadata("vanished")) return;
+        if (livingEntity.hasMetadata("NPC")) return;
+
+        if (livingEntity instanceof Player) {
+            Player playerTarget = (Player) livingEntity;
+            if (playerTarget.getGameMode() == GameMode.SPECTATOR
+                    || playerTarget.getGameMode() == GameMode.CREATIVE) return;
+
+            MessagesConfig.BULLET_HIT_BY_PLAYER.get(playerTarget,
+                    new PlaceHolder("Name", player.getName()));
+        }
 
         if (livingEntity.getLocation().getWorld() != null) {
             livingEntity.getLocation().getWorld().playEffect(livingEntity.getEyeLocation(),
                     Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
         }
+
+        MessagesConfig.BULLET_HIT_OTHER.get(player,
+                new PlaceHolder("Name", livingEntity.getName()));
+        if (rayTraceResult.isHeadshot()) {
+            MessagesConfig.BULLET_HIT_OTHER_HEADSHOT.get(player,
+                    new PlaceHolder("Name", livingEntity.getName()));
+        }
+
+        PluginUtils.getInstance().performRecoil(livingEntity, 0F, fireable.getKnockbackAmount());
 
         double damage = fireable.getDamage();
         if (damage > livingEntity.getHealth()) {

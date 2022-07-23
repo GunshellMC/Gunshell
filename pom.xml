@@ -105,7 +105,13 @@
         <dependency>
             <groupId>com.elmakers.mine.bukkit</groupId>
             <artifactId>EffectLib</artifactId>
-            <version>9.0</version>
+            <version>9.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>23.0.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -117,10 +123,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
-            <scope>compile</scope>
+            <groupId>org.spigotmc.</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.19-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

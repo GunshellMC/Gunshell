@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell;
 
 import com.jazzkuh.gunshell.common.WeaponRegistry;
+import com.jazzkuh.gunshell.common.commands.GunshellCMD;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.common.listeners.FireablePreFireListener;
@@ -53,23 +54,12 @@ public final class GunshellPlugin extends JavaPlugin {
         MessagesConfig.init();
         messages.saveConfig();
 
+        new GunshellCMD().register(this, true);
+
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new FireablePreFireListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerSwapHandListener(), this);
-
-        // TODO: Remove this when commands are implemented
-        // TODO: Too lazy to implement commands right now, so I'm just going to do this
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            ItemStack fireable = this.weaponRegistry.getWeapons().get("revolver").getItemStack(100);
-            player.getInventory().addItem(fireable);
-
-            ItemStack ammunition = this.weaponRegistry.getAmmunition().get("revolver_ammo").getItem().toItemStack();
-            player.getInventory().addItem(ammunition);
-
-            ItemStack ammunition2 = this.weaponRegistry.getAmmunition().get("revolver_ammo2").getItem().toItemStack();
-            player.getInventory().addItem(ammunition2);
-        }
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
     }

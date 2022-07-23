@@ -24,6 +24,15 @@ public class PluginUtils {
         setInstance(this);
     }
 
+    public boolean isValidInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public Optional<ItemStack> getItemWithNBTTags(Player player, String tag, List<String> values) {
         for (ItemStack item : player.getInventory().getContents()) {
             if (item != null && NBTEditor.contains(item, tag)) {

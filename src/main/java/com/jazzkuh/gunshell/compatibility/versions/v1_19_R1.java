@@ -2,7 +2,9 @@ package com.jazzkuh.gunshell.compatibility.versions;
 
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
+import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import org.bukkit.FluidCollisionMode;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -42,5 +44,17 @@ public class v1_19_R1 implements CompatibilityLayer {
         RayTraceResult result = player.getWorld()
                 .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, 0.2, null);
         return result != null ? result.toString() : "No result found";
+    }
+
+    @Override
+    public void showEndCreditScene(Player player) {
+        PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.e, 1f);
+        ((CraftPlayer) player).getHandle().b.a(gameStateChange);
+    }
+
+    @Override
+    public void showDemoMenu(Player player) {
+        PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.f, 0f);
+        ((CraftPlayer) player).getHandle().b.a(gameStateChange);
     }
 }

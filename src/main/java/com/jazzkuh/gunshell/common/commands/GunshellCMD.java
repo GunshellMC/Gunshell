@@ -1,0 +1,152 @@
+package com.jazzkuh.gunshell.common.commands;
+
+import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
+import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
+import com.jazzkuh.gunshell.utils.ChatUtils;
+import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.utils.command.AbstractCommand;
+import com.jazzkuh.gunshell.utils.command.CommandInvocation;
+import com.jazzkuh.gunshell.utils.command.Subcommand;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.*;
+import java.util.stream.Stream;
+
+public class GunshellCMD extends AbstractCommand {
+
+    public GunshellCMD() {
+        super("gunshell");
+    }
+
+    @Override
+    public void execute(CommandInvocation commandInvocation) {
+        if (!hasPermission(getBasePermission(), commandInvocation.getCommandSender())) return;
+        sendNotEnoughArguments(commandInvocation);
+    }
+
+    @Subcommand(name = "reloadconfig", aliases = "rel|reload",
+            description = "Reload the plugins configuration files.")
+    public void onReloadConfig(CommandInvocation commandInvocation) {
+        if (!hasPermission(getBasePermission(), commandInvocation.getCommandSender())) return;
+
+        try {
+            GunshellPlugin.getInstance().getWeaponRegistry().registerFireables("weapons", "builtin.yml");
+            MessagesConfig.SUCCESSFULLY_LOADED_TYPE.get(commandInvocation.getCommandSender(),
+                    new PlaceHolder("Amount", String.valueOf(GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().size())),
+                    new PlaceHolder("Type", "weapon types"));
+
+            GunshellPlugin.getInstance().getWeaponRegistry().registerAmmunition("ammunition", "builtin.yml");
+            MessagesConfig.SUCCESSFULLY_LOADED_TYPE.get(commandInvocation.getCommandSender(),
+                    new PlaceHolder("Amount", String.valueOf(GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().size())),
+                    new PlaceHolder("Type", "ammo types"));
+
+            GunshellPlugin.getMessages().reloadConfig();
+            GunshellPlugin.getInstance().reloadConfig();
+
+            MessagesConfig.SUCCESSFULLY_RELOADED_CONFIGURATION.get(commandInvocation.getCommandSender());
+        } catch (Exception exception) {
+            MessagesConfig.ERROR_WHILST_LOADING_CONFIGURATION.get(commandInvocation.getCommandSender(),
+                    new PlaceHolder("Error", exception.getMessage()));
+            exception.printStackTrace();
+        }
+    }
+
+    @Subcommand(name = "getweapon", usage = "<weaponType> <durability> [player]", permission = true,
+            aliases = "get|weapon", description = "Get a weapon from the config.", playerOnly = true)
+    public void onGetWeapon(CommandInvocation commandInvocation) {
+        String[] args = commandInvocation.getArguments();
+        Player player = (Player) commandInvocation.getCommandSender();
+
+        if (args.length < 3) {
+            this.sendNotEnoughArguments(commandInvocation);
+            return;
+        }
+
+        String weaponKey = args[1].toLowerCase();
+        if (!GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().containsKey(weaponKey)) {
+            MessagesConfig.ERROR_WEAPON_NOT_FOUND.get(player);
+            return;
+        }
+
+        if (!PluginUtils.getInstance().isValidInteger(args[2])) {
+            MessagesConfig.ERROR_INVALID_INTEGER.get(player);
+            return;
+        }
+
+        int durability = Integer.parseInt(args[2]);
+
+        GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
+
+        if (args.length > 3) {
+            Player target = Bukkit.getPlayer(args[3]);
+            if (target == null) {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                return;
+            }
+
+            target.getInventory().addItem(fireable.getItemStack(durability));
+            MessagesConfig.SUCCESSFULLY_ADDED_TO_INVENTORY.get(player);
+        } else {
+            player.getInventory().addItem(fireable.getItemStack(durability));
+            MessagesConfig.SUCCESSFULLY_ADDED_TO_INVENTORY.get(player);
+        }
+    }
+
+    @Subcommand(name = "getammo", usage = "<ammoType> [player]", permission = true,
+            aliases = "ammo", description = "Get ammo from the config files.", playerOnly = true)
+    public void onGetAmmo(CommandInvocation commandInvocation) {
+        String[] args = commandInvocation.getArguments();
+        Player player = (Player) commandInvocation.getCommandSender();
+
+        if (args.length < 2) {
+            this.sendNotEnoughArguments(commandInvocation);
+            return;
+        }
+
+        String ammoKey = args[1].toLowerCase();
+        if (!GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().containsKey(ammoKey)) {
+            MessagesConfig.ERROR_WEAPON_NOT_FOUND.get(player);
+            return;
+        }
+
+        GunshellAmmunition ammunition = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().get(ammoKey);
+
+        if (args.length > 2) {
+            Player target = Bukkit.getPlayer(args[2]);
+            if (target == null) {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                return;
+            }
+
+            target.getInventory().addItem(ammunition.getItem().toItemStack());
+            MessagesConfig.SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY.get(player);
+        } else {
+            player.getInventory().addItem(ammunition.getItem().toItemStack());
+            MessagesConfig.SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY.get(player);
+        }
+    }
+
+    @Override
+    public List<String> tabComplete(CommandInvocation commandInvocation) {
+        String[] args = commandInvocation.getArguments();
+        if (!commandInvocation.getCommandSender().hasPermission(getBasePermission())) {
+            return Collections.emptyList();
+        }
+
+        if (args.length == 2 && Stream.of("getweapon", "get", "weapon").anyMatch(cmd -> cmd.equalsIgnoreCase(args[0]))) {
+            Set<String> weaponKeys = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().keySet();
+            return getApplicableTabCompleters(args[1], weaponKeys);
+        }
+
+        if (args.length == 2 && Stream.of("getammo", "ammo").anyMatch(cmd -> cmd.equalsIgnoreCase(args[0]))) {
+            Set<String> ammoKeys = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().keySet();
+            return getApplicableTabCompleters(args[1], ammoKeys);
+        }
+
+        return null;
+    }
+}

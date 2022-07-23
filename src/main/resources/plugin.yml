@@ -3,3 +3,6 @@ version: '${project.version}'
 main: com.jazzkuh.gunshell.GunshellPlugin
 api-version: 1.19
 authors: [ Jazzkuh ]
+commands:
+  gunshell:
+    aliases: [gs, gun, weapons, weapon, mtwapens, mtwapen]

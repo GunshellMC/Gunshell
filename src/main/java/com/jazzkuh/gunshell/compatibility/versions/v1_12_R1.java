@@ -64,6 +64,18 @@ public class v1_12_R1 implements CompatibilityLayer {
         return result != null ? result.toString() : "No result found";
     }
 
+    @Override
+    public void showEndCreditScene(Player player) {
+        PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(4, 1f);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(gameStateChange);
+    }
+
+    @Override
+    public void showDemoMenu(Player player) {
+        PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(5, 0f);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(gameStateChange);
+    }
+
     /**
      * Performs a ray trace.
      * Unfortunately, the 1.12.2 version of the CraftBukkit API does not have a method for performing a ray trace.

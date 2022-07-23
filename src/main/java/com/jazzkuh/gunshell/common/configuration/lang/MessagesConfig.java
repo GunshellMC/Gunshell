@@ -8,8 +8,18 @@ import lombok.Getter;
 import org.bukkit.command.CommandSender;
 
 public enum MessagesConfig {
+    ERROR_NO_PERMISSION("error.no-permission", "&cYou don't have permission to use this command."),
+    ERROR_WEAPON_NOT_FOUND("error.weapon-not-found", "&cThe given weapon type could not be found."),
+    ERROR_AMMO_NOT_FOUND("error.ammo-not-found", "&cThe given ammo type could not be found."),
+    ERROR_INVALID_INTEGER("error.invalid-integer", "&cThe given integer is invalid."),
+    ERROR_PLAYER_NOT_FOUND("error.player-not-found", "&cThe given player could not be found."),
     ERROR_AMMUNITION_NOT_FOUND("error.ammunition-not-found", "&cAmmunition not found for key: <Key>"),
     ERROR_OUT_OF_AMMO("error.out-of-ammo", "&cJe geweer is leeg!"),
+    ERROR_WHILST_LOADING_CONFIGURATION("error.loading-configuration", "&cEr is iets mis gegaan met het herladen van de configuration files: <Error>"),
+    SUCCESSFULLY_ADDED_TO_INVENTORY("common.success.added-to-inventory", "&aJe hebt je geweer toegevoegd aan je inventory."),
+    SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY("common.success.added-ammo-to-inventory", "&aJe hebt je ammo toegevoegd aan je inventory."),
+    SUCCESSFULLY_RELOADED_CONFIGURATION("common.success.reloaded-configuration", "&aJe hebt de configuration files succesvol herladen."),
+    SUCCESSFULLY_LOADED_TYPE("common.success.loaded-type", "&aEr zijn <Amount> <Type> succesvol geladen."),
     RELOADING_START("common.reloading.start", "&aJe wapen is nu aan het herladen.."),
     RELOADING_FINISHED("common.reloading.finished", "&aJe wapen is herladen."),
     UNLOADING_FINISHED("common.unloading.finished", "&aJe wapen is ontladen."),
@@ -26,6 +36,11 @@ public enum MessagesConfig {
     MessagesConfig(String path, String message) {
         this.path = path;
         this.message = message;
+    }
+
+    public String get() {
+        String msg = GunshellPlugin.getMessages().getConfig().getString(this.getPath());
+        return ChatUtils.color(msg);
     }
 
     public void get(CommandSender commandSender) {

@@ -7,4 +7,6 @@ import org.bukkit.entity.Player;
 public interface CompatibilityLayer {
     GunshellRayTraceResult performRayTrace(Player player, int range);
     String getRayTraceResult(Player player, int range);
+    void showEndCreditScene(Player player);
+    void showDemoMenu(Player player);
 }

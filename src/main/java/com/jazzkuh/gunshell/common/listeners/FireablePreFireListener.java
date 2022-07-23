@@ -18,15 +18,10 @@ import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.UUID;

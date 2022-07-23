@@ -34,7 +34,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter double grabCooldown;
     private final @Getter int reloadTime;
     private final @Getter int maxAmmo;
-    private final @Getter String ammunitionKey;
+    private final @Getter List<String> ammunitionKeys;
     private final @Getter double recoilAmount;
     private final @Getter double knockbackAmount;
     private final @Getter double selfKnockbackAmount;
@@ -57,7 +57,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.grabCooldown = configuration.getDouble("grabCooldown", 1);
         this.reloadTime = configuration.getInt("reloadTime", 1) * 20; // Tick based timer
         this.maxAmmo = configuration.getInt("maxAmmo", 8);
-        this.ammunitionKey = configuration.getString("ammunitionKey");
+        this.ammunitionKeys = configuration.getStringList("ammunitionKeys");
         this.recoilAmount = configuration.getDouble("recoilAmount", 0.0);
         this.knockbackAmount = configuration.getDouble("knockbackAmount", 0.0);
         this.selfKnockbackAmount = configuration.getDouble("selfKnockbackAmount", 0.0);
@@ -74,9 +74,9 @@ public class GunshellFireable implements GunshellWeaponImpl {
                         new PlaceHolder("Damage", String.valueOf(this.getDamage())),
                         new PlaceHolder("Durability", String.valueOf(durability))))
                 .setNBT("gunshell_weapon_key", key)
-                .setNBT("gunshell_weapon_type", "fireable")
                 .setNBT("gunshell_weapon_ammo", this.getMaxAmmo())
                 .setNBT("gunshell_weapon_durability", durability)
+                .setNBT("gunshell_weapon_ammotype", this.getAmmunitionKeys().get(0))
                 .setAttackSpeed(attackSpeed);
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
@@ -86,6 +86,8 @@ public class GunshellFireable implements GunshellWeaponImpl {
 
     public void updateItemMeta(ItemStack itemStack, int ammo) {
         ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) return;
+
         List<String> lore = this.getLore();
         itemMeta.setLore(ChatUtils.color(lore,
                 new PlaceHolder("Ammo", String.valueOf(ammo)),

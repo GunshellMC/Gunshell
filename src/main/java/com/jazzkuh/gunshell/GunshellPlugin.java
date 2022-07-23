@@ -66,6 +66,9 @@ public final class GunshellPlugin extends JavaPlugin {
 
             ItemStack ammunition = this.weaponRegistry.getAmmunition().get("revolver_ammo").getItem().toItemStack();
             player.getInventory().addItem(ammunition);
+
+            ItemStack ammunition2 = this.weaponRegistry.getAmmunition().get("revolver_ammo2").getItem().toItemStack();
+            player.getInventory().addItem(ammunition2);
         }
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");

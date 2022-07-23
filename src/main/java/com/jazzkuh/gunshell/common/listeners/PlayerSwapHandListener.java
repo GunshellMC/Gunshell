@@ -20,6 +20,7 @@ import java.util.List;
 
 public class PlayerSwapHandListener implements Listener {
     private final String GUN_AMMO_KEY = "gunshell_weapon_ammo";
+    private final String GUN_AMMOTYPE_KEY = "gunshell_weapon_ammotype";
     private final String DURABILITY_KEY = "gunshell_weapon_durability";
 
     private final String AMMUNITION_KEY = "gunshell_ammunition_key";
@@ -47,21 +48,14 @@ public class PlayerSwapHandListener implements Listener {
             return;
         }
 
-        String ammunitionKey = fireable.getAmmunitionKey();
-        GunshellAmmunition ammunition = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().get(ammunitionKey);
-        if (ammunition == null) {
-            MessagesConfig.ERROR_AMMUNITION_NOT_FOUND.get(player,
-                    new PlaceHolder("Key", ammunitionKey));
-            return;
-        }
-
-        if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTag(player, AMMUNITION_KEY, ammunitionKey).isEmpty()) {
+        List<String> ammunitionKeys = fireable.getAmmunitionKeys();
+        if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).isEmpty()) {
             MessagesConfig.ERROR_OUT_OF_AMMO.get(player);
             return;
         }
 
-        if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTag(player, AMMUNITION_KEY, ammunitionKey).isPresent()) {
-            ItemStack ammoItem = PluginUtils.getInstance().getItemWithNBTTag(player, AMMUNITION_KEY, ammunitionKey).get();
+        if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).isPresent()) {
+            ItemStack ammoItem = PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).get();
             int ammoAmount = NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY);
             GunshellPlugin.getInstance().getReloadingSet().add(player.getUniqueId());
 
@@ -76,6 +70,7 @@ public class PlayerSwapHandListener implements Listener {
             Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
                 int finalAmmoAmount = ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount;
                 PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, finalAmmoAmount);
+                PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMOTYPE_KEY, NBTEditor.getString(ammoItem, AMMUNITION_KEY));
                 fireable.updateItemMeta(itemStack, finalAmmoAmount);
 
                 MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
@@ -87,8 +82,9 @@ public class PlayerSwapHandListener implements Listener {
                 MessagesConfig.RELOADING_FINISHED.get(player);
             }, fireable.getReloadTime());
         } else {
+            GunshellAmmunition newAmmunition = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition()
+                    .get(NBTEditor.getString(itemStack, GUN_AMMOTYPE_KEY));
             int ammoAmount = NBTEditor.getInt(itemStack, GUN_AMMO_KEY);
-            GunshellAmmunition newAmmunition = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().get(ammunitionKey);
             ItemStack ammoItem = newAmmunition.getItemStack(ammoAmount);
 
             // Weapon has been unloaded so set the ammo to 0

@@ -10,3 +10,15 @@ revolver_ammo:
       value: "revolver_bullets"
     ammo: 5
     actionType: DAMAGE
+revolver_ammo2:
+  name: "&5Revolver Ammo"
+  lore:
+    - '&6Officieel Minetopia Ammo.'
+    - ''
+    - '&7Ammo: &f<Ammo>'
+  material: IRON_INGOT
+  nbt:
+    key: "mtcustom"
+    value: "desert_eagle_bullets"
+  ammo: 5
+  actionType: DAMAGE

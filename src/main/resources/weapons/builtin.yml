@@ -16,7 +16,9 @@ revolver:
     grabCooldown: 3
     reloadTime: 1
     maxAmmo: 5
-    ammunitionKey: "revolver_ammo"
+    ammunitionKeys:
+      - revolver_ammo
+      - revolver_ammo2
     recoilAmount: 2.0
     knockbackAmount: 0.4
     selfKnockbackAmount: 0.2

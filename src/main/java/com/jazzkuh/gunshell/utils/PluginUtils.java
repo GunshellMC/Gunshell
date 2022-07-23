@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PluginUtils {
@@ -23,10 +24,10 @@ public class PluginUtils {
         setInstance(this);
     }
 
-    public Optional<ItemStack> getItemWithNBTTag(Player player, String tag, String value) {
+    public Optional<ItemStack> getItemWithNBTTags(Player player, String tag, List<String> values) {
         for (ItemStack item : player.getInventory().getContents()) {
             if (item != null && NBTEditor.contains(item, tag)) {
-                if (NBTEditor.getString(item, tag).equals(value)) {
+                if (values.stream().anyMatch(value -> NBTEditor.getString(item, tag).equals(value))) {
                     return Optional.of(item);
                 }
                 return Optional.empty();

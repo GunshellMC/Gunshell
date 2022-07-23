@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 public enum MessagesConfig {
     ERROR_AMMUNITION_NOT_FOUND("error.ammunition-not-found", "&cAmmunition not found for key: <Key>"),
     ERROR_OUT_OF_AMMO("error.out-of-ammo", "&cJe geweer is leeg!"),
-    RELOADING_START("common.reloading.start", "&aJe wapen is nu aan het herladen..."),
+    RELOADING_START("common.reloading.start", "&aJe wapen is nu aan het herladen.."),
     RELOADING_FINISHED("common.reloading.finished", "&aJe wapen is herladen."),
     UNLOADING_FINISHED("common.unloading.finished", "&aJe wapen is ontladen."),
     SHOW_AMMO_DURABILITY("common.ammo-durability", "&aDurability: &f<Durability>\n&aAmmo: &7<Ammo>&8/&7<MaxAmmo>"),

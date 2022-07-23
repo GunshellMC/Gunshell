@@ -1,6 +1,6 @@
 package com.jazzkuh.gunshell.api.objects;
 
-import com.jazzkuh.gunshell.api.interfaces.IGunshellWeapon;
+import com.jazzkuh.gunshell.api.interfaces.GunshellWeaponImpl;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GunshellFireable implements IGunshellWeapon {
+public class GunshellFireable implements GunshellWeaponImpl {
     private final @NotNull @Getter String key;
     private final @NotNull @Getter ConfigurationSection configuration;
 

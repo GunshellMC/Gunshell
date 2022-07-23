@@ -13,7 +13,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.HashMap;
 
 public class WeaponRegistry {
-
     private final GunshellPlugin plugin;
     private final String FILE_SEPARATOR = "/";
 

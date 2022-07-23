@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.api.objects;
 
+import com.jazzkuh.gunshell.api.enums.ActionType;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
@@ -25,6 +26,7 @@ public class GunshellAmmunition {
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
     private final @Getter int ammo;
+    private final @Getter ActionType actionType;
 
     public GunshellAmmunition(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -38,6 +40,7 @@ public class GunshellAmmunition {
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
         this.ammo = configuration.getInt("ammo", 8);
+        this.actionType = ActionType.valueOf(configuration.getString("actionType", "DAMAGE").toUpperCase());
     }
 
     public ItemBuilder getItem() {

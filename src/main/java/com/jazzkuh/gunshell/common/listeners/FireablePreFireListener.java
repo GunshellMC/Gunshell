@@ -6,6 +6,8 @@ import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
+import com.jazzkuh.gunshell.common.AmmunitionActionImpl;
+import com.jazzkuh.gunshell.common.AmmunitionActionRegistry;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
@@ -146,49 +148,14 @@ public class FireablePreFireListener implements Listener {
             Block block = rayTraceResult.getOptionalBlock().get();
             block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
         }
-        if (rayTraceResult.getOptionalLivingEntity().isEmpty()) return;
 
-        LivingEntity livingEntity = rayTraceResult.getOptionalLivingEntity().get();
-        if (livingEntity.isDead()) return;
-        if (livingEntity.hasMetadata("vanished")) return;
-        if (livingEntity.hasMetadata("NPC")) return;
-
-        if (livingEntity instanceof Player) {
-            Player playerTarget = (Player) livingEntity;
-            if (playerTarget.getGameMode() == GameMode.SPECTATOR
-                    || playerTarget.getGameMode() == GameMode.CREATIVE) return;
-
-            MessagesConfig.BULLET_HIT_BY_PLAYER.get(playerTarget,
-                    new PlaceHolder("Name", player.getName()));
+        AmmunitionActionImpl ammunitionAction = AmmunitionActionRegistry.getAction(fireable, ammunition, ammunition.getActionType());
+        if (ammunitionAction == null) {
+            ChatUtils.sendMessage(player, "&cError: &4Ammunition action not found!");
+            return;
         }
 
-        if (livingEntity.getLocation().getWorld() != null) {
-            livingEntity.getLocation().getWorld().playEffect(livingEntity.getEyeLocation(),
-                    Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
-        }
-
-        MessagesConfig.BULLET_HIT_OTHER.get(player,
-                new PlaceHolder("Name", livingEntity.getName()));
-
-        double damage = fireable.getDamage();
-        if (rayTraceResult.isHeadshot()) {
-            damage = fireable.getHeadshotDamage();
-            MessagesConfig.BULLET_HIT_OTHER_HEADSHOT.get(player,
-                    new PlaceHolder("Name", livingEntity.getName()));
-        }
-
-        PluginUtils.getInstance().performRecoil(livingEntity, 0F, fireable.getKnockbackAmount());
-
-        if (damage > livingEntity.getHealth()) {
-            livingEntity.setHealth(0D);
-        } else {
-            EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
-                    EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK, damage);
-            livingEntity.setHealth(livingEntity.getHealth() - damage);
-
-            livingEntity.setLastDamageCause(entityDamageByEntityEvent);
-            Bukkit.getPluginManager().callEvent(entityDamageByEntityEvent);
-        }
+        ammunitionAction.fireAction(player, rayTraceResult, ammunition.getConfiguration());
     }
 
     private boolean hasCooldown(String cooldownKey, GunshellFireable fireable) {

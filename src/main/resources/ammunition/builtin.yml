@@ -9,3 +9,4 @@ revolver_ammo:
       key: "mtcustom"
       value: "revolver_bullets"
     ammo: 5
+    actionType: DAMAGE

@@ -32,6 +32,7 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter(AccessLevel.PRIVATE) WeaponRegistry weaponRegistry;
     private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityLayer compatibilityLayer;
     private @Getter @Setter HashMap<String, Long> weaponCooldownMap = new HashMap<>();
+    private @Getter @Setter HashMap<UUID, Long> grabCooldownMap = new HashMap<>();
     private @Getter @Setter Set<UUID> reloadingSet = new HashSet<>();
 
     @Override

@@ -10,8 +10,10 @@ revolver:
       key: "mtcustom"
       value: "revolver_fullmodel"
     damage: 8
+    headshotDamage: 16
     range: 16
     cooldown: 1
+    grabCooldown: 3
     reloadTime: 1
     maxAmmo: 5
     ammunitionKey: "revolver_ammo"

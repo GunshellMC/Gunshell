@@ -27,8 +27,10 @@ public class GunshellFireable implements IGunshellWeapon {
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
     private final @Getter int damage;
+    private final @Getter int headshotDamage;
     private final @Getter int range;
     private final @Getter double cooldown;
+    private final @Getter double grabCooldown;
     private final @Getter int reloadTime;
     private final @Getter int maxAmmo;
     private final @Getter String ammunitionKey;
@@ -48,8 +50,10 @@ public class GunshellFireable implements IGunshellWeapon {
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
         this.damage = configuration.getInt("damage", 5);
+        this.headshotDamage = configuration.getInt("headshotDamage", this.damage);
         this.range = configuration.getInt("range", 10);
         this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
+        this.grabCooldown = configuration.getDouble("grabCooldown", 1);
         this.reloadTime = configuration.getInt("reloadTime", 1) * 20; // Tick based timer
         this.maxAmmo = configuration.getInt("maxAmmo", 8);
         this.ammunitionKey = configuration.getString("ammunitionKey");
@@ -60,6 +64,7 @@ public class GunshellFireable implements IGunshellWeapon {
 
     @Override
     public ItemBuilder getItem(int durability) {
+        double attackSpeed = -4 + 1 / this.getGrabCooldown();
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
                 .setLore(ChatUtils.color(lore,
@@ -70,7 +75,8 @@ public class GunshellFireable implements IGunshellWeapon {
                 .setNBT("gunshell_weapon_key", key)
                 .setNBT("gunshell_weapon_type", "fireable")
                 .setNBT("gunshell_weapon_ammo", this.getMaxAmmo())
-                .setNBT("gunshell_weapon_durability", durability);
+                .setNBT("gunshell_weapon_durability", durability)
+                .setAttackSpeed(attackSpeed);
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);

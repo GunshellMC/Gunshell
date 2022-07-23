@@ -21,6 +21,7 @@ public class PlayerItemHeldListener implements Listener {
             return;
         }
 
+        GunshellPlugin.getInstance().getGrabCooldownMap().remove(player.getUniqueId());
         if (event.getPlayer().getInventory().getItem(event.getNewSlot()) == null) return;
         ItemStack itemStack = event.getPlayer().getInventory().getItem(event.getNewSlot());
 
@@ -28,6 +29,8 @@ public class PlayerItemHeldListener implements Listener {
         if (!NBTEditor.contains(itemStack, "gunshell_weapon_key")) return;
         String weaponKey = NBTEditor.getString(itemStack, "gunshell_weapon_key");
         GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
+
+        GunshellPlugin.getInstance().getGrabCooldownMap().put(player.getUniqueId(), System.currentTimeMillis());
 
         int ammo = NBTEditor.getInt(itemStack, "gunshell_weapon_ammo");
         int durability = NBTEditor.getInt(itemStack, "gunshell_weapon_durability");

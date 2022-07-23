@@ -85,7 +85,7 @@ public class FireablePreFireListener implements Listener {
             Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
                 int finalAmmoAmount = ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount;
                 PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, finalAmmoAmount);
-                this.updateFireableItemMeta(itemStack, fireable, finalAmmoAmount);
+                fireable.updateItemMeta(itemStack, finalAmmoAmount);
 
                 MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
                         new PlaceHolder("Durability", String.valueOf(durability)),
@@ -113,8 +113,7 @@ public class FireablePreFireListener implements Listener {
         GunshellPlugin.getInstance().getWeaponCooldownMap().put(cooldownKey, System.currentTimeMillis());
         PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, ammo - 1);
         PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);
-
-        this.updateFireableItemMeta(itemStack, fireable, ammo - 1);
+        fireable.updateItemMeta(itemStack, ammo - 1);
 
         PluginUtils.getInstance().performRecoil(player,
                 (float) fireable.getRecoilAmount(), fireable.getSelfKnockbackAmount());
@@ -190,18 +189,6 @@ public class FireablePreFireListener implements Listener {
             livingEntity.setLastDamageCause(entityDamageByEntityEvent);
             Bukkit.getPluginManager().callEvent(entityDamageByEntityEvent);
         }
-    }
-
-    private void updateFireableItemMeta(ItemStack itemStack, GunshellFireable fireable, int ammo) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        List<String> lore = fireable.getLore();
-
-        itemMeta.setLore(ChatUtils.color(lore,
-                new PlaceHolder("Ammo", String.valueOf(ammo)),
-                new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())),
-                new PlaceHolder("Damage", String.valueOf(fireable.getDamage())),
-                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY)))));
-        itemStack.setItemMeta(itemMeta);
     }
 
     private boolean hasCooldown(String cooldownKey, GunshellFireable fireable) {

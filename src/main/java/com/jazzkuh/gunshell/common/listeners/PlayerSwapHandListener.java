@@ -76,7 +76,7 @@ public class PlayerSwapHandListener implements Listener {
             Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
                 int finalAmmoAmount = ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount;
                 PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, finalAmmoAmount);
-                this.updateFireableItemMeta(itemStack, fireable, finalAmmoAmount);
+                fireable.updateItemMeta(itemStack, finalAmmoAmount);
 
                 MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
                         new PlaceHolder("Durability", String.valueOf(durability)),
@@ -93,23 +93,11 @@ public class PlayerSwapHandListener implements Listener {
 
             // Weapon has been unloaded so set the ammo to 0
             PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, 0);
-            this.updateFireableItemMeta(itemStack, fireable, 0);
+            fireable.updateItemMeta(itemStack, 0);
 
             // Add the ammo to the player's inventory
             player.getInventory().addItem(ammoItem);
             MessagesConfig.UNLOADING_FINISHED.get(player);
         }
-    }
-
-    private void updateFireableItemMeta(ItemStack itemStack, GunshellFireable fireable, int ammo) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        List<String> lore = fireable.getLore();
-
-        itemMeta.setLore(ChatUtils.color(lore,
-                new PlaceHolder("Ammo", String.valueOf(ammo)),
-                new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())),
-                new PlaceHolder("Damage", String.valueOf(fireable.getDamage())),
-                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY)))));
-        itemStack.setItemMeta(itemMeta);
     }
 }

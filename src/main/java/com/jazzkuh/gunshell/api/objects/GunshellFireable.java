@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -81,6 +82,17 @@ public class GunshellFireable implements IGunshellWeapon {
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         return itemBuilder;
+    }
+
+    public void updateItemMeta(ItemStack itemStack, int ammo) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        List<String> lore = this.getLore();
+        itemMeta.setLore(ChatUtils.color(lore,
+                new PlaceHolder("Ammo", String.valueOf(ammo)),
+                new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())),
+                new PlaceHolder("Damage", String.valueOf(this.getDamage())),
+                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, "gunshell_weapon_durability")))));
+        itemStack.setItemMeta(itemMeta);
     }
 
     @Override

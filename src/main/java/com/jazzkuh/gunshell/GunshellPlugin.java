@@ -6,6 +6,7 @@ import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.common.listeners.FireablePreFireListener;
 import com.jazzkuh.gunshell.common.listeners.PlayerInteractListener;
 import com.jazzkuh.gunshell.common.listeners.PlayerItemHeldListener;
+import com.jazzkuh.gunshell.common.listeners.PlayerSwapHandListener;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.utils.PluginUtils;
@@ -55,6 +56,7 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new FireablePreFireListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerSwapHandListener(), this);
 
         // TODO: Remove this when commands are implemented
         // TODO: Too lazy to implement commands right now, so I'm just going to do this

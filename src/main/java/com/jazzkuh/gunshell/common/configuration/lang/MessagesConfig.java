@@ -12,6 +12,7 @@ public enum MessagesConfig {
     ERROR_OUT_OF_AMMO("error.out-of-ammo", "&cJe geweer is leeg!"),
     RELOADING_START("common.reloading.start", "&aJe wapen is nu aan het herladen..."),
     RELOADING_FINISHED("common.reloading.finished", "&aJe wapen is herladen."),
+    UNLOADING_FINISHED("common.unloading.finished", "&aJe wapen is ontladen."),
     SHOW_AMMO_DURABILITY("common.ammo-durability", "&aDurability: &f<Durability>\n&aAmmo: &7<Ammo>&8/&7<MaxAmmo>"),
     BULLET_HIT_OTHER("common.bullet.hit-other", "&cJe hebt &4<Name> &cgeraakt met je schot."),
     BULLET_HIT_OTHER_HEADSHOT("common.bullet.hit-other-headshot", "&cJe hebt <Name> met een headshot geraakt!"),

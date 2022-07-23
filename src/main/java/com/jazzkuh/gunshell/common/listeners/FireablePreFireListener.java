@@ -100,7 +100,6 @@ public class FireablePreFireListener implements Listener {
 
         if (hasCooldown(cooldownKey, fireable) || hasGrabCooldown(player.getUniqueId(), fireable)) return;
 
-
         FireableFireEvent fireableFireEvent = new FireableFireEvent(player, fireable);
         if (fireableFireEvent.isCancelled()) return;
         Bukkit.getPluginManager().callEvent(fireableFireEvent);

@@ -29,7 +29,7 @@ public class ThrowablePreFireListener implements Listener {
         GunshellPlugin.getInstance().getThrowableCooldownMap().put(player.getUniqueId(), System.currentTimeMillis());
 
         if (itemStack.getAmount() > 1) {
-            itemStack.setAmount(itemStack.getAmount() - 1);
+            player.getInventory().getItemInMainHand().setAmount(itemStack.getAmount() - 1);
         } else {
             player.getInventory().removeItem(itemStack);
         }

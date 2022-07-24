@@ -31,6 +31,7 @@ public class PlayerInteractListener implements Listener {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
         if (NBTEditor.contains(itemStack, "gunshell_weapon_key")) {
+            event.setCancelled(true);
             String weaponKey = NBTEditor.getString(itemStack, "gunshell_weapon_key");
             GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
 
@@ -38,6 +39,7 @@ public class PlayerInteractListener implements Listener {
             if (fireablePreFireEvent.isCancelled()) return;
             Bukkit.getPluginManager().callEvent(fireablePreFireEvent);
         } else if (NBTEditor.contains(itemStack, "gunshell_throwable_key")) {
+            event.setCancelled(true);
             String throwableKey = NBTEditor.getString(itemStack, "gunshell_throwable_key");
             GunshellThrowable throwable = GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().get(throwableKey);
 

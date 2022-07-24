@@ -9,6 +9,7 @@ import com.jazzkuh.gunshell.common.ThrowableActionRegistry;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,7 +37,7 @@ public class ThrowablePreFireListener implements Listener {
 
         ArmorStand armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
         armorStand.setVelocity(player.getEyeLocation().getDirection().multiply(1.3D));
-        armorStand.setVisible(true);
+        armorStand.setVisible(false);
         armorStand.setSmall(true);
         armorStand.getEquipment().setHelmet(
                 throwable.getItemStack());
@@ -52,7 +53,7 @@ public class ThrowablePreFireListener implements Listener {
             } else {
                 double velocity = (1.6 - (0.2 * bounces.get()));
                 if (velocity < 0.1) velocity = 0;
-                double finalVelocity = -velocity;
+                double finalVelocity = rayTraceResult.getBlockFace() == BlockFace.UP ? velocity : -velocity;
                 armorStand.setVelocity(armorStand.getEyeLocation().getDirection().multiply(finalVelocity).normalize());
                 bounces.getAndIncrement();
             }

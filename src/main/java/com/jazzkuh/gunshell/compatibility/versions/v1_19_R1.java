@@ -34,8 +34,9 @@ public class v1_19_R1 implements CompatibilityLayer {
         if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) {
             return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), false);
         }
-        boolean isHeadshot = (result.getHitPosition().getY() - entity.getLocation().getY()) > 1.35;
         LivingEntity livingEntity = (LivingEntity) entity;
+        boolean isHeadshot = (result.getHitPosition().getY() - entity.getLocation().getY()) > 1.375
+                || (livingEntity instanceof Player && ((Player) livingEntity).isSneaking() && (result.getHitPosition().getY() - entity.getLocation().getY()) >  1.1);
         return new GunshellRayTraceResult(Optional.of(livingEntity), Optional.empty(), isHeadshot);
     }
 

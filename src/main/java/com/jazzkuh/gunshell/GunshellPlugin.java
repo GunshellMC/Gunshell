@@ -4,10 +4,7 @@ import com.jazzkuh.gunshell.common.WeaponRegistry;
 import com.jazzkuh.gunshell.common.commands.GunshellCMD;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
-import com.jazzkuh.gunshell.common.listeners.FireablePreFireListener;
-import com.jazzkuh.gunshell.common.listeners.PlayerInteractListener;
-import com.jazzkuh.gunshell.common.listeners.PlayerItemHeldListener;
-import com.jazzkuh.gunshell.common.listeners.PlayerSwapHandListener;
+import com.jazzkuh.gunshell.common.listeners.*;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.utils.PluginUtils;
@@ -17,8 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -35,7 +31,9 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityLayer compatibilityLayer;
     private @Getter @Setter HashMap<String, Long> weaponCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> grabCooldownMap = new HashMap<>();
+    private @Getter @Setter HashMap<UUID, Long> throwableCooldownMap = new HashMap<>();
     private @Getter @Setter Set<UUID> reloadingSet = new HashSet<>();
+    private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -47,6 +45,7 @@ public final class GunshellPlugin extends JavaPlugin {
         setWeaponRegistry(new WeaponRegistry(this));
         this.weaponRegistry.registerFireables("weapons", "builtin.yml");
         this.weaponRegistry.registerAmmunition("ammunition", "builtin.yml");
+        this.weaponRegistry.registerThrowables("throwables", "builtin.yml");
 
         DefaultConfig.init();
 
@@ -60,11 +59,19 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new FireablePreFireListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerSwapHandListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ProjectileHitListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ThrowablePreFireListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
     }
 
     @Override
     public void onDisable() {
+        for (ArmorStand armorStand : this.activeThrowables.keySet()) {
+            Bukkit.getScheduler().cancelTask(this.activeThrowables.get(armorStand));
+            armorStand.remove();
+        }
+
+        this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been disabled!");
     }
 }

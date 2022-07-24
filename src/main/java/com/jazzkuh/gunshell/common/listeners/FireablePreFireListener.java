@@ -57,6 +57,7 @@ public class FireablePreFireListener implements Listener {
         List<String> ammunitionKeys = fireable.getAmmunitionKeys();
         if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).isEmpty()) {
             MessagesConfig.ERROR_OUT_OF_AMMO.get(player);
+            player.playSound(player.getLocation(), fireable.getEmptySound(), 100, 1F);
             return;
         }
 
@@ -64,6 +65,12 @@ public class FireablePreFireListener implements Listener {
             ItemStack ammoItem = PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).get();
             int ammoAmount = NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY);
             GunshellPlugin.getInstance().getReloadingSet().add(player.getUniqueId());
+
+            for (Player target : player.getLocation().getWorld().getPlayers()) {
+                if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
+                    target.playSound(player.getLocation(), fireable.getReloadSound(), 100, 1F);
+                }
+            }
 
             MessagesConfig.RELOADING_START.get(player);
 
@@ -140,6 +147,12 @@ public class FireablePreFireListener implements Listener {
 
         if (NBTEditor.getInt(itemStack, DURABILITY_KEY) <= 0) {
             player.getInventory().removeItem(itemStack);
+        }
+
+        for (Player target : player.getLocation().getWorld().getPlayers()) {
+            if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
+                target.playSound(player.getLocation(), fireable.getSound(), 100, 1F);
+            }
         }
 
         if (rayTraceResult.getOptionalBlock().isPresent()) {

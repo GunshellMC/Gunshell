@@ -28,7 +28,7 @@ import java.util.function.Predicate;
 
 public class v1_12_R1 implements CompatibilityLayer {
     @Override
-    public GunshellRayTraceResult performRayTrace(Player player, int range) {
+    public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
         Location start = player.getEyeLocation();
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
@@ -93,7 +93,7 @@ public class v1_12_R1 implements CompatibilityLayer {
      * @return The result of the ray trace.
      */
     // Start backport from 1.13.2
-    public RayTraceResult rayTrace(Player player, Location start, Vector direction, double maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks, double raySize, Predicate<Entity> filter) {
+    public RayTraceResult rayTrace(LivingEntity player, Location start, Vector direction, double maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks, double raySize, Predicate<Entity> filter) {
         RayTraceResult blockHit = this.rayTraceBlocks(start, direction, maxDistance, fluidCollisionMode, ignorePassableBlocks);
         Vector startVec = null;
         double blockHitDistance = maxDistance;
@@ -133,7 +133,7 @@ public class v1_12_R1 implements CompatibilityLayer {
         return new CraftRayTraceResult().fromNMS(start.getWorld(), nmsHitResult);
     }
 
-    public RayTraceResult rayTraceEntities(Player player, Location start, Vector direction, double maxDistance, double raySize, Predicate<Entity> filter) {
+    public RayTraceResult rayTraceEntities(LivingEntity player, Location start, Vector direction, double maxDistance, double raySize, Predicate<Entity> filter) {
         Validate.notNull(start, "Start location is null!");
         start.checkFinite();
 

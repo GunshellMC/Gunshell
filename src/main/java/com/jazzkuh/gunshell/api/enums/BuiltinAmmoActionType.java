@@ -1,5 +1,5 @@
 package com.jazzkuh.gunshell.api.enums;
 
-public enum BuiltinActionType {
+public enum BuiltinAmmoActionType {
     DAMAGE, END_CREDITS, DEMO_MENU
 }

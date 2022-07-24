@@ -35,6 +35,9 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter int reloadTime;
     private final @Getter int maxAmmo;
     private final @Getter List<String> ammunitionKeys;
+    private final @Getter String sound;
+    private final @Getter String reloadSound;
+    private final @Getter String emptySound;
     private final @Getter double recoilAmount;
     private final @Getter double knockbackAmount;
     private final @Getter double selfKnockbackAmount;
@@ -58,6 +61,9 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.reloadTime = configuration.getInt("reloadTime", 1) * 20; // Tick based timer
         this.maxAmmo = configuration.getInt("maxAmmo", 8);
         this.ammunitionKeys = configuration.getStringList("ammunitionKeys");
+        this.sound = configuration.getString("sound", "empty");
+        this.reloadSound = configuration.getString("reloadSound", "empty");
+        this.emptySound = configuration.getString("emptySound", "empty");
         this.recoilAmount = configuration.getDouble("recoilAmount", 0.0);
         this.knockbackAmount = configuration.getDouble("knockbackAmount", 0.0);
         this.selfKnockbackAmount = configuration.getDouble("selfKnockbackAmount", 0.0);

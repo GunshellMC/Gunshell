@@ -19,6 +19,9 @@ revolver:
     ammunitionKeys:
       - revolver_ammo
       - revolver_ammo2
+    sound: "minetopia.gunshotrevolver"
+    reloadSound: "minetopia.gunreloadhard"
+    emptySound: "minetopia.gunempty"
     recoilAmount: 2.0
     knockbackAmount: 0.4
     selfKnockbackAmount: 0.2

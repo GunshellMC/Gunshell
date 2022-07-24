@@ -3,6 +3,7 @@ package com.jazzkuh.gunshell.common.commands;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.ChatUtils;
@@ -43,6 +44,11 @@ public class GunshellCMD extends AbstractCommand {
             MessagesConfig.SUCCESSFULLY_LOADED_TYPE.get(commandInvocation.getCommandSender(),
                     new PlaceHolder("Amount", String.valueOf(GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().size())),
                     new PlaceHolder("Type", "ammo types"));
+
+            GunshellPlugin.getInstance().getWeaponRegistry().registerThrowables("throwables", "builtin.yml");
+            MessagesConfig.SUCCESSFULLY_LOADED_TYPE.get(commandInvocation.getCommandSender(),
+                    new PlaceHolder("Amount", String.valueOf(GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().size())),
+                    new PlaceHolder("Type", "throwable types"));
 
             GunshellPlugin.getMessages().reloadConfig();
             GunshellPlugin.getInstance().reloadConfig();
@@ -109,7 +115,7 @@ public class GunshellCMD extends AbstractCommand {
 
         String ammoKey = args[1].toLowerCase();
         if (!GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().containsKey(ammoKey)) {
-            MessagesConfig.ERROR_WEAPON_NOT_FOUND.get(player);
+            MessagesConfig.ERROR_AMMO_NOT_FOUND.get(player);
             return;
         }
 
@@ -130,6 +136,40 @@ public class GunshellCMD extends AbstractCommand {
         }
     }
 
+    @Subcommand(name = "getthrowable", usage = "<throwableType> [player]", permission = true,
+            aliases = "getgrenade|throwable", description = "Get a throwable from the config files.", playerOnly = true)
+    public void onGetThrowable(CommandInvocation commandInvocation) {
+        String[] args = commandInvocation.getArguments();
+        Player player = (Player) commandInvocation.getCommandSender();
+
+        if (args.length < 2) {
+            this.sendNotEnoughArguments(commandInvocation);
+            return;
+        }
+
+        String throwableKey = args[1].toLowerCase();
+        if (!GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().containsKey(throwableKey)) {
+            MessagesConfig.ERROR_THROWABLE_NOT_FOUND.get(player);
+            return;
+        }
+
+        GunshellThrowable throwable = GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().get(throwableKey);
+
+        if (args.length > 2) {
+            Player target = Bukkit.getPlayer(args[2]);
+            if (target == null) {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                return;
+            }
+
+            target.getInventory().addItem(throwable.getItem().toItemStack());
+            MessagesConfig.SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY.get(player);
+        } else {
+            player.getInventory().addItem(throwable.getItem().toItemStack());
+            MessagesConfig.SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY.get(player);
+        }
+    }
+
     @Override
     public List<String> tabComplete(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
@@ -145,6 +185,11 @@ public class GunshellCMD extends AbstractCommand {
         if (args.length == 2 && Stream.of("getammo", "ammo").anyMatch(cmd -> cmd.equalsIgnoreCase(args[0]))) {
             Set<String> ammoKeys = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().keySet();
             return getApplicableTabCompleters(args[1], ammoKeys);
+        }
+
+        if (args.length == 2 && Stream.of("getthrowable", "getgrenade", "throwable").anyMatch(cmd -> cmd.equalsIgnoreCase(args[0]))) {
+            Set<String> throwableKeys = GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().keySet();
+            return getApplicableTabCompleters(args[1], throwableKeys);
         }
 
         return null;

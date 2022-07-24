@@ -1,4 +1,4 @@
-package com.jazzkuh.gunshell.common.actions;
+package com.jazzkuh.gunshell.common.actions.ammunition;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
@@ -16,8 +16,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public class EndCreditsAction extends AbstractAmmunitionAction {
-    public EndCreditsAction(GunshellFireable fireable, GunshellAmmunition ammunition) {
+public class DemoMenuAction extends AbstractAmmunitionAction {
+    public DemoMenuAction(GunshellFireable fireable, GunshellAmmunition ammunition) {
         super(fireable, ammunition);
     }
 
@@ -38,7 +38,7 @@ public class EndCreditsAction extends AbstractAmmunitionAction {
                     new PlaceHolder("Name", player.getName()));
 
             CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
-            compatibilityLayer.showEndCreditScene(playerTarget);
+            compatibilityLayer.showDemoMenu(playerTarget);
         }
 
         if (livingEntity.getLocation().getWorld() != null) {

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class v1_19_R1 implements CompatibilityLayer {
     @Override
-    public GunshellRayTraceResult performRayTrace(Player player, int range) {
+    public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
         RayTraceResult result = player.getWorld()
                 .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, 0.2, null);
         if (result == null) {

@@ -2,7 +2,9 @@ package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
+import com.jazzkuh.gunshell.api.events.ThrowablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -28,12 +30,20 @@ public class PlayerInteractListener implements Listener {
 
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (!NBTEditor.contains(itemStack, "gunshell_weapon_key")) return;
-        String weaponKey = NBTEditor.getString(itemStack, "gunshell_weapon_key");
-        GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
+        if (NBTEditor.contains(itemStack, "gunshell_weapon_key")) {
+            String weaponKey = NBTEditor.getString(itemStack, "gunshell_weapon_key");
+            GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
 
-        FireablePreFireEvent fireablePreFireEvent = new FireablePreFireEvent(player, fireable);
-        if (fireablePreFireEvent.isCancelled()) return;
-        Bukkit.getPluginManager().callEvent(fireablePreFireEvent);
+            FireablePreFireEvent fireablePreFireEvent = new FireablePreFireEvent(player, fireable);
+            if (fireablePreFireEvent.isCancelled()) return;
+            Bukkit.getPluginManager().callEvent(fireablePreFireEvent);
+        } else if (NBTEditor.contains(itemStack, "gunshell_throwable_key")) {
+            String throwableKey = NBTEditor.getString(itemStack, "gunshell_throwable_key");
+            GunshellThrowable throwable = GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().get(throwableKey);
+
+            ThrowablePreFireEvent throwablePreFireEvent = new ThrowablePreFireEvent(player, throwable);
+            if (throwablePreFireEvent.isCancelled()) return;
+            Bukkit.getPluginManager().callEvent(throwablePreFireEvent);
+        }
     }
 }

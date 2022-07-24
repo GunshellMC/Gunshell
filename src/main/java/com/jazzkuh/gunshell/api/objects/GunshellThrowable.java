@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.api.objects;
 
 import com.jazzkuh.gunshell.api.enums.BuiltinAmmoActionType;
+import com.jazzkuh.gunshell.api.enums.BuiltinThrowableActionType;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
@@ -14,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GunshellAmmunition {
+public class GunshellThrowable {
     private final @NotNull @Getter String key;
     private final @NotNull @Getter ConfigurationSection configuration;
 
@@ -25,10 +26,14 @@ public class GunshellAmmunition {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private final @Getter int ammo;
+    private final @Getter int damage;
+    private final @Getter int range;
+    private final @Getter int fuseTime;
+    private final @Getter double cooldown;
+    private final @Getter double knockbackAmount;
     private final @Getter String actionType;
 
-    public GunshellAmmunition(@NotNull String key, @NotNull ConfigurationSection configuration) {
+    public GunshellThrowable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
         this.configuration = configuration;
 
@@ -39,28 +44,26 @@ public class GunshellAmmunition {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
-        this.ammo = configuration.getInt("ammo", 8);
-        this.actionType = configuration.getString("actionType", BuiltinAmmoActionType.DAMAGE.toString()).toUpperCase();
+        this.damage = configuration.getInt("damage", 5);
+        this.range = configuration.getInt("range", 10);
+        this.fuseTime = configuration.getInt("fuseTime", 1) * 20; // convert to ticks
+        this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
+        this.knockbackAmount = configuration.getDouble("knockbackAmount", 0);
+        this.actionType = configuration.getString("actionType", BuiltinThrowableActionType.EXPLOSIVE.toString()).toUpperCase();
     }
 
     public ItemBuilder getItem() {
-        return this.getItem(this.getAmmo());
-    }
-
-    public ItemBuilder getItem(int ammo) {
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
-                .setLore(ChatUtils.color(lore,
-                        new PlaceHolder("Ammo", String.valueOf(ammo))))
-                .setNBT("gunshell_ammunition_key", key)
-                .setNBT("gunshell_ammunition_ammo", ammo);
+                .setLore(ChatUtils.color(lore))
+                .setNBT("gunshell_throwable_key", key);
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         return itemBuilder;
     }
 
-    public ItemStack getItemStack(int ammo) {
-        return getItem(ammo).toItemStack();
+    public ItemStack getItemStack() {
+        return getItem().toItemStack();
     }
 }

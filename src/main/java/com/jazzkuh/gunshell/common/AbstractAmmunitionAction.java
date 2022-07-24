@@ -16,5 +16,6 @@ public abstract class AbstractAmmunitionAction implements AmmunitionActionImpl {
         this.ammunition = ammunition;
     }
 
+    @Override
     public abstract void fireAction(Player player, GunshellRayTraceResult rayTraceResult, ConfigurationSection configuration);
 }

@@ -36,21 +36,25 @@ public class ThrowablePreFireListener implements Listener {
 
         ArmorStand armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
         armorStand.setVelocity(player.getEyeLocation().getDirection().multiply(1.3D));
-        armorStand.setVisible(false);
-        armorStand.setBasePlate(false);
+        armorStand.setVisible(true);
         armorStand.setSmall(true);
         armorStand.getEquipment().setHelmet(
                 throwable.getItemStack());
 
-        AtomicInteger maxBounces = new AtomicInteger();
+        AtomicInteger bounces = new AtomicInteger(0);
         int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(GunshellPlugin.getInstance(), () -> {
-            GunshellRayTraceResult rayTraceResult = GunshellPlugin.getInstance().getCompatibilityLayer().performRayTrace(armorStand, 2D);
+            GunshellRayTraceResult rayTraceResult = GunshellPlugin.getInstance().getCompatibilityLayer().performRayTrace(armorStand, 2.1D);
             if (rayTraceResult.getOptionalBlock().isEmpty() && rayTraceResult.getOptionalLivingEntity().isEmpty()) {
-                armorStand.setVelocity(armorStand.getVelocity().multiply(1.3D));
+                double velocity = (1.2 - (0.2 * bounces.get()));
+                if (velocity < 0.1) velocity = 0;
+                double finalVelocity = velocity;
+                armorStand.setVelocity(armorStand.getVelocity().multiply(finalVelocity));
             } else {
-                if (maxBounces.get() > 2) return;
-                armorStand.setVelocity(armorStand.getEyeLocation().getDirection().multiply(-1.6D).normalize());
-                maxBounces.getAndIncrement();
+                double velocity = (1.6 - (0.2 * bounces.get()));
+                if (velocity < 0.1) velocity = 0;
+                double finalVelocity = -velocity;
+                armorStand.setVelocity(armorStand.getEyeLocation().getDirection().multiply(finalVelocity).normalize());
+                bounces.getAndIncrement();
             }
         }, 0L, 5L);
 

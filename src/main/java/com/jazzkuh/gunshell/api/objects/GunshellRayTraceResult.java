@@ -17,4 +17,12 @@ public class GunshellRayTraceResult {
         this.optionalBlock = optionalBlock;
         this.headshot = headshot;
     }
+
+    public String toString() {
+        return "GunshellRayTraceResult{" +
+                "optionalLivingEntity=" + optionalLivingEntity +
+                ", optionalBlock=" + optionalBlock +
+                ", headshot=" + headshot +
+                '}';
+    }
 }

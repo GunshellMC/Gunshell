@@ -12,3 +12,24 @@ grenade:
     cooldown: 5
     knockbackAmount: 0.5
     actionType: EXPLOSIVE
+
+dev_credit:
+    name: "&5Dev Credit"
+    lore:
+      - '&6Officieel Minetopia Wapen'
+    material: REDSTONE_TORCH
+    range: 6
+    fuseTime: 4
+    cooldown: 5
+    knockbackAmount: 0.5
+    actionType: END_CREDITS
+dev_credit2:
+    name: "&5Dev Credit (Demo Menu)"
+    lore:
+      - '&6Officieel Minetopia Wapen'
+    material: REDSTONE_TORCH
+    range: 6
+    fuseTime: 4
+    cooldown: 5
+    knockbackAmount: 0.5
+    actionType: DEMO_MENU

@@ -1,23 +1,27 @@
 package com.jazzkuh.gunshell.common.actions.throwable;
 
+import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.AbstractThrowableAction;
+import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.utils.PluginUtils;
-import org.bukkit.*;
+import org.bukkit.Effect;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ExplosiveAction extends AbstractThrowableAction {
-    public ExplosiveAction(GunshellThrowable throwable) {
+public class EndCreditsThrowableAction extends AbstractThrowableAction {
+    public EndCreditsThrowableAction(GunshellThrowable throwable) {
         super(throwable);
     }
 
@@ -30,18 +34,14 @@ public class ExplosiveAction extends AbstractThrowableAction {
                 }).map(entity -> (LivingEntity) entity).collect(Collectors.toSet());
         ArrayList<Block> blocks = this.getBlocksAroundCenter(location, getThrowable().getRange());
 
-        double damage = getThrowable().getDamage();
-        double range = getThrowable().getRange();
-
-        for (Block block : blocks) {
-            block.getWorld().createExplosion(block.getLocation(), 0F, false, false);
-        }
-
         for (LivingEntity livingEntity : livingEntities) {
             if (livingEntity instanceof Player) {
                 Player playerTarget = (Player) livingEntity;
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR
                         || playerTarget.getGameMode() == GameMode.CREATIVE) return;
+
+                CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityManager().getCompatibilityLayer();
+                compatibilityLayer.showEndCreditScene(playerTarget);
             }
 
             if (livingEntity.getLocation().getWorld() != null) {
@@ -50,17 +50,6 @@ public class ExplosiveAction extends AbstractThrowableAction {
             }
 
             PluginUtils.getInstance().performRecoil(livingEntity, 0F, this.getThrowable().getKnockbackAmount());
-
-            if (damage > livingEntity.getHealth()) {
-                livingEntity.setHealth(0D);
-            } else {
-                EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
-                        EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK, damage);
-                livingEntity.setHealth(livingEntity.getHealth() - damage);
-
-                livingEntity.setLastDamageCause(entityDamageByEntityEvent);
-                Bukkit.getPluginManager().callEvent(entityDamageByEntityEvent);
-            }
         }
     }
 }

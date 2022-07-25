@@ -5,7 +5,6 @@ import com.jazzkuh.gunshell.common.commands.GunshellCMD;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.common.listeners.*;
-import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.config.ConfigurationFile;

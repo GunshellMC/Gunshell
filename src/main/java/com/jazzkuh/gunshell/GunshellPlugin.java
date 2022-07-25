@@ -28,7 +28,7 @@ public final class GunshellPlugin extends JavaPlugin {
     private static @Getter ConfigurationFile messages;
     private @Getter @Setter(AccessLevel.PRIVATE) EffectManager effectManager;
     private @Getter @Setter(AccessLevel.PRIVATE) WeaponRegistry weaponRegistry;
-    private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityLayer compatibilityLayer;
+    private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityManager compatibilityManager;
     private @Getter @Setter HashMap<String, Long> weaponCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> grabCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> throwableCooldownMap = new HashMap<>();
@@ -39,7 +39,7 @@ public final class GunshellPlugin extends JavaPlugin {
     public void onEnable() {
         setInstance(this);
         setEffectManager(new EffectManager(this));
-        setCompatibilityLayer(new CompatibilityManager().getCompatibilityLayer());
+        setCompatibilityManager(new CompatibilityManager());
         new PluginUtils();
 
         setWeaponRegistry(new WeaponRegistry(this));

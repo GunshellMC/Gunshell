@@ -39,7 +39,7 @@ public class DemoMenuAction extends AbstractAmmunitionAction {
             MessagesConfig.BULLET_HIT_BY_PLAYER.get(playerTarget,
                     new PlaceHolder("Name", player.getName()));
 
-            CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
+            CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityManager().getCompatibilityLayer();
             compatibilityLayer.showDemoMenu(playerTarget);
         }
 

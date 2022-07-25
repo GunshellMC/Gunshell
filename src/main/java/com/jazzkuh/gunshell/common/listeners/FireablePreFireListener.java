@@ -121,7 +121,7 @@ public class FireablePreFireListener implements Listener {
         /*
          * Perform the raytrace to find the target
          */
-        CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
+        CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityManager().getCompatibilityLayer();
         GunshellRayTraceResult rayTraceResult = compatibilityLayer.performRayTrace(player, fireable.getRange());
 
         GunshellPlugin.getInstance().getWeaponCooldownMap().put(cooldownKey, System.currentTimeMillis());

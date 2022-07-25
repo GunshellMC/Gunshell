@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.NumberConversions;
+import org.bukkit.util.Vector;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,12 +49,12 @@ public class ThrowablePreFireListener implements Listener {
             GunshellRayTraceResult rayTraceResult = GunshellPlugin.getInstance().getCompatibilityLayer().performRayTrace(armorStand, 2.1D);
             if (rayTraceResult.getOptionalBlock().isEmpty() && rayTraceResult.getOptionalLivingEntity().isEmpty()) {
                 double velocity = (1.2 - (0.2 * bounces.get()));
-                if (velocity < 0.1) velocity = 0;
+                if (velocity < 0.1) velocity = 0.1;
                 double finalVelocity = velocity;
                 armorStand.setVelocity(armorStand.getVelocity().multiply(finalVelocity));
             } else {
-                double velocity = (1.6 - (0.2 * bounces.get()));
-                if (velocity < 0.1) velocity = 0;
+                double velocity = (1.6 - (0.4 * bounces.get()));
+                if (velocity < 0.1) velocity = 0.1;
                 double finalVelocity = rayTraceResult.getBlockFace() == BlockFace.UP ? velocity : -velocity;
                 armorStand.setVelocity(armorStand.getEyeLocation().getDirection().multiply(finalVelocity).normalize());
                 bounces.getAndIncrement();

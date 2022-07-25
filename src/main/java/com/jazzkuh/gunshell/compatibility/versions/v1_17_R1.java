@@ -4,7 +4,7 @@ import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import org.bukkit.FluidCollisionMode;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -13,7 +13,7 @@ import org.bukkit.util.RayTraceResult;
 
 import java.util.Optional;
 
-public class v1_19_R1 implements CompatibilityLayer {
+public class v1_17_R1 implements CompatibilityLayer {
     @Override
     public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
         RayTraceResult result = player.getWorld()

@@ -1,7 +1,7 @@
 name: Gunshell
 version: '${project.version}'
 main: com.jazzkuh.gunshell.GunshellPlugin
-api-version: 1.19
+api-version: 1.13
 authors: [ Jazzkuh ]
 commands:
   gunshell:

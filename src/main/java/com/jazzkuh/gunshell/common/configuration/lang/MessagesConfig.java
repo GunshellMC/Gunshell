@@ -17,7 +17,7 @@ public enum MessagesConfig {
     ERROR_AMMUNITION_NOT_FOUND("error.ammunition-not-found", "&cAmmunition not found for key: <Key>"),
     ERROR_OUT_OF_AMMO("error.out-of-ammo", "&cJe geweer is leeg!"),
     ERROR_WHILST_LOADING_CONFIGURATION("error.loading-configuration", "&cEr is iets mis gegaan met het herladen van de configuration files: <Error>"),
-    ERROR_CANNOT_SHOOT_WHILST_VANISHED("error.cannot-shoot-whilst-vanished", "&cJe kan niet schieten wanneer je in vanish zit."),
+    ERROR_CANNOT_SHOOT_WHILST_VANISHED("error.cannot-shoot-whilst-vanished", "&cJe kunt niet schieten wanneer je in vanish zit."),
     SUCCESSFULLY_ADDED_TO_INVENTORY("common.success.added-to-inventory", "&aJe hebt je geweer toegevoegd aan je inventory."),
     SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY("common.success.added-ammo-to-inventory", "&aJe hebt je ammo toegevoegd aan je inventory."),
     SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY("common.success.added-throwable-to-inventory", "&aJe hebt je throwable toegevoegd aan je inventory."),

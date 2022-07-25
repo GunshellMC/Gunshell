@@ -14,7 +14,8 @@ public class CompatibilityManager {
             GunshellPlugin.getInstance().getLogger().info("Using compatibility layer for version " + version);
             return (CompatibilityLayer) nmsClass.getConstructors()[0].newInstance();
         } catch (Exception ignored) {
-            GunshellPlugin.getInstance().getLogger().warning("Your server version (" + version + ") is not supported by Gunshell. Loading a fallback compatibility layer.");
+            GunshellPlugin.getInstance().getLogger().warning("Your server version (" + version + ") is not supported by Gunshell. Please upgrade to a supported version.");
+            Bukkit.getPluginManager().disablePlugin(GunshellPlugin.getInstance());
             return null;
         }
     }

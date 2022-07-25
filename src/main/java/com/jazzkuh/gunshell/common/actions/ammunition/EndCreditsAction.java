@@ -29,6 +29,8 @@ public class EndCreditsAction extends AbstractAmmunitionAction {
         if (livingEntity.hasMetadata("vanished")) return;
         if (livingEntity.hasMetadata("NPC")) return;
 
+        if (!this.isInMinimumRange(livingEntity, player, getFireable())) return;
+
         if (livingEntity instanceof Player) {
             Player playerTarget = (Player) livingEntity;
             if (playerTarget.getGameMode() == GameMode.SPECTATOR

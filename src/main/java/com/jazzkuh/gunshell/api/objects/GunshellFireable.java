@@ -30,6 +30,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter int damage;
     private final @Getter int headshotDamage;
     private final @Getter int range;
+    private final @Getter int minimumRange;
     private final @Getter double cooldown;
     private final @Getter double grabCooldown;
     private final @Getter int reloadTime;
@@ -56,6 +57,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.damage = configuration.getInt("damage", 5);
         this.headshotDamage = configuration.getInt("headshotDamage", this.damage);
         this.range = configuration.getInt("range", 10);
+        this.minimumRange = configuration.getInt("minimumRange", 0);
         this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
         this.grabCooldown = configuration.getDouble("grabCooldown", 1);
         this.reloadTime = configuration.getInt("reloadTime", 1) * 20; // Tick based timer

@@ -18,7 +18,6 @@ revolver:
     maxAmmo: 5
     ammunitionKeys:
       - revolver_ammo
-      - revolver_ammo2
     sound: "minetopia.gunshotrevolver"
     reloadSound: "minetopia.gunreloadhard"
     emptySound: "minetopia.gunempty"

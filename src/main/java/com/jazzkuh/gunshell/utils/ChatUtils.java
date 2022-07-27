@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.utils;
 
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -38,5 +39,9 @@ public class ChatUtils {
      */
     public static void sendMessage(CommandSender commandSender, String message) {
         commandSender.sendMessage(color(message));
+    }
+
+    public static void sendBroadcast(String message) {
+        Bukkit.broadcastMessage(color(message));
     }
 }

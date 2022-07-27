@@ -46,7 +46,7 @@ public class ThrowablePreFireListener implements Listener {
 
         AtomicInteger bounces = new AtomicInteger(0);
         int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(GunshellPlugin.getInstance(), () -> {
-            GunshellRayTraceResult rayTraceResult = GunshellPlugin.getInstance().getCompatibilityManager().getCompatibilityLayer().performRayTrace(armorStand, 2.1D);
+            GunshellRayTraceResult rayTraceResult = GunshellPlugin.getInstance().getCompatibilityLayer().performRayTrace(armorStand, 2.1D);
             if (rayTraceResult.getOptionalBlock().isEmpty() && rayTraceResult.getOptionalLivingEntity().isEmpty()) {
                 double velocity = (1.2 - (0.2 * bounces.get()));
                 if (velocity < 0.1) velocity = 0.1;

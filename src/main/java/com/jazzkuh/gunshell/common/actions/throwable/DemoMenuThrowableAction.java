@@ -38,7 +38,7 @@ public class DemoMenuThrowableAction extends AbstractThrowableAction {
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR
                         || playerTarget.getGameMode() == GameMode.CREATIVE) return;
 
-                CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityManager().getCompatibilityLayer();
+                CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
                 compatibilityLayer.showDemoMenu(playerTarget);
             }
 

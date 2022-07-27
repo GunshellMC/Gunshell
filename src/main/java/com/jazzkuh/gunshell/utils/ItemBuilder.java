@@ -342,7 +342,7 @@ public class ItemBuilder {
     public ItemBuilder setAttackSpeed(Double amount) {
         try {
             NBTEditor.NBTCompound compound = NBTEditor.getNBTCompound(is);
-            if (GunshellPlugin.getInstance().getCompatibilityManager().getVersion().equals("v1_12_R1")) {
+            if (CompatibilityManager.getVersion().equals("v1_12_R1")) {
                 compound.set("generic.attackSpeed", "tag", "AttributeModifiers", null, "AttributeName");
                 compound.set("AttackSpeed", "tag", "AttributeModifiers", 0, "Name");
                 compound.set("mainhand", "tag", "AttributeModifiers", 0, "Slot");

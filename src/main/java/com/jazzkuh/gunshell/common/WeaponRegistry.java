@@ -78,7 +78,7 @@ public class WeaponRegistry {
             ammoRegistry.put(key, gunshellAmmunition);
         }
         setAmmunition(ammoRegistry);
-        plugin.getLogger().info(getWeapons().size() + " ammunition types have been loaded into memory.");
+        plugin.getLogger().info(getAmmunition().size() + " ammunition types have been loaded into memory.");
     }
 
     public void registerThrowables(String directory, String defaultFile) {
@@ -104,6 +104,6 @@ public class WeaponRegistry {
             throwableRegistry.put(key, gunshellThrowable);
         }
         setThrowables(throwableRegistry);
-        plugin.getLogger().info(getWeapons().size() + " throwables have been loaded into memory.");
+        plugin.getLogger().info(getThrowables().size() + " throwables have been loaded into memory.");
     }
 }

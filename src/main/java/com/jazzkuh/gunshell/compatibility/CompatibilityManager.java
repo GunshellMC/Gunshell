@@ -14,8 +14,8 @@ import org.bukkit.util.RayTraceResult;
 import java.util.Optional;
 
 public class CompatibilityManager {
-    private final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName();
-    private final @Getter String version = bukkitVersion.substring(bukkitVersion.lastIndexOf('.') + 1);
+    private static final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName();
+    public static final @Getter String version = bukkitVersion.substring(bukkitVersion.lastIndexOf('.') + 1);
 
     public CompatibilityLayer getCompatibilityLayer() {
         try {

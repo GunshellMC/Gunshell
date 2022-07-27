@@ -15,17 +15,20 @@ public class AmmunitionActionRegistry {
 
     static {
         actions.put(BuiltinAmmoActionType.DAMAGE.toString(), DamageAction.class);
-        actions.put(BuiltinAmmoActionType.END_CREDITS.toString(), EndCreditsAction.class);
-        actions.put(BuiltinAmmoActionType.DEMO_MENU.toString(), DemoMenuAction.class);
     }
 
     public static void registerAction(String actionType, Class<? extends AbstractAmmunitionAction> actionClass) {
+        actions.remove(actionType);
         actions.put(actionType, actionClass);
+    }
+
+    public static void unregisterAction(String actionType) {
+        actions.remove(actionType);
     }
 
     public static AbstractAmmunitionAction getAction(GunshellFireable fireable, GunshellAmmunition ammunition, String actionType) {
         Class<? extends AbstractAmmunitionAction> actionClass = actions.get(actionType);
-        if (actionClass == null) return null;
+        if (actionClass == null) actionClass = DamageAction.class;
 
         try {
             return actionClass.getConstructor(GunshellFireable.class, GunshellAmmunition.class).newInstance(fireable, ammunition);

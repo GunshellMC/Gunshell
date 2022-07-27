@@ -1,4 +1,4 @@
-package com.jazzkuh.gunshell.common;
+package com.jazzkuh.gunshell.common.actions.melee.abstraction;
 
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;

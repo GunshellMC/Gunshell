@@ -3,7 +3,7 @@ package com.jazzkuh.gunshell.common.actions.ammunition;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
-import com.jazzkuh.gunshell.common.AbstractAmmunitionAction;
+import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AbstractAmmunitionAction;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.PluginUtils;

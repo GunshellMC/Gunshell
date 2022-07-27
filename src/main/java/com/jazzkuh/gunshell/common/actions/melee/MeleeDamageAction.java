@@ -1,14 +1,7 @@
 package com.jazzkuh.gunshell.common.actions.melee;
 
-import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
-import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
-import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
-import com.jazzkuh.gunshell.common.AbstractAmmunitionAction;
-import com.jazzkuh.gunshell.common.AbstractMeleeAction;
-import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
-import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
-import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.common.actions.melee.abstraction.AbstractMeleeAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;

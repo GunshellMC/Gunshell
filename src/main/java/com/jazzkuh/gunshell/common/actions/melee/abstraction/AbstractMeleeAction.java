@@ -1,16 +1,10 @@
-package com.jazzkuh.gunshell.common;
+package com.jazzkuh.gunshell.common.actions.melee.abstraction;
 
-import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
-import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import lombok.Getter;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public abstract class AbstractMeleeAction implements MeleeActionImpl {
     private final @Getter GunshellMelee melee;

@@ -4,7 +4,7 @@ import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.events.ThrowablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
-import com.jazzkuh.gunshell.common.ThrowableActionImpl;
+import com.jazzkuh.gunshell.common.actions.throwable.abstraction.ThrowableActionImpl;
 import com.jazzkuh.gunshell.common.ThrowableActionRegistry;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import org.bukkit.Bukkit;
@@ -15,8 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -1,7 +1,7 @@
 package com.jazzkuh.gunshell.common.actions.throwable;
 
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
-import com.jazzkuh.gunshell.common.AbstractThrowableAction;
+import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;

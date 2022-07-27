@@ -1,4 +1,4 @@
-package com.jazzkuh.gunshell.common;
+package com.jazzkuh.gunshell.common.actions.ammunition.abstraction;
 
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import org.bukkit.configuration.ConfigurationSection;

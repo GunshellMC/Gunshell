@@ -1,13 +1,9 @@
 package com.jazzkuh.gunshell.common;
 
 import com.jazzkuh.gunshell.api.enums.BuiltinAmmoActionType;
-import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
-import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
-import com.jazzkuh.gunshell.common.actions.ammunition.DamageAction;
 import com.jazzkuh.gunshell.common.actions.melee.MeleeDamageAction;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import com.jazzkuh.gunshell.common.actions.melee.abstraction.AbstractMeleeAction;
 
 import java.util.HashMap;
 import java.util.Map;

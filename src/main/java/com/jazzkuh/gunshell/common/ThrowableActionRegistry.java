@@ -3,6 +3,7 @@ package com.jazzkuh.gunshell.common;
 import com.jazzkuh.gunshell.api.enums.BuiltinThrowableActionType;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.ExplosiveThrowableAction;
+import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 
 import java.util.HashMap;
 import java.util.Map;

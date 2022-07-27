@@ -1,14 +1,10 @@
-package com.jazzkuh.gunshell.common;
+package com.jazzkuh.gunshell.common.actions.throwable.abstraction;
 
-import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
-import com.jazzkuh.gunshell.api.objects.GunshellFireable;
-import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

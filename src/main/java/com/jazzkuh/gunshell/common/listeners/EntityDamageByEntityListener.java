@@ -1,14 +1,9 @@
 package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
-import com.jazzkuh.gunshell.api.events.FireableFireEvent;
 import com.jazzkuh.gunshell.api.events.MeleeDamageEvent;
-import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
-import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
-import com.jazzkuh.gunshell.common.AmmunitionActionImpl;
-import com.jazzkuh.gunshell.common.AmmunitionActionRegistry;
-import com.jazzkuh.gunshell.common.MeleeActionImpl;
+import com.jazzkuh.gunshell.common.actions.melee.abstraction.MeleeActionImpl;
 import com.jazzkuh.gunshell.common.MeleeActionRegistry;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
@@ -23,10 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
 import java.util.UUID;
 
 public class EntityDamageByEntityListener implements Listener {

@@ -2,7 +2,7 @@ package com.jazzkuh.gunshell.common.actions.throwable;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
-import com.jazzkuh.gunshell.common.AbstractThrowableAction;
+import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.*;
@@ -12,7 +12,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
 import java.util.Set;

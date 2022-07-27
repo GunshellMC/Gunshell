@@ -3,6 +3,7 @@ package com.jazzkuh.gunshell.common;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.utils.config.ConfigurationFile;
 import com.jazzkuh.gunshell.utils.config.KeyDirectoryConfiguration;
@@ -20,10 +21,12 @@ public class WeaponRegistry {
     private @Getter @Setter HashMap<String, GunshellFireable> weapons = new HashMap<>();
     private @Getter @Setter HashMap<String, GunshellAmmunition> ammunition = new HashMap<>();
     private @Getter @Setter HashMap<String, GunshellThrowable> throwables = new HashMap<>();
+    private @Getter @Setter HashMap<String, GunshellMelee> melees = new HashMap<>();
 
     private @Getter KeyDirectoryConfiguration weaponConfigurations;
     private @Getter KeyDirectoryConfiguration ammoConfigurations;
     private @Getter KeyDirectoryConfiguration throwableConfigurations;
+    private @Getter KeyDirectoryConfiguration meleeConfigurations;
 
     public WeaponRegistry(GunshellPlugin plugin) {
         this.plugin = plugin;
@@ -105,5 +108,31 @@ public class WeaponRegistry {
         }
         setThrowables(throwableRegistry);
         plugin.getLogger().info(getThrowables().size() + " throwables have been loaded into memory.");
+    }
+
+    public void registerMelees(String directory, String defaultFile) {
+        ConfigurationFile configurationFile = new ConfigurationFile(plugin, directory + FILE_SEPARATOR + defaultFile, true);
+        configurationFile.saveConfig();
+
+        meleeConfigurations = new KeyDirectoryConfiguration(plugin, directory);
+
+        HashMap<String, GunshellMelee> meleeRegistry = new HashMap<>();
+        for (String key : getMeleeConfigurations().getConfigurations().keySet()) {
+            FileConfiguration fileConfiguration = getMeleeConfigurations().getConfigurations().get(key);
+            if (fileConfiguration == null) {
+                plugin.getLogger().warning("Melee configuration for " + key + " could not be loaded.");
+                continue;
+            }
+            ConfigurationSection configuration = fileConfiguration.getConfigurationSection(key);
+            if (configuration == null) {
+                plugin.getLogger().warning("Melee configuration for " + key + " could not be loaded.");
+                continue;
+            }
+
+            GunshellMelee gunshellMelee = new GunshellMelee(key, configuration);
+            meleeRegistry.put(key, gunshellMelee);
+        }
+        setMelees(meleeRegistry);
+        plugin.getLogger().info(getMelees().size() + " melee weapons have been loaded into memory.");
     }
 }

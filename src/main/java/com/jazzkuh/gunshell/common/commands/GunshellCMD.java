@@ -3,6 +3,7 @@ package com.jazzkuh.gunshell.common.commands;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
@@ -170,6 +171,47 @@ public class GunshellCMD extends AbstractCommand {
         }
     }
 
+    @Subcommand(name = "getmelee", usage = "<meleeType> <durability> [player]", permission = true,
+            aliases = "melee", description = "Get a melee weapon from the config files.", playerOnly = true)
+    public void onGetMelee(CommandInvocation commandInvocation) {
+        String[] args = commandInvocation.getArguments();
+        Player player = (Player) commandInvocation.getCommandSender();
+
+        if (args.length < 3) {
+            this.sendNotEnoughArguments(commandInvocation);
+            return;
+        }
+
+        String meleeKey = args[1].toLowerCase();
+        if (!GunshellPlugin.getInstance().getWeaponRegistry().getMelees().containsKey(meleeKey)) {
+            MessagesConfig.ERROR_MELEE_NOT_FOUND.get(player);
+            return;
+        }
+
+        if (!PluginUtils.getInstance().isValidInteger(args[2])) {
+            MessagesConfig.ERROR_INVALID_INTEGER.get(player);
+            return;
+        }
+
+        int durability = Integer.parseInt(args[2]);
+
+        GunshellMelee melee = GunshellPlugin.getInstance().getWeaponRegistry().getMelees().get(meleeKey);
+
+        if (args.length > 3) {
+            Player target = Bukkit.getPlayer(args[3]);
+            if (target == null) {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                return;
+            }
+
+            target.getInventory().addItem(melee.getItemStack(durability));
+            MessagesConfig.SUCCESSFULLY_ADDED_MELEE_TO_INVENTORY.get(player);
+        } else {
+            player.getInventory().addItem(melee.getItemStack(durability));
+            MessagesConfig.SUCCESSFULLY_ADDED_MELEE_TO_INVENTORY.get(player);
+        }
+    }
+
     @Override
     public List<String> tabComplete(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
@@ -190,6 +232,11 @@ public class GunshellCMD extends AbstractCommand {
         if (args.length == 2 && Stream.of("getthrowable", "getgrenade", "throwable").anyMatch(cmd -> cmd.equalsIgnoreCase(args[0]))) {
             Set<String> throwableKeys = GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().keySet();
             return getApplicableTabCompleters(args[1], throwableKeys);
+        }
+
+        if (args.length == 2 && Stream.of("getmelee", "melee").anyMatch(cmd -> cmd.equalsIgnoreCase(args[0]))) {
+            Set<String> meleeKeys = GunshellPlugin.getInstance().getWeaponRegistry().getMelees().keySet();
+            return getApplicableTabCompleters(args[1], meleeKeys);
         }
 
         return null;

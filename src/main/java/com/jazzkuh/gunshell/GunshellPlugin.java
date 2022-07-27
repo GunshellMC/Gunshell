@@ -32,6 +32,8 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityLayer compatibilityLayer;
     private @Getter @Setter HashMap<String, Long> weaponCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> grabCooldownMap = new HashMap<>();
+    private @Getter @Setter HashMap<String, Long> meleeCooldownMap = new HashMap<>();
+    private @Getter @Setter HashMap<UUID, Long> meleeGrabCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> throwableCooldownMap = new HashMap<>();
     private @Getter @Setter Set<UUID> reloadingSet = new HashSet<>();
     private @Getter @Setter(AccessLevel.PRIVATE) ErrorResult errorResult;
@@ -53,6 +55,7 @@ public final class GunshellPlugin extends JavaPlugin {
         this.weaponRegistry.registerFireables("weapons", "builtin.yml");
         this.weaponRegistry.registerAmmunition("ammunition", "builtin.yml");
         this.weaponRegistry.registerThrowables("throwables", "builtin.yml");
+        this.weaponRegistry.registerMelees("melee", "builtin.yml");
 
         DefaultConfig.init();
 
@@ -68,6 +71,7 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerSwapHandListener(), this);
         Bukkit.getPluginManager().registerEvents(new ProjectileHitListener(), this);
         Bukkit.getPluginManager().registerEvents(new ThrowablePreFireListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {

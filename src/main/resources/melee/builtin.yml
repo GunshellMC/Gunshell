@@ -1,0 +1,14 @@
+karambit:
+    name: "&9Karambit"
+    lore:
+      - '&6Officieel Minetopia Wapen.'
+      - ''
+      - '&7Durability: &f<Durability>'
+    material: GOLD_SWORD
+    nbt:
+      key: "mtcustom"
+      value: "knife1"
+    damage: 6
+    cooldown: 1
+    grabCooldown: 1
+    actionType: DAMAGE

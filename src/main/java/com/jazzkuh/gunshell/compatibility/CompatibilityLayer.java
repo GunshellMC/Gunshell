@@ -10,4 +10,5 @@ public interface CompatibilityLayer {
     String getRayTraceResult(Player player, int range);
     void showEndCreditScene(Player player);
     void showDemoMenu(Player player);
+    void sendPumpkinEffect(Player player, boolean forRemoval);
 }

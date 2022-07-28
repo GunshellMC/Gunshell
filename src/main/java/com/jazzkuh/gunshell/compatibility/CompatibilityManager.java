@@ -69,6 +69,11 @@ public class CompatibilityManager {
                 public void showDemoMenu(Player player) {
                     throw new UnsupportedOperationException("This server version is not supported by Gunshell");
                 }
+
+                @Override
+                public void sendPumpkinEffect(Player player, boolean forRemoval) {
+                    throw new UnsupportedOperationException("This server version is not supported by Gunshell");
+                }
             };
         }
     }

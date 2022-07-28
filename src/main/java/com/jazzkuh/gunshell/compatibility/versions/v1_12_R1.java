@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.compatibility.versions;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Preconditions;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
@@ -13,6 +14,7 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -74,6 +76,18 @@ public class v1_12_R1 implements CompatibilityLayer {
     public void showDemoMenu(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(5, 0f);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(gameStateChange);
+    }
+
+    @Override
+    public void sendPumpkinEffect(Player player, boolean forRemoval) {
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        org.bukkit.inventory.ItemStack itemStack = XMaterial.AIR.parseItem();
+        if (!forRemoval) {
+            itemStack = XMaterial.PUMPKIN.parseItem();
+        }
+
+        craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutSetSlot(0, 5,
+                CraftItemStack.asNMSCopy(itemStack)));
     }
 
     /**

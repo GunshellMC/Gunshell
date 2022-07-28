@@ -42,6 +42,9 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter double recoilAmount;
     private final @Getter double knockbackAmount;
     private final @Getter double selfKnockbackAmount;
+    private final @Getter boolean scopeEnabled;
+    private final @Getter boolean scopePumpkinBlurEnabled;
+    private final @Getter int scopeAmplifier;
 
     public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -69,6 +72,9 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.recoilAmount = configuration.getDouble("recoilAmount", 0.0);
         this.knockbackAmount = configuration.getDouble("knockbackAmount", 0.0);
         this.selfKnockbackAmount = configuration.getDouble("selfKnockbackAmount", 0.0);
+        this.scopeEnabled = configuration.getBoolean("scope.enabled", false);
+        this.scopePumpkinBlurEnabled = configuration.getBoolean("scope.pumpkinBlurEnabled", false);
+        this.scopeAmplifier = configuration.getInt("scope.amplifier", 8);
     }
 
     @Override

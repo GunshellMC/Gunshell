@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
+import com.jazzkuh.gunshell.api.events.FireableToggleScopeEvent;
 import com.jazzkuh.gunshell.api.events.ThrowablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
@@ -22,7 +23,6 @@ public class PlayerInteractListener implements Listener {
         Player player = event.getPlayer();
 
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
-        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 
         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) return;
         if (player.getInventory().getItemInMainHand().getItemMeta() == null) return;
@@ -35,11 +35,29 @@ public class PlayerInteractListener implements Listener {
             String weaponKey = NBTEditor.getString(itemStack, "gunshell_weapon_key");
             GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
 
-            FireablePreFireEvent fireablePreFireEvent = new FireablePreFireEvent(player, fireable);
-            if (fireablePreFireEvent.isCancelled()) return;
-            Bukkit.getPluginManager().callEvent(fireablePreFireEvent);
+            switch (event.getAction()) {
+                case LEFT_CLICK_AIR: {
+                    if (!fireable.isScopeEnabled()) return;
+                    FireableToggleScopeEvent scopeEvent = new FireableToggleScopeEvent(player, fireable);
+                    if (scopeEvent.isCancelled()) return;
+                    Bukkit.getPluginManager().callEvent(scopeEvent);
+                    break;
+                }
+                case RIGHT_CLICK_BLOCK:
+                case RIGHT_CLICK_AIR: {
+                    FireablePreFireEvent fireablePreFireEvent = new FireablePreFireEvent(player, fireable);
+                    if (fireablePreFireEvent.isCancelled()) return;
+                    Bukkit.getPluginManager().callEvent(fireablePreFireEvent);
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
         } else if (NBTEditor.contains(itemStack, "gunshell_throwable_key")) {
             event.setCancelled(true);
+
+            if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
             String throwableKey = NBTEditor.getString(itemStack, "gunshell_throwable_key");
             GunshellThrowable throwable = GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().get(throwableKey);
 

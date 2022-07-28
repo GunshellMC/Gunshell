@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell;
 
+import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
 import com.jazzkuh.gunshell.common.ErrorResult;
 import com.jazzkuh.gunshell.common.WeaponRegistry;
 import com.jazzkuh.gunshell.common.commands.GunshellCMD;
@@ -35,6 +36,7 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter HashMap<String, Long> meleeCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> meleeGrabCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> throwableCooldownMap = new HashMap<>();
+    private @Getter @Setter HashMap<UUID, PlayerTempModification> modifiedPlayerMap = new HashMap<>();
     private @Getter @Setter Set<UUID> reloadingSet = new HashSet<>();
     private @Getter @Setter(AccessLevel.PRIVATE) ErrorResult errorResult;
     private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
@@ -72,6 +74,8 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ProjectileHitListener(), this);
         Bukkit.getPluginManager().registerEvents(new ThrowablePreFireListener(), this);
         Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        Bukkit.getPluginManager().registerEvents(new FireableToggleScopeListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerRestoreModifiedListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {

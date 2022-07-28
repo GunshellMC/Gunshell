@@ -1,9 +1,12 @@
 package com.jazzkuh.gunshell.compatibility.versions;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
+import net.minecraft.network.protocol.game.PacketPlayOutSetSlot;
 import org.bukkit.FluidCollisionMode;
+import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -58,5 +61,17 @@ public class v1_18_R2 implements CompatibilityLayer {
     public void showDemoMenu(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.f, 0f);
         ((CraftPlayer) player).getHandle().b.sendPacket(gameStateChange);
+    }
+
+    @Override
+    public void sendPumpkinEffect(Player player, boolean forRemoval) {
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+        org.bukkit.inventory.ItemStack itemStack = XMaterial.AIR.parseItem();
+        if (!forRemoval) {
+            itemStack = XMaterial.PUMPKIN.parseItem();
+        }
+
+        craftPlayer.getHandle().b.sendPacket(new PacketPlayOutSetSlot(0, 0, 5,
+                CraftItemStack.asNMSCopy(itemStack)));
     }
 }

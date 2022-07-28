@@ -51,6 +51,11 @@ public class GunshellCMD extends AbstractCommand {
                     new PlaceHolder("Amount", String.valueOf(GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().size())),
                     new PlaceHolder("Type", "throwable types"));
 
+            GunshellPlugin.getInstance().getWeaponRegistry().registerMelees("melee", "builtin.yml");
+            MessagesConfig.SUCCESSFULLY_LOADED_TYPE.get(commandInvocation.getCommandSender(),
+                    new PlaceHolder("Amount", String.valueOf(GunshellPlugin.getInstance().getWeaponRegistry().getMelees().size())),
+                    new PlaceHolder("Type", "melee types"));
+
             GunshellPlugin.getMessages().reloadConfig();
             GunshellPlugin.getInstance().reloadConfig();
 

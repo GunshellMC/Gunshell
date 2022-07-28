@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
 import com.jazzkuh.gunshell.api.events.FireableFireEvent;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
@@ -22,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
 import java.util.UUID;
@@ -153,6 +155,17 @@ public class FireablePreFireListener implements Listener {
             if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
                 target.playSound(player.getLocation(), fireable.getSound(), 100, 1F);
             }
+        }
+
+        if (GunshellPlugin.getInstance().getModifiedPlayerMap().containsKey(player.getUniqueId())
+                && GunshellPlugin.getInstance().getModifiedPlayerMap().get(player.getUniqueId()) == PlayerTempModification.SCOPED) {
+            if (player.hasPotionEffect(PotionEffectType.SLOW)) {
+                player.removePotionEffect(PotionEffectType.SLOW);
+            }
+            if (fireable.isScopePumpkinBlurEnabled()) {
+                compatibilityLayer.sendPumpkinEffect(player, true);
+            }
+            GunshellPlugin.getInstance().getModifiedPlayerMap().remove(player.getUniqueId());
         }
 
         if (rayTraceResult.getOptionalBlock().isPresent()) {

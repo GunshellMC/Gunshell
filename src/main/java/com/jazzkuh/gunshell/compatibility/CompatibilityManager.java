@@ -2,6 +2,8 @@ package com.jazzkuh.gunshell.compatibility;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
+import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.external.abstraction.ExtensionImpl;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
@@ -11,11 +13,45 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 public class CompatibilityManager {
     private static final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName();
     public static final @Getter String version = bukkitVersion.substring(bukkitVersion.lastIndexOf('.') + 1);
+    private @Getter HashMap<Extension, ExtensionImpl> extensions = new HashMap<>();
+
+    public WorldGuardExtension getWorldGuardExtension() {
+        return new WorldGuardExtension();
+    }
+
+    public boolean isExtensionEnabled(Extension extension) {
+        return extensions.containsKey(extension);
+    }
+
+    public void registerExtensions() {
+        if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
+            extensions.put(Extension.WORLDGUARD, getWorldGuardExtension());
+        }
+    }
+
+    public void enableExtensions() {
+        for (ExtensionImpl extension : extensions.values()) {
+            extension.onEnable();
+        }
+    }
+
+    public void loadExtensions() {
+        for (ExtensionImpl extension : extensions.values()) {
+            extension.onLoad();
+        }
+    }
+
+    public void disableExtensions() {
+        for (ExtensionImpl extension : extensions.values()) {
+            extension.onDisable();
+        }
+    }
 
     public CompatibilityLayer getCompatibilityLayer() {
         try {
@@ -76,5 +112,9 @@ public class CompatibilityManager {
                 }
             };
         }
+    }
+
+    public enum Extension {
+        WORLDGUARD
     }
 }

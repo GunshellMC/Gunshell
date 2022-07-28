@@ -1,11 +1,14 @@
 package com.jazzkuh.gunshell.common.actions.ammunition;
 
+import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AbstractAmmunitionAction;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
+import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
+import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -15,6 +18,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.codemc.worldguardwrapper.flag.WrappedState;
 
 public class DamageAction extends AbstractAmmunitionAction {
     public DamageAction(GunshellFireable fireable, GunshellAmmunition ammunition) {
@@ -29,6 +33,11 @@ public class DamageAction extends AbstractAmmunitionAction {
         if (livingEntity.hasMetadata("NPC")) return;
 
         if (!this.isInMinimumRange(livingEntity, player, getFireable())) return;
+
+        CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
+        if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
+                && compatibilityManager.getWorldGuardExtension().isFlagState(player, livingEntity.getLocation(),
+                WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
 
         if (livingEntity instanceof Player) {
             Player playerTarget = (Player) livingEntity;

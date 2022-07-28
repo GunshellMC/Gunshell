@@ -91,7 +91,8 @@ public class GunshellFireable implements GunshellWeaponImpl {
                 .setNBT("gunshell_weapon_ammo", this.getMaxAmmo())
                 .setNBT("gunshell_weapon_durability", durability)
                 .setNBT("gunshell_weapon_ammotype", this.getAmmunitionKeys().get(0))
-                .setAttackSpeed(attackSpeed);
+                .setAttackSpeed(attackSpeed)
+                .makeUnbreakable(true);
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);

@@ -4,6 +4,8 @@ import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
+import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
+import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -12,6 +14,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.codemc.worldguardwrapper.flag.WrappedState;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -32,6 +35,11 @@ public class DemoMenuThrowableAction extends AbstractThrowableAction {
         ArrayList<Block> blocks = this.getBlocksAroundCenter(location, getThrowable().getRange());
 
         for (LivingEntity livingEntity : livingEntities) {
+            CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
+            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
+                    && compatibilityManager.getWorldGuardExtension().isFlagState(player, livingEntity.getLocation(),
+                    WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
+
             if (livingEntity instanceof Player) {
                 Player playerTarget = (Player) livingEntity;
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR

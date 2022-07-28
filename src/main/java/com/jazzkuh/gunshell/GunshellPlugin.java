@@ -30,6 +30,7 @@ public final class GunshellPlugin extends JavaPlugin {
     private static @Getter ConfigurationFile messages;
     private @Getter @Setter(AccessLevel.PRIVATE) EffectManager effectManager;
     private @Getter @Setter(AccessLevel.PRIVATE) WeaponRegistry weaponRegistry;
+    private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityManager compatibilityManager;
     private @Getter @Setter(AccessLevel.PRIVATE) CompatibilityLayer compatibilityLayer;
     private @Getter @Setter HashMap<String, Long> weaponCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, Long> grabCooldownMap = new HashMap<>();
@@ -42,11 +43,20 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
 
     @Override
+    public void onLoad() {
+        setCompatibilityManager(new CompatibilityManager());
+        this.getCompatibilityManager().registerExtensions();
+        this.getCompatibilityManager().loadExtensions();
+    }
+
+    @Override
     public void onEnable() {
         setInstance(this);
         setEffectManager(new EffectManager(this));
-        setCompatibilityLayer(new CompatibilityManager().getCompatibilityLayer());
+        setCompatibilityLayer(this.getCompatibilityManager().getCompatibilityLayer());
         new PluginUtils();
+
+        this.getCompatibilityManager().enableExtensions();
 
         setErrorResult(PluginUtils.getInstance().getErrorResult(this.getServer().getPort()));
         this.getErrorResult().checkStatus(this, false);
@@ -91,6 +101,7 @@ public final class GunshellPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.getCompatibilityManager().disableExtensions();
         for (ArmorStand armorStand : this.activeThrowables.keySet()) {
             Bukkit.getScheduler().cancelTask(this.activeThrowables.get(armorStand));
             armorStand.remove();

@@ -6,6 +6,9 @@ import com.jazzkuh.gunshell.api.events.FireableToggleScopeEvent;
 import com.jazzkuh.gunshell.api.events.ThrowablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
+import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
+import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +19,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.codemc.worldguardwrapper.flag.WrappedState;
 
 public class PlayerInteractListener implements Listener {
     @EventHandler
@@ -30,6 +34,7 @@ public class PlayerInteractListener implements Listener {
 
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
+        CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
         if (NBTEditor.contains(itemStack, "gunshell_weapon_key")) {
             event.setCancelled(true);
             String weaponKey = NBTEditor.getString(itemStack, "gunshell_weapon_key");
@@ -46,6 +51,15 @@ public class PlayerInteractListener implements Listener {
                 case RIGHT_CLICK_BLOCK:
                 case RIGHT_CLICK_AIR: {
                     FireablePreFireEvent fireablePreFireEvent = new FireablePreFireEvent(player, fireable);
+
+                    if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
+                            && compatibilityManager.getWorldGuardExtension().isFlagState(player, player.getLocation(),
+                            WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
+                        fireablePreFireEvent.setCancelled(true);
+                        MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);
+                        return;
+                    }
+
                     if (fireablePreFireEvent.isCancelled()) return;
                     Bukkit.getPluginManager().callEvent(fireablePreFireEvent);
                     break;
@@ -62,6 +76,15 @@ public class PlayerInteractListener implements Listener {
             GunshellThrowable throwable = GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().get(throwableKey);
 
             ThrowablePreFireEvent throwablePreFireEvent = new ThrowablePreFireEvent(player, throwable);
+
+            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
+                    && compatibilityManager.getWorldGuardExtension().isFlagState(player, player.getLocation(),
+                    WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
+                throwablePreFireEvent.setCancelled(true);
+                MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);
+                return;
+            }
+
             if (throwablePreFireEvent.isCancelled()) return;
             Bukkit.getPluginManager().callEvent(throwablePreFireEvent);
         }

@@ -17,6 +17,7 @@ public enum MessagesConfig {
     ERROR_PLAYER_NOT_FOUND("error.player-not-found", "&cThe given player could not be found."),
     ERROR_AMMUNITION_NOT_FOUND("error.ammunition-not-found", "&cAmmunition not found for key: <Key>"),
     ERROR_OUT_OF_AMMO("error.out-of-ammo", "&cJe geweer is leeg!"),
+    ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE("error.cannot-use-gunshell-weapons-here", "&cJe kunt hier geen Gunshell wapens gebruiken!"),
     ERROR_WHILST_LOADING_CONFIGURATION("error.loading-configuration", "&cEr is iets mis gegaan met het herladen van de configuration files: <Error>"),
     SUCCESSFULLY_ADDED_TO_INVENTORY("common.success.added-to-inventory", "&aJe hebt je geweer toegevoegd aan je inventory."),
     SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY("common.success.added-ammo-to-inventory", "&aJe hebt je ammo toegevoegd aan je inventory."),

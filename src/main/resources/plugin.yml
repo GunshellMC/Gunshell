@@ -2,7 +2,8 @@ name: Gunshell
 version: '${project.version}'
 main: com.jazzkuh.gunshell.GunshellPlugin
 api-version: 1.13
-authors: [ Jazzkuh ]
+authors: [Jazzkuh]
+softdepend: [WorldGuard]
 commands:
   gunshell:
     aliases: [gs, gun, weapons, weapon, mtwapens, mtwapen]

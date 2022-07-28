@@ -49,13 +49,16 @@ private final @Getter double grabCooldown;
         this.actionType = configuration.getString("actionType", BuiltinMeleeActionType.DAMAGE.toString()).toUpperCase();
     }
     public ItemBuilder getItem(int durability) {
+        double attackSpeed = -4 + 1 / this.getGrabCooldown();
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
                 .setLore(ChatUtils.color(lore,
                         new PlaceHolder("Damage", String.valueOf(this.getDamage())),
                         new PlaceHolder("Durability", String.valueOf(durability))))
                 .setNBT("gunshell_melee_key", key)
-                .setNBT("gunshell_melee_durability", durability);
+                .setNBT("gunshell_melee_durability", durability)
+                .setAttackSpeed(attackSpeed)
+                .makeUnbreakable(true);
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);

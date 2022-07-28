@@ -53,7 +53,8 @@ public class GunshellAmmunition {
                 .setLore(ChatUtils.color(lore,
                         new PlaceHolder("Ammo", String.valueOf(ammo))))
                 .setNBT("gunshell_ammunition_key", key)
-                .setNBT("gunshell_ammunition_ammo", ammo);
+                .setNBT("gunshell_ammunition_ammo", ammo)
+                .makeUnbreakable(true);
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);

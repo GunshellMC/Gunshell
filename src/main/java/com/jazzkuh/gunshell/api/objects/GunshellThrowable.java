@@ -56,7 +56,8 @@ public class GunshellThrowable {
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
                 .setLore(ChatUtils.color(lore))
-                .setNBT("gunshell_throwable_key", key);
+                .setNBT("gunshell_throwable_key", key)
+                .makeUnbreakable(true);
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);

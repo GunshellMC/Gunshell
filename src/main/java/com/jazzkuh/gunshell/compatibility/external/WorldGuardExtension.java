@@ -56,8 +56,7 @@ public class WorldGuardExtension implements ExtensionImpl {
         if (flag.isEmpty() || regions.size() == 0) return false;
 
         WrappedState state = flag.map(mappedFlag -> wrapper.queryFlag(player, location, mappedFlag)
-                        .orElse(WrappedState.ALLOW))
-                .orElse(WrappedState.ALLOW);
+                        .orElse(WrappedState.ALLOW)).orElse(WrappedState.ALLOW);
         return state == flagState;
     }
 

@@ -8,7 +8,7 @@ import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AbstractAmmuni
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;

@@ -2,8 +2,8 @@ package com.jazzkuh.gunshell.compatibility;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
-import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
-import com.jazzkuh.gunshell.compatibility.external.abstraction.ExtensionImpl;
+import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.abstraction.ExtensionImpl;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;

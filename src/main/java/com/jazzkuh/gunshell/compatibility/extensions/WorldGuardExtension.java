@@ -1,7 +1,7 @@
-package com.jazzkuh.gunshell.compatibility.external;
+package com.jazzkuh.gunshell.compatibility.extensions;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
-import com.jazzkuh.gunshell.compatibility.external.abstraction.ExtensionImpl;
+import com.jazzkuh.gunshell.compatibility.extensions.abstraction.ExtensionImpl;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

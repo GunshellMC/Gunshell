@@ -1,4 +1,4 @@
-package com.jazzkuh.gunshell.compatibility.external.abstraction;
+package com.jazzkuh.gunshell.compatibility.extensions.abstraction;
 
 public interface ExtensionImpl {
     void onEnable();

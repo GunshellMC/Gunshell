@@ -5,7 +5,7 @@ import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;

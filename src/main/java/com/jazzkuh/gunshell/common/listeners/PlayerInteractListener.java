@@ -8,7 +8,7 @@ import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

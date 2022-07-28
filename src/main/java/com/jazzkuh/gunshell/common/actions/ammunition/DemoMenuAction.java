@@ -9,7 +9,7 @@ import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.external.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;

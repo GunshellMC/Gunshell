@@ -7,8 +7,8 @@ import org.bukkit.Location;
 import java.util.List;
 
 public enum DefaultConfig {
-    CONFIG_VERSION("config_version", "1.0"),
-    PER_WEAPON_COOLDOWN("per_weapon_cooldown", true);
+    CONFIG_VERSION("config-version", "1.0"),
+    PER_WEAPON_COOLDOWN("per-weapon-cooldown", true);
 
     private final @Getter String path;
     private final @Getter Object value;

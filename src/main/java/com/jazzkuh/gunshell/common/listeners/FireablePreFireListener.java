@@ -40,12 +40,6 @@ public class FireablePreFireListener implements Listener {
         GunshellFireable fireable = event.getFireable();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (player.hasMetadata("vanished")) {
-            event.setCancelled(true);
-            MessagesConfig.ERROR_CANNOT_SHOOT_WHILST_VANISHED.get(player);
-            return;
-        }
-
         String cooldownKey = DefaultConfig.PER_WEAPON_COOLDOWN.asBoolean() ?
                 player.getUniqueId() + "_" + player.getInventory().getHeldItemSlot() :
                 player.getUniqueId() + "_global";

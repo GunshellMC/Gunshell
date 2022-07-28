@@ -26,7 +26,6 @@ public class DamageAction extends AbstractAmmunitionAction {
         if (rayTraceResult.getOptionalLivingEntity().isEmpty()) return;
         LivingEntity livingEntity = rayTraceResult.getOptionalLivingEntity().get();
         if (livingEntity.isDead()) return;
-        if (livingEntity.hasMetadata("vanished")) return;
         if (livingEntity.hasMetadata("NPC")) return;
 
         if (!this.isInMinimumRange(livingEntity, player, getFireable())) return;

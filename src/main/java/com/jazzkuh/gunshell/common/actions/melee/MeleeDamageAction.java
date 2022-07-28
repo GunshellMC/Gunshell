@@ -19,7 +19,6 @@ public class MeleeDamageAction extends AbstractMeleeAction {
     @Override
     public void fireAction(LivingEntity entity, Player player, ConfigurationSection configuration) {
         if (entity.isDead()) return;
-        if (entity.hasMetadata("vanished")) return;
         if (entity.hasMetadata("NPC")) return;
 
         if (entity instanceof Player) {

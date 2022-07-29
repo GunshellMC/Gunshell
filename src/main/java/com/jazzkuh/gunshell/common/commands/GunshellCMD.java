@@ -12,7 +12,9 @@ import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.command.AbstractCommand;
 import com.jazzkuh.gunshell.utils.command.CommandInvocation;
 import com.jazzkuh.gunshell.utils.command.Subcommand;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -26,8 +28,21 @@ public class GunshellCMD extends AbstractCommand {
 
     @Override
     public void execute(CommandInvocation commandInvocation) {
-        if (!hasPermission(getBasePermission(), commandInvocation.getCommandSender())) return;
+        CommandSender commandSender = commandInvocation.getCommandSender();
+        if (!hasPermission(getBasePermission(), commandInvocation.getCommandSender())) {
+            this.sendDefaultMessage(commandSender);
+            return;
+        }
         sendNotEnoughArguments(commandInvocation);
+    }
+
+    private void sendDefaultMessage(CommandSender sender) {
+        ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");
+        ChatUtils.sendMessage(sender, "&8| &aThis server is using Gunshell &2v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&a.");
+        ChatUtils.sendMessage(sender, "&8| &2Description: &a" + GunshellPlugin.getInstance().getDescription().getDescription());
+        ChatUtils.sendMessage(sender, "&8| &2Download: &a" + GunshellPlugin.getInstance().getDescription().getWebsite());
+        ChatUtils.sendMessage(sender, "&8| &2Authors: &a" + StringUtils.join(GunshellPlugin.getInstance().getDescription().getAuthors(), ", "));
+        ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");
     }
 
     @Subcommand(name = "reloadconfig", aliases = "rel|reload",

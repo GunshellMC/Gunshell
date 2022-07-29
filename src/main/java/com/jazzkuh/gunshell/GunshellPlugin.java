@@ -75,7 +75,7 @@ public final class GunshellPlugin extends JavaPlugin {
         MessagesConfig.init();
         messages.saveConfig();
 
-        new GunshellCMD().register(this, true);
+        new GunshellCMD().register(this);
 
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new FireablePreFireListener(), this);
@@ -86,6 +86,7 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         Bukkit.getPluginManager().registerEvents(new FireableToggleScopeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerRestoreModifiedListener(), this);
+        Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {

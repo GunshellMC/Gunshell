@@ -105,12 +105,21 @@ public class PluginUtils {
         return new ErrorResult(revokedAccess, devFeatures);
     }
 
+    public String getServerAddress() {
+        JsonObject jsonObject = getJSON("https://dash.mtwapens.nl/api/check-address", "GET");
+        if (jsonObject == null) {
+            return "API Error";
+        }
+
+        return jsonObject.get("address").getAsString();
+    }
+
     private JsonObject getJSON(String url, String method) {
         try {
             HttpURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
             connection.setConnectTimeout(5000);
             connection.setRequestMethod(method);
-            connection.setRequestProperty("User-Agent", "MTWAPENS");
+            connection.setRequestProperty("User-Agent", "Gunshell-Agent");
             connection.setRequestProperty("Version", GunshellPlugin.getInstance().getDescription().getVersion());
             connection.connect();
 

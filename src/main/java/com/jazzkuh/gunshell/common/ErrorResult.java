@@ -24,8 +24,7 @@ public class ErrorResult {
 
     public void checkStatus(GunshellPlugin plugin, boolean broadcast) {
         if (this.isDisabled()) {
-            Bukkit.getLogger().severe(plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " is geblacklist van deze server omdat de desbetreffende server zich niet heeft gehouden aan de terms of service die staan aangegeven op de spigot pagina.");
-            Bukkit.getLogger().severe("Voor meer informatie neem contact op met een van de authors van deze plugin " + StringUtils.join(plugin.getDescription().getAuthors(), ", ") + ".");
+            Bukkit.getLogger().severe(plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " has been blacklisted from this server. Please contact one of the authors for more information.");
 
             if (broadcast) {
                 for (int i = 0; i <= 20; i++) {
@@ -33,7 +32,7 @@ public class ErrorResult {
                 }
                 ChatUtils.sendBroadcast("&4&l" + plugin.getDescription().getName().toUpperCase() + " BLACKLIST");
                 ChatUtils.sendBroadcast(ChatColor.RESET.toString());
-                ChatUtils.sendBroadcast(plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " is geblacklist van deze server omdat de desbetreffende server zich niet heeft gehouden aan de terms of service die staan aangegeven op de spigot pagina.");
+                ChatUtils.sendBroadcast("&7" + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " is geblacklist van deze server omdat de desbetreffende server zich niet heeft gehouden aan de terms of service die staan aangegeven op de spigot pagina.");
                 ChatUtils.sendBroadcast(ChatColor.RESET.toString());
                 ChatUtils.sendBroadcast("&7&oVoor meer informatie neem contact op met een van de authors van deze plugin " + StringUtils.join(plugin.getDescription().getAuthors(), ", ") + ".");
                 ChatUtils.sendBroadcast(ChatColor.RESET.toString());

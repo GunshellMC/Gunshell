@@ -28,9 +28,8 @@ public class GunshellCMD extends AbstractCommand {
 
     @Override
     public void execute(CommandInvocation commandInvocation) {
-        CommandSender commandSender = commandInvocation.getCommandSender();
         if (!hasPermission(getBasePermission(), commandInvocation.getCommandSender())) {
-            this.sendDefaultMessage(commandSender);
+            this.onInfo(commandInvocation);
             return;
         }
         sendNotEnoughArguments(commandInvocation);
@@ -45,11 +44,14 @@ public class GunshellCMD extends AbstractCommand {
         ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");
     }
 
-    @Subcommand(name = "reloadconfig", aliases = "rel|reload",
-            description = "Reload the plugins configuration files.")
-    public void onReloadConfig(CommandInvocation commandInvocation) {
-        if (!hasPermission(getBasePermission(), commandInvocation.getCommandSender())) return;
+    @Subcommand(name = "info", description = "Shows information about the plugin.")
+    public void onInfo(CommandInvocation commandInvocation) {
+        this.sendDefaultMessage(commandInvocation.getCommandSender());
+    }
 
+    @Subcommand(name = "reloadconfig", aliases = "rel|reload",
+            description = "Reload the plugins configuration files.", permission = true)
+    public void onReloadConfig(CommandInvocation commandInvocation) {
         try {
             GunshellPlugin.getInstance().getWeaponRegistry().registerFireables("weapons", "builtin.yml");
             MessagesConfig.SUCCESSFULLY_LOADED_TYPE.get(commandInvocation.getCommandSender(),

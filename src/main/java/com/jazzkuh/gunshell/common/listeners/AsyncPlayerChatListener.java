@@ -1,5 +1,7 @@
 package com.jazzkuh.gunshell.common.listeners;
 
+import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.common.ErrorResult;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -30,6 +32,12 @@ public class AsyncPlayerChatListener implements Listener {
             TextComponent component = new TextComponent(ChatUtils.color("&aServer Address: " + serverAddress + ":" + Bukkit.getServer().getPort()));
             component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, serverAddress + ":" + Bukkit.getServer().getPort()));
             player.spigot().sendMessage(component);
+
+            ErrorResult errorResult = PluginUtils.getInstance().getErrorResult(Bukkit.getServer().getPort());
+            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> {
+                errorResult.checkStatus(GunshellPlugin.getInstance(), true);
+                errorResult.checkDevelopmentalFeatures();
+            });
         }
     }
 }

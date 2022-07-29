@@ -34,7 +34,7 @@ public class ErrorResult {
                 ChatUtils.sendBroadcast(ChatColor.RESET.toString());
                 ChatUtils.sendBroadcast("&7" + plugin.getDescription().getName() + " v" + plugin.getDescription().getVersion() + " is geblacklist van deze server omdat de desbetreffende server zich niet heeft gehouden aan de terms of service die staan aangegeven op de spigot pagina.");
                 ChatUtils.sendBroadcast(ChatColor.RESET.toString());
-                ChatUtils.sendBroadcast("&7&oVoor meer informatie neem contact op met een van de authors van deze plugin " + StringUtils.join(plugin.getDescription().getAuthors(), ", ") + ".");
+                ChatUtils.sendBroadcast("&7&oVoor meer informatie neem contact op met een van de authors van deze plugin: " + StringUtils.join(plugin.getDescription().getAuthors(), ", ") + ".");
                 ChatUtils.sendBroadcast(ChatColor.RESET.toString());
             }
             plugin.getPluginLoader().disablePlugin(plugin);

@@ -14,6 +14,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -39,6 +40,8 @@ public class ThrowablePreFireListener implements Listener {
         armorStand.setVelocity(player.getEyeLocation().getDirection().multiply(1.3D));
         armorStand.setVisible(false);
         armorStand.setSmall(true);
+        armorStand.setInvulnerable(true);
+        armorStand.addEquipmentLock(EquipmentSlot.HEAD, ArmorStand.LockType.REMOVING_OR_CHANGING);
         armorStand.getEquipment().setHelmet(
                 throwable.getItemStack());
 

@@ -16,6 +16,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,6 +41,7 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter HashMap<UUID, Long> throwableCooldownMap = new HashMap<>();
     private @Getter @Setter HashMap<UUID, PlayerTempModification> modifiedPlayerMap = new HashMap<>();
     private @Getter @Setter Set<UUID> reloadingSet = new HashSet<>();
+    private @Getter @Setter Set<Block> undoList = new HashSet<>();
     private @Getter @Setter(AccessLevel.PRIVATE) ErrorResult errorResult;
     private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
 
@@ -87,6 +90,7 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new FireableToggleScopeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerRestoreModifiedListener(), this);
         Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerArmorStandManipulateListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
@@ -106,6 +110,10 @@ public final class GunshellPlugin extends JavaPlugin {
         for (ArmorStand armorStand : this.activeThrowables.keySet()) {
             Bukkit.getScheduler().cancelTask(this.activeThrowables.get(armorStand));
             armorStand.remove();
+        }
+
+        for (Block block : this.undoList) {
+            block.setType(Material.AIR);
         }
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been disabled!");

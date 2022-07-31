@@ -8,7 +8,8 @@ import java.util.List;
 
 public enum DefaultConfig {
     CONFIG_VERSION("config-version", "1.0"),
-    PER_WEAPON_COOLDOWN("per-weapon-cooldown", true);
+    PER_WEAPON_COOLDOWN("per-weapon-cooldown", true),
+    HITBOX_INCREASE("hitbox-increase", 0.2);
 
     private final @Getter String path;
     private final @Getter Object value;
@@ -28,6 +29,10 @@ public enum DefaultConfig {
 
     public Boolean asBoolean() {
         return GunshellPlugin.getInstance().getConfig().getBoolean(this.getPath());
+    }
+
+    public Double asDouble() {
+        return GunshellPlugin.getInstance().getConfig().getDouble(this.getPath());
     }
 
     public Location asLocation() {

@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.compatibility.versions;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
+import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import net.minecraft.network.protocol.game.PacketPlayOutSetSlot;
@@ -20,7 +21,7 @@ public class v1_18_R2 implements CompatibilityLayer {
     @Override
     public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
         RayTraceResult result = player.getWorld()
-                .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, 0.2, entity ->
+                .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), entity ->
                         entity != player);
         if (result == null) {
             return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
@@ -47,7 +48,7 @@ public class v1_18_R2 implements CompatibilityLayer {
     @Override
     public String getRayTraceResult(Player player, int range) {
         RayTraceResult result = player.getWorld()
-                .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, 0.2, null);
+                .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), null);
         return result != null ? result.toString() : "No result found";
     }
 

@@ -12,6 +12,34 @@ grenade:
     cooldown: 5
     knockbackAmount: 0.5
     actionType: EXPLOSIVE
+molotov:
+    name: "&cMolotov"
+    lore:
+        - '&6Officieel Minetopia Wapen'
+    material: IRON_INGOT
+    nbt:
+        key: "mtcustom"
+        value: "grenade_1"
+    fuseTime: 2
+    cooldown: 5
+    actionType: MOLOTOV
+    options:
+        duration: 3
+flashbang:
+    name: "&9Flashbang"
+    lore:
+        - '&6Officieel Minetopia Wapen'
+    material: IRON_INGOT
+    nbt:
+        key: "mtcustom"
+        value: "grenade_4"
+    range: 4
+    fuseTime: 2
+    cooldown: 5
+    actionType: FLASHBANG
+    options:
+        duration: 10
+        amplifier: 1
 
 dev_credit:
     name: "&5Dev Credit"

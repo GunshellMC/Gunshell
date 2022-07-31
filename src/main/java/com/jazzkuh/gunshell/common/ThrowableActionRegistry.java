@@ -3,6 +3,8 @@ package com.jazzkuh.gunshell.common;
 import com.jazzkuh.gunshell.api.enums.BuiltinThrowableActionType;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.ExplosiveThrowableAction;
+import com.jazzkuh.gunshell.common.actions.throwable.FlashbangThrowableAction;
+import com.jazzkuh.gunshell.common.actions.throwable.MolotovThrowableAction;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 
 import java.util.HashMap;
@@ -13,6 +15,8 @@ public class ThrowableActionRegistry {
 
     static {
         actions.put(BuiltinThrowableActionType.EXPLOSIVE.toString(), ExplosiveThrowableAction.class);
+        actions.put(BuiltinThrowableActionType.FLASHBANG.toString(), FlashbangThrowableAction.class);
+        actions.put(BuiltinThrowableActionType.MOLOTOV.toString(), MolotovThrowableAction.class);
     }
 
     public static void registerAction(String actionType, Class<? extends AbstractThrowableAction> actionClass) {

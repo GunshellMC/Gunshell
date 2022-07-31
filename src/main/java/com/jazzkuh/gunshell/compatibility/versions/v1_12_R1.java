@@ -3,6 +3,7 @@ package com.jazzkuh.gunshell.compatibility.versions;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.base.Preconditions;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
+import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.server.v1_12_R1.*;
 import org.apache.commons.lang.Validate;
@@ -34,7 +35,7 @@ public class v1_12_R1 implements CompatibilityLayer {
         Location start = player.getEyeLocation();
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
-        RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, 0.2, null);
+        RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), null);
         if (result == null) {
             return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
         }
@@ -62,7 +63,7 @@ public class v1_12_R1 implements CompatibilityLayer {
         Location start = player.getEyeLocation();
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
-        RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, 0.2, null);
+        RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), null);
         return result != null ? result.toString() : "No result found";
     }
 

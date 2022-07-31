@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,11 +38,11 @@ public class ThrowablePreFireListener implements Listener {
         }
 
         ArmorStand armorStand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+        armorStand.setMetadata("gunshell_throwable_armorstand", new FixedMetadataValue(GunshellPlugin.getInstance(), true));
         armorStand.setVelocity(player.getEyeLocation().getDirection().multiply(1.3D));
         armorStand.setVisible(false);
         armorStand.setSmall(true);
         armorStand.setInvulnerable(true);
-        armorStand.addEquipmentLock(EquipmentSlot.HEAD, ArmorStand.LockType.REMOVING_OR_CHANGING);
         armorStand.getEquipment().setHelmet(
                 throwable.getItemStack());
 

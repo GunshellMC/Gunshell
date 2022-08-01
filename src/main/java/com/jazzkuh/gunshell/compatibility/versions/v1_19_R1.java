@@ -25,7 +25,6 @@ public class v1_19_R1 implements CompatibilityLayer {
         RayTraceResult result = player.getWorld()
                 .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), entity ->
                         entity != player);
-        Bukkit.broadcastMessage(result == null ? "null" : result.toString());
         if (result == null) {
             return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
         }

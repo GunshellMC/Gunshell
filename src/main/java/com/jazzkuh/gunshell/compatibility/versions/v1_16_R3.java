@@ -7,6 +7,7 @@ import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.server.v1_16_R3.PacketPlayOutSetSlot;
 import net.minecraft.server.v1_16_R3.PacketPlayOutGameStateChange;
 import org.bukkit.FluidCollisionMode;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
@@ -74,5 +75,10 @@ public class v1_16_R3 implements CompatibilityLayer {
 
         craftPlayer.getHandle().playerConnection.sendPacket(new PacketPlayOutSetSlot(0, 5,
                 CraftItemStack.asNMSCopy(itemStack)));
+    }
+
+    @Override
+    public boolean isPassable(Block block) {
+        return block.isPassable();
     }
 }

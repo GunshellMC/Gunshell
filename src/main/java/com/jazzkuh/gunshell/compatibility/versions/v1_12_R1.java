@@ -416,4 +416,9 @@ public class v1_12_R1 implements CompatibilityLayer {
         }
     }
     // End backport from 1.13.2
+
+    @Override
+    public boolean isPassable(Block block) {
+        return block.isEmpty();
+    }
 }

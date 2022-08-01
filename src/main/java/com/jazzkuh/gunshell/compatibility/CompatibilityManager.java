@@ -7,6 +7,7 @@ import com.jazzkuh.gunshell.compatibility.extensions.abstraction.ExtensionImpl;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -109,6 +110,11 @@ public class CompatibilityManager {
                 @Override
                 public void sendPumpkinEffect(Player player, boolean forRemoval) {
                     throw new UnsupportedOperationException("This server version is not supported by Gunshell");
+                }
+
+                @Override
+                public boolean isPassable(Block block) {
+                    return block.isEmpty();
                 }
             };
         }

@@ -6,7 +6,9 @@ import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import net.minecraft.network.protocol.game.PacketPlayOutSetSlot;
+import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
@@ -74,5 +76,10 @@ public class v1_19_R1 implements CompatibilityLayer {
 
         craftPlayer.getHandle().b.sendPacket(new PacketPlayOutSetSlot(0, 0, 5,
                 CraftItemStack.asNMSCopy(itemStack)));
+    }
+
+    @Override
+    public boolean isPassable(Block block) {
+        return block.isPassable();
     }
 }

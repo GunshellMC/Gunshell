@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.compatibility;
 
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -11,4 +12,5 @@ public interface CompatibilityLayer {
     void showEndCreditScene(Player player);
     void showDemoMenu(Player player);
     void sendPumpkinEffect(Player player, boolean forRemoval);
+    boolean isPassable(Block block);
 }

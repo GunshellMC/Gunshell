@@ -22,7 +22,7 @@ public class PlayerArmorStandManipulateListener implements Listener {
     @EventHandler
     public void onPlayerArmorStandManipulate(PlayerArmorStandManipulateEvent event) {
         ArmorStand armorStand = event.getRightClicked();
-        if (armorStand.hasMetadata("gunshell_trowable_armorstand")) {
+        if (armorStand.hasMetadata("gunshell_throwable_armorstand")) {
             event.setCancelled(true);
         }
     }

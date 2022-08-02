@@ -46,7 +46,8 @@ public class MolotovThrowableAction extends AbstractThrowableAction {
         CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
         Set<Block> tempUndoList = new HashSet<>();
         for (Block block : blocks) {
-            if (compatibilityManager.getWorldGuardExtension().isFlagState(player, block.getLocation(), WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.ALLOW)) continue;
+            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD) &&
+                    compatibilityManager.getWorldGuardExtension().isFlagState(player, block.getLocation(), WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) continue;
 
             if (block.getType() == Material.AIR) {
                 GunshellPlugin.getInstance().getUndoList().add(block);

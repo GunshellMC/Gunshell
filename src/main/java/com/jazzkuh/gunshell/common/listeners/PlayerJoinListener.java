@@ -3,6 +3,7 @@ package com.jazzkuh.gunshell.common.listeners;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.common.ErrorResult;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -31,7 +32,8 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (DefaultConfig.ENABLE_DEVELOPER_JOIN_MESSAGE.asBoolean() && GunshellPlugin.getInstance().getDescription().getAuthors().contains(player.getName())) {
-            ChatUtils.sendBroadcast("&2&k!!&aGunshell Developer &2" + player.getName() + "&a heeft de server betreden!&2&k!!");
+            ChatUtils.sendBroadcast(MessagesConfig.DEVELOPER_JOIN_MESSAGE.get()
+                    .replace("<Player>", player.getName()));
             for (Player permittedPlayer : Bukkit.getOnlinePlayers()) {
                 if (!permittedPlayer.hasPermission("gunshell.commands.gunshell")) continue;
                 ChatUtils.sendMessage(permittedPlayer, "&c&lAdmin Notice: &7Je kunt dit bericht uitschakelen in de config.yml");

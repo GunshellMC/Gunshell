@@ -34,7 +34,7 @@ public class PlayerJoinListener implements Listener {
             ChatUtils.sendBroadcast("&2&k!!&aGunshell Developer &2" + player.getName() + "&a heeft de server betreden!&2&k!!");
             for (Player permittedPlayer : Bukkit.getOnlinePlayers()) {
                 if (!permittedPlayer.hasPermission("gunshell.commands.gunshell")) continue;
-                ChatUtils.sendMessage(permittedPlayer, "&7&oJe kunt dit bericht uitschakelen in de config.yml");
+                ChatUtils.sendMessage(permittedPlayer, "&c&lAdmin Notice: &7Je kunt dit bericht uitschakelen in de config.yml");
             }
         }
     }

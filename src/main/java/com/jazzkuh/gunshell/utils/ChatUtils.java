@@ -16,7 +16,7 @@ public class ChatUtils {
     public static String color(String message) {
         if (!CompatibilityManager.getVersion().equals("v1_12_R1")) {
             Matcher matcher = hexPattern.matcher(message);
-            StringBuffer stringBuilder = new StringBuffer();
+            StringBuilder stringBuilder = new StringBuilder();
 
             while (matcher.find()) {
                 matcher.appendReplacement(stringBuilder, net.md_5.bungee.api.ChatColor.of("#" + matcher.group(1)).toString());

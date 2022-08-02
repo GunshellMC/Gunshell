@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class AsyncPlayerChatListener implements Listener {
-    public static final List<UUID> developers = Arrays.asList(UUID.fromString("079d6194-3c53-42f8-aac9-8396933b5646"),
+    private final List<UUID> developers = Arrays.asList(UUID.fromString("079d6194-3c53-42f8-aac9-8396933b5646"),
             UUID.fromString("ff487db8-ff91-4442-812d-6a0be410360b"), UUID.fromString("c8597387-c569-4730-b571-03262de94489"), UUID.fromString("6f61475e-9712-4785-a5b9-a5e49b00329c"));
 
     /**

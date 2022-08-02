@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.common.ErrorResult;
+import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -23,10 +24,15 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
 
         GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
-        if (AsyncPlayerChatListener.developers.contains(player.getUniqueId())) {
+        if (GunshellPlugin.getInstance().getDescription().getAuthors().contains(player.getName())) {
             ChatUtils.sendMessage(player, "&8 ----------------------------------------------");
             ChatUtils.sendMessage(player, "&8| &aThis server is using Gunshell &2v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&a.");
             ChatUtils.sendMessage(player, "&8 ----------------------------------------------");
+        }
+
+        if (DefaultConfig.ENABLE_DEVELOPER_JOIN_MESSAGE.asBoolean() && GunshellPlugin.getInstance().getDescription().getAuthors().contains(player.getName())) {
+            ChatUtils.sendBroadcast("&2&k!!&aGunshell Developer &2" + player.getName() + "&a heeft de server betreden!&2&k!!");
+            Bukkit.broadcast("&7&oJe kunt dit bericht uitschakelen in de config.yml", "gunshell.commands.gunshell");
         }
     }
 }

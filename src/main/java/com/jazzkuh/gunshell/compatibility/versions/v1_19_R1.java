@@ -6,7 +6,6 @@ import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import net.minecraft.network.protocol.game.PacketPlayOutSetSlot;
-import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
@@ -57,13 +56,13 @@ public class v1_19_R1 implements CompatibilityLayer {
     @Override
     public void showEndCreditScene(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.e, 1f);
-        ((CraftPlayer) player).getHandle().b.sendPacket(gameStateChange);
+        ((CraftPlayer) player).getHandle().b.a(gameStateChange);
     }
 
     @Override
     public void showDemoMenu(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.f, 0f);
-        ((CraftPlayer) player).getHandle().b.sendPacket(gameStateChange);
+        ((CraftPlayer) player).getHandle().b.a(gameStateChange);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class v1_19_R1 implements CompatibilityLayer {
             itemStack = XMaterial.PUMPKIN.parseItem();
         }
 
-        craftPlayer.getHandle().b.sendPacket(new PacketPlayOutSetSlot(0, 0, 5,
+        craftPlayer.getHandle().b.a(new PacketPlayOutSetSlot(0, 0, 5,
                 CraftItemStack.asNMSCopy(itemStack)));
     }
 

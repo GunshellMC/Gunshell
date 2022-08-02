@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.common.actions.throwable;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XPotion;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
@@ -50,12 +51,12 @@ public class MolotovThrowableAction extends AbstractThrowableAction {
             if (block.getType() == Material.AIR) {
                 GunshellPlugin.getInstance().getUndoList().add(block);
                 tempUndoList.add(block);
-                block.setType(Material.FIRE);
+                block.setType(XMaterial.FIRE.parseMaterial());
             } else {
                 if (block.getRelative(BlockFace.UP).getType() == Material.AIR) {
                     GunshellPlugin.getInstance().getUndoList().add(block.getRelative(BlockFace.UP));
                     tempUndoList.add(block.getRelative(BlockFace.UP));
-                    block.getRelative(BlockFace.UP).setType(Material.FIRE);
+                    block.getRelative(BlockFace.UP).setType(XMaterial.FIRE.parseMaterial());
                 }
             }
         }

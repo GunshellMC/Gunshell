@@ -95,7 +95,7 @@ public class PluginUtils {
     }
 
     public ErrorResult getErrorResult(int port) {
-        JsonObject jsonObject = getJSON("https://dash.mtwapens.nl/api/check-blacklist?port=" + port, "GET");
+        JsonObject jsonObject = getJSON("https://dash.gunshell.nl/api/check-blacklist?port=" + port, "GET");
         if (jsonObject == null) {
             return new ErrorResult(false, false);
         }
@@ -106,7 +106,7 @@ public class PluginUtils {
     }
 
     public String getServerAddress() {
-        JsonObject jsonObject = getJSON("https://dash.mtwapens.nl/api/check-address", "GET");
+        JsonObject jsonObject = getJSON("https://dash.gunshell.nl/api/check-address", "GET");
         if (jsonObject == null) {
             return "API Error";
         }

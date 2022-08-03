@@ -19,7 +19,6 @@ public enum MessagesConfig {
     ERROR_OUT_OF_AMMO("error.out-of-ammo", "&cJe geweer is leeg!"),
     ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE("error.cannot-use-gunshell-weapons-here", "&cJe kunt hier geen Gunshell wapens gebruiken!"),
     ERROR_WHILST_LOADING_CONFIGURATION("error.loading-configuration", "&cEr is iets mis gegaan met het herladen van de configuration files: <Error>"),
-    DEVELOPER_JOIN_MESSAGE("common.developer.join-message", "&2&k!!&aGunshell Developer &2<Player>&a heeft de server betreden!&2&k!!"),
     SUCCESSFULLY_ADDED_TO_INVENTORY("common.success.added-to-inventory", "&aJe hebt je geweer toegevoegd aan je inventory."),
     SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY("common.success.added-ammo-to-inventory", "&aJe hebt je ammo toegevoegd aan je inventory."),
     SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY("common.success.added-throwable-to-inventory", "&aJe hebt je throwable toegevoegd aan je inventory."),

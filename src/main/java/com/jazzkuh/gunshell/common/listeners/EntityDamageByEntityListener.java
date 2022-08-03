@@ -14,6 +14,7 @@ import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,6 +54,7 @@ public class EntityDamageByEntityListener implements Listener {
         GunshellMelee melee = GunshellPlugin.getInstance().getWeaponRegistry().getMelees().get(meleeKey);
 
         if (!(event.getEntity() instanceof LivingEntity)) return;
+        if (event.getEntity() instanceof ArmorStand) return;
         LivingEntity entity = (LivingEntity) event.getEntity();
         event.setCancelled(true);
         event.setDamage(0);

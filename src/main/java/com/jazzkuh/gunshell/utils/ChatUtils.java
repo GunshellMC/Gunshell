@@ -3,8 +3,11 @@ package com.jazzkuh.gunshell.utils;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +56,17 @@ public class ChatUtils {
      * @param message The message to send
      */
     public static void sendMessage(CommandSender commandSender, String message) {
-        commandSender.sendMessage(color(message));
+        if (message.length() >= 1) {
+            if (message.startsWith("a:") && commandSender instanceof Player) {
+                sendActionbar((Player) commandSender, message.substring(2));
+            } else {
+                commandSender.sendMessage(color(message));
+            }
+        }
+    }
+
+    public static void sendActionbar(Player player, String input) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(color(input)));
     }
 
     public static void sendBroadcast(String message) {

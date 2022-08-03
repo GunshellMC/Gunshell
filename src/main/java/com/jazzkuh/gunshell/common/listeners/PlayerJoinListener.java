@@ -30,14 +30,5 @@ public class PlayerJoinListener implements Listener {
             ChatUtils.sendMessage(player, "&8| &aThis server is using Gunshell &2v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&a.");
             ChatUtils.sendMessage(player, "&8 ----------------------------------------------");
         }
-
-        if (DefaultConfig.ENABLE_DEVELOPER_JOIN_MESSAGE.asBoolean() && GunshellPlugin.getInstance().getDescription().getAuthors().contains(player.getName())) {
-            ChatUtils.sendBroadcast(MessagesConfig.DEVELOPER_JOIN_MESSAGE.get()
-                    .replace("<Player>", player.getName()));
-            for (Player permittedPlayer : Bukkit.getOnlinePlayers()) {
-                if (!permittedPlayer.hasPermission("gunshell.commands.gunshell")) continue;
-                ChatUtils.sendMessage(permittedPlayer, "&c&lAdmin Notice: &7Je kunt dit bericht uitschakelen in de config.yml");
-            }
-        }
     }
 }

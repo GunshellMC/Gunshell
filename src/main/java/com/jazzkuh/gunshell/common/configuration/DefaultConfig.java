@@ -8,7 +8,6 @@ import java.util.List;
 
 public enum DefaultConfig {
     CONFIG_VERSION("config-version", "1.0"),
-    ENABLE_DEVELOPER_JOIN_MESSAGE("enable-developer-join-message", true),
     PER_WEAPON_COOLDOWN("per-weapon-cooldown", true),
     HITBOX_INCREASE("hitbox-increase", 0.2);
 

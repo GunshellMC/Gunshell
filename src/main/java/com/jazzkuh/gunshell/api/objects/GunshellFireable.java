@@ -27,24 +27,24 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private final @Getter int damage;
-    private final @Getter int headshotDamage;
-    private final @Getter int range;
+    private @Getter int damage;
+    private @Getter int headshotDamage;
+    private @Getter int range;
     private final @Getter int minimumRange;
     private final @Getter double cooldown;
     private final @Getter double grabCooldown;
-    private final @Getter int reloadTime;
-    private final @Getter int maxAmmo;
+    private @Getter int reloadTime;
+    private @Getter int maxAmmo;
     private final @Getter List<String> ammunitionKeys;
-    private final @Getter String sound;
-    private final @Getter String reloadSound;
-    private final @Getter String emptySound;
-    private final @Getter double recoilAmount;
-    private final @Getter double knockbackAmount;
-    private final @Getter double selfKnockbackAmount;
-    private final @Getter boolean scopeEnabled;
-    private final @Getter boolean scopePumpkinBlurEnabled;
-    private final @Getter int scopeAmplifier;
+    private @Getter String sound;
+    private @Getter String reloadSound;
+    private @Getter String emptySound;
+    private @Getter double recoilAmount;
+    private @Getter double knockbackAmount;
+    private @Getter double selfKnockbackAmount;
+    private @Getter boolean scopeEnabled;
+    private @Getter boolean scopePumpkinBlurEnabled;
+    private @Getter int scopeAmplifier;
 
     public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -76,7 +76,48 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.scopePumpkinBlurEnabled = configuration.getBoolean("scope.pumpkinBlurEnabled", false);
         this.scopeAmplifier = configuration.getInt("scope.amplifier", 8);
     }
-
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+    public void setReloadTime(int time) {
+        this.reloadTime = time;
+    }
+    public void setHeadshotDamage(int damage) {
+        this.headshotDamage = damage;
+    }
+    public void setRange(int range) {
+        this.range = range;
+    }
+    public void setRecoilAmount(double amount) {
+        this.recoilAmount = amount;
+    }
+    public void setKnockbackAmount(double amount) {
+        this.knockbackAmount = range;
+    }
+    public void setSelfKnockbackAmount(double amount) {
+        this.selfKnockbackAmount = range;
+    }
+    public void setScopeAmplifier(int amplifier) {
+        this.scopeAmplifier = amplifier;
+    }
+    public void setScopeEnabled(boolean isEnabled) {
+        this.scopeEnabled = isEnabled;
+    }
+    public void setScopePumpkinBlurEnabled(boolean isEnabled) {
+        this.scopePumpkinBlurEnabled = isEnabled;
+    }
+    public void setMaxAmmo(int amount) {
+        this.maxAmmo = amount;
+    }
+    public void setEmptySound(String sound) {
+        this.emptySound = sound;
+    }
+    public void setReloadSound(String sound) {
+        this.reloadSound = sound;
+    }
+    public void setSound(String sound) {
+        this.sound = sound;
+    }
     @Override
     public ItemBuilder getItem(int durability) {
         double attackSpeed = -4 + 1 / this.getGrabCooldown();
@@ -98,7 +139,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         return itemBuilder;
     }
-
     public void updateItemMeta(ItemStack itemStack, int ammo) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) return;

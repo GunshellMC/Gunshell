@@ -6,6 +6,7 @@ import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
@@ -25,8 +26,8 @@ public class GunshellAmmunition {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private @Getter int ammo;
-    private final @Getter String actionType;
+    private @Setter @Getter int ammo;
+    private @Setter @Getter String actionType;
 
     public GunshellAmmunition(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -41,9 +42,6 @@ public class GunshellAmmunition {
         this.customModelData = configuration.getInt("customModelData", 0);
         this.ammo = configuration.getInt("ammo", 8);
         this.actionType = configuration.getString("actionType", BuiltinAmmoActionType.DAMAGE.toString()).toUpperCase();
-    }
-    public void setAmmo(int ammo) {
-        this.ammo = ammo;
     }
     public ItemBuilder getItem() {
         return this.getItem(this.getAmmo());

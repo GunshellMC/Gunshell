@@ -12,13 +12,11 @@ import org.jetbrains.annotations.NotNull;
 public class FireablePreFireEvent extends Event implements Cancellable {
     private final @Getter Player player;
     private final @Getter GunshellFireable fireable;
-    private final @Getter ItemStack itemstack;
     private static final HandlerList handlers = new HandlerList();
 
     public FireablePreFireEvent(Player player, @NotNull GunshellFireable fireable) {
         this.player = player;
         this.fireable = fireable;
-        this.itemstack = player.getInventory().getItemInMainHand();
     }
 
     @Override

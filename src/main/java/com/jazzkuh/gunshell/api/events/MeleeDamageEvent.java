@@ -13,13 +13,11 @@ import org.jetbrains.annotations.NotNull;
 public class MeleeDamageEvent extends Event implements Cancellable {
     private final @Getter Player player;
     private final @Getter GunshellMelee melee;
-    private final @Getter ItemStack itemstack;
     private static final HandlerList handlers = new HandlerList();
 
     public MeleeDamageEvent(Player player, @NotNull GunshellMelee melee) {
         this.player = player;
         this.melee = melee;
-        this.itemstack = player.getInventory().getItemInMainHand();
     }
 
     @Override

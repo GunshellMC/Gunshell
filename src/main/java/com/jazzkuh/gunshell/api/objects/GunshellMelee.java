@@ -27,10 +27,10 @@ public class GunshellMelee {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private final @Getter double damage;
+    private @Getter double damage;
     private final @Getter double cooldown;
-private final @Getter double grabCooldown;
-    private final @Getter String actionType;
+    private final @Getter double grabCooldown;
+    private @Getter String actionType;
 
     public GunshellMelee(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -47,6 +47,12 @@ private final @Getter double grabCooldown;
         this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
         this.grabCooldown = configuration.getDouble("grabCooldown", 1);
         this.actionType = configuration.getString("actionType", BuiltinMeleeActionType.DAMAGE.toString()).toUpperCase();
+    }
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
     public ItemBuilder getItem(int durability) {
         double attackSpeed = -4 + 1 / this.getGrabCooldown();

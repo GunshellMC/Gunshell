@@ -25,7 +25,7 @@ public class GunshellAmmunition {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private final @Getter int ammo;
+    private @Getter int ammo;
     private final @Getter String actionType;
 
     public GunshellAmmunition(@NotNull String key, @NotNull ConfigurationSection configuration) {
@@ -42,7 +42,9 @@ public class GunshellAmmunition {
         this.ammo = configuration.getInt("ammo", 8);
         this.actionType = configuration.getString("actionType", BuiltinAmmoActionType.DAMAGE.toString()).toUpperCase();
     }
-
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
     public ItemBuilder getItem() {
         return this.getItem(this.getAmmo());
     }

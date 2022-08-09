@@ -85,10 +85,10 @@ public class GunshellCMD extends AbstractCommand {
     }
 
     @Subcommand(name = "getweapon", usage = "<weaponType> <durability> [player]", permission = true,
-            aliases = "get|weapon", description = "Get a weapon from the config.", playerOnly = true)
+            aliases = "get|weapon", description = "Get a weapon from the config.")
     public void onGetWeapon(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
-        Player player = (Player) commandInvocation.getCommandSender();
+        CommandSender sender = commandInvocation.getCommandSender();
 
         if (args.length < 3) {
             this.sendNotEnoughArguments(commandInvocation);
@@ -97,12 +97,12 @@ public class GunshellCMD extends AbstractCommand {
 
         String weaponKey = args[1].toLowerCase();
         if (!GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().containsKey(weaponKey)) {
-            MessagesConfig.ERROR_WEAPON_NOT_FOUND.get(player);
+            MessagesConfig.ERROR_WEAPON_NOT_FOUND.get(sender);
             return;
         }
 
         if (!PluginUtils.getInstance().isValidInteger(args[2])) {
-            MessagesConfig.ERROR_INVALID_INTEGER.get(player);
+            MessagesConfig.ERROR_INVALID_INTEGER.get(sender);
             return;
         }
 
@@ -113,23 +113,27 @@ public class GunshellCMD extends AbstractCommand {
         if (args.length > 3) {
             Player target = Bukkit.getPlayer(args[3]);
             if (target == null) {
-                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
                 return;
             }
 
             target.getInventory().addItem(fireable.getItemStack(durability));
-            MessagesConfig.SUCCESSFULLY_ADDED_TO_INVENTORY.get(player);
+            MessagesConfig.SUCCESSFULLY_ADDED_TO_INVENTORY.get(sender);
         } else {
-            player.getInventory().addItem(fireable.getItemStack(durability));
-            MessagesConfig.SUCCESSFULLY_ADDED_TO_INVENTORY.get(player);
+            if (sender instanceof Player) {
+                ((Player) sender).getInventory().addItem(fireable.getItemStack(durability));
+                MessagesConfig.SUCCESSFULLY_ADDED_TO_INVENTORY.get(sender);
+            } else {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
+            }
         }
     }
 
     @Subcommand(name = "getammo", usage = "<ammoType> [player]", permission = true,
-            aliases = "ammo", description = "Get ammo from the config files.", playerOnly = true)
+            aliases = "ammo", description = "Get ammo from the config files.")
     public void onGetAmmo(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
-        Player player = (Player) commandInvocation.getCommandSender();
+        CommandSender sender = commandInvocation.getCommandSender();
 
         if (args.length < 2) {
             this.sendNotEnoughArguments(commandInvocation);
@@ -138,7 +142,7 @@ public class GunshellCMD extends AbstractCommand {
 
         String ammoKey = args[1].toLowerCase();
         if (!GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition().containsKey(ammoKey)) {
-            MessagesConfig.ERROR_AMMO_NOT_FOUND.get(player);
+            MessagesConfig.ERROR_AMMO_NOT_FOUND.get(sender);
             return;
         }
 
@@ -147,23 +151,27 @@ public class GunshellCMD extends AbstractCommand {
         if (args.length > 2) {
             Player target = Bukkit.getPlayer(args[2]);
             if (target == null) {
-                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
                 return;
             }
 
             target.getInventory().addItem(ammunition.getItem().toItemStack());
-            MessagesConfig.SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY.get(player);
+            MessagesConfig.SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY.get(sender);
         } else {
-            player.getInventory().addItem(ammunition.getItem().toItemStack());
-            MessagesConfig.SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY.get(player);
+            if (sender instanceof Player) {
+                ((Player) sender).getInventory().addItem(ammunition.getItem().toItemStack());
+                MessagesConfig.SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY.get(sender);
+            } else {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
+            }
         }
     }
 
     @Subcommand(name = "getthrowable", usage = "<throwableType> [player]", permission = true,
-            aliases = "getgrenade|throwable", description = "Get a throwable from the config files.", playerOnly = true)
+            aliases = "getgrenade|throwable", description = "Get a throwable from the config files.")
     public void onGetThrowable(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
-        Player player = (Player) commandInvocation.getCommandSender();
+        CommandSender sender = commandInvocation.getCommandSender();
 
         if (args.length < 2) {
             this.sendNotEnoughArguments(commandInvocation);
@@ -172,7 +180,7 @@ public class GunshellCMD extends AbstractCommand {
 
         String throwableKey = args[1].toLowerCase();
         if (!GunshellPlugin.getInstance().getWeaponRegistry().getThrowables().containsKey(throwableKey)) {
-            MessagesConfig.ERROR_THROWABLE_NOT_FOUND.get(player);
+            MessagesConfig.ERROR_THROWABLE_NOT_FOUND.get(sender);
             return;
         }
 
@@ -181,15 +189,19 @@ public class GunshellCMD extends AbstractCommand {
         if (args.length > 2) {
             Player target = Bukkit.getPlayer(args[2]);
             if (target == null) {
-                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
                 return;
             }
 
             target.getInventory().addItem(throwable.getItem().toItemStack());
-            MessagesConfig.SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY.get(player);
+            MessagesConfig.SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY.get(sender);
         } else {
-            player.getInventory().addItem(throwable.getItem().toItemStack());
-            MessagesConfig.SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY.get(player);
+            if (sender instanceof Player) {
+                ((Player) sender).getInventory().addItem(throwable.getItem().toItemStack());
+                MessagesConfig.SUCCESSFULLY_ADDED_THROWABLE_TO_INVENTORY.get(sender);
+            } else {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
+            }
         }
     }
 
@@ -197,7 +209,7 @@ public class GunshellCMD extends AbstractCommand {
             aliases = "melee", description = "Get a melee weapon from the config files.", playerOnly = true)
     public void onGetMelee(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
-        Player player = (Player) commandInvocation.getCommandSender();
+        CommandSender sender = commandInvocation.getCommandSender();
 
         if (args.length < 3) {
             this.sendNotEnoughArguments(commandInvocation);
@@ -206,12 +218,12 @@ public class GunshellCMD extends AbstractCommand {
 
         String meleeKey = args[1].toLowerCase();
         if (!GunshellPlugin.getInstance().getWeaponRegistry().getMelees().containsKey(meleeKey)) {
-            MessagesConfig.ERROR_MELEE_NOT_FOUND.get(player);
+            MessagesConfig.ERROR_MELEE_NOT_FOUND.get(sender);
             return;
         }
 
         if (!PluginUtils.getInstance().isValidInteger(args[2])) {
-            MessagesConfig.ERROR_INVALID_INTEGER.get(player);
+            MessagesConfig.ERROR_INVALID_INTEGER.get(sender);
             return;
         }
 
@@ -222,15 +234,19 @@ public class GunshellCMD extends AbstractCommand {
         if (args.length > 3) {
             Player target = Bukkit.getPlayer(args[3]);
             if (target == null) {
-                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(player);
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
                 return;
             }
 
             target.getInventory().addItem(melee.getItemStack(durability));
-            MessagesConfig.SUCCESSFULLY_ADDED_MELEE_TO_INVENTORY.get(player);
+            MessagesConfig.SUCCESSFULLY_ADDED_MELEE_TO_INVENTORY.get(sender);
         } else {
-            player.getInventory().addItem(melee.getItemStack(durability));
-            MessagesConfig.SUCCESSFULLY_ADDED_MELEE_TO_INVENTORY.get(player);
+            if (sender instanceof Player) {
+                ((Player) sender).getInventory().addItem(melee.getItemStack(durability));
+                MessagesConfig.SUCCESSFULLY_ADDED_MELEE_TO_INVENTORY.get(sender);
+            } else {
+                MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
+            }
         }
     }
 

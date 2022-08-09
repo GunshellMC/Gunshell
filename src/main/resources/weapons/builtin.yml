@@ -69,7 +69,7 @@ magnum44:
   reloadTime: 1
   maxAmmo: 8
   ammunitionKeys:
-    - deserteagle_ammo
+    - magnum44_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty
@@ -95,7 +95,7 @@ waltherp99:
   reloadTime: 1
   maxAmmo: 10
   ammunitionKeys:
-    - deserteagle_ammo
+    - waltherp99_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty
@@ -121,7 +121,7 @@ glock19:
   reloadTime: 1
   maxAmmo: 10
   ammunitionKeys:
-    - deserteagle_ammo
+    - glock19_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty
@@ -201,7 +201,7 @@ mk14:
   reloadTime: 5
   maxAmmo: 3
   ammunitionKeys:
-    - awp_ammo
+    - mk14_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty
@@ -255,7 +255,7 @@ barett50:
   reloadTime: 3
   maxAmmo: 4
   ammunitionKeys:
-    - ballista_ammo
+    - barret50_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty
@@ -309,7 +309,7 @@ m16a4:
   reloadTime: 4
   maxAmmo: 15
   ammunitionKeys:
-    - fad_ammo
+    - m16a4_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty
@@ -335,7 +335,7 @@ m1a:
   reloadTime: 4
   maxAmmo: 15
   ammunitionKeys:
-    - fad_ammo
+    - m1a_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty

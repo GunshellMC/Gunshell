@@ -2,7 +2,6 @@ package com.jazzkuh.gunshell.api.events;
 
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import lombok.Getter;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

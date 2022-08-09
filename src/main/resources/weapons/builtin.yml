@@ -193,8 +193,8 @@ mk14:
   nbt:
     key: mtcustom
     value: mk14_scoped
-  damage: 10
-  headshotDamage: 15
+  damage: 7
+  headshotDamage: 10.5
   range: 100
   cooldown: 3
   grabCooldown: 3
@@ -221,8 +221,8 @@ ballista:
   nbt:
     key: mtcustom
     value: ballista
-  damage: 9
-  headshotDamage: 13
+  damage: 8
+  headshotDamage: 12
   range: 25
   cooldown: 3
   grabCooldown: 1

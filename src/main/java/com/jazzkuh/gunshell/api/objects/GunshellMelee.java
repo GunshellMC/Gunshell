@@ -7,6 +7,7 @@ import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
@@ -27,10 +28,10 @@ public class GunshellMelee {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private final @Getter double damage;
+    private @Getter @Setter double damage;
     private final @Getter double cooldown;
-private final @Getter double grabCooldown;
-    private final @Getter String actionType;
+    private final @Getter double grabCooldown;
+    private @Getter @Setter String actionType;
 
     public GunshellMelee(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;

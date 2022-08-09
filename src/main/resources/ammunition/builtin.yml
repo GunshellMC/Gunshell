@@ -58,18 +58,6 @@ ballista_ammo:
     value: revolver_bullets
   ammo: 8
   actionType: DAMAGE
-barett50_ammo:
-  name: '&8Barett50 Ammo'
-  lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
-    - '&7Ammo: &f<Ammo>'
-  material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 4
-  actionType: DAMAGE
 fad_ammo:
   name: '&8FAD Ammo'
   lore:
@@ -82,8 +70,6 @@ fad_ammo:
     value: revolver_bullets
   ammo: 18
   actionType: DAMAGE
-
-
 magnum44_ammo:
   name: '&8Magnum44 Ammo'
   lore:

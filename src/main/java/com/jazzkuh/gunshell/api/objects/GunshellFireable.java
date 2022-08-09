@@ -7,6 +7,7 @@ import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
@@ -27,24 +28,24 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private final @Getter int damage;
-    private final @Getter int headshotDamage;
-    private final @Getter int range;
+    private @Getter @Setter int damage;
+    private @Getter @Setter int headshotDamage;
+    private @Getter @Setter int range;
     private final @Getter int minimumRange;
     private final @Getter double cooldown;
     private final @Getter double grabCooldown;
-    private final @Getter int reloadTime;
-    private final @Getter int maxAmmo;
+    private @Getter @Setter int reloadTime;
+    private @Getter @Setter int maxAmmo;
     private final @Getter List<String> ammunitionKeys;
-    private final @Getter String sound;
-    private final @Getter String reloadSound;
-    private final @Getter String emptySound;
-    private final @Getter double recoilAmount;
-    private final @Getter double knockbackAmount;
-    private final @Getter double selfKnockbackAmount;
-    private final @Getter boolean scopeEnabled;
-    private final @Getter boolean scopePumpkinBlurEnabled;
-    private final @Getter int scopeAmplifier;
+    private @Getter @Setter String sound;
+    private @Getter @Setter String reloadSound;
+    private @Getter @Setter String emptySound;
+    private @Getter @Setter double recoilAmount;
+    private @Getter @Setter double knockbackAmount;
+    private @Getter @Setter double selfKnockbackAmount;
+    private @Getter @Setter boolean scopeEnabled;
+    private @Getter @Setter boolean scopePumpkinBlurEnabled;
+    private @Getter @Setter int scopeAmplifier;
 
     public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -76,7 +77,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.scopePumpkinBlurEnabled = configuration.getBoolean("scope.pumpkinBlurEnabled", false);
         this.scopeAmplifier = configuration.getInt("scope.amplifier", 8);
     }
-
     @Override
     public ItemBuilder getItem(int durability) {
         double attackSpeed = -4 + 1 / this.getGrabCooldown();
@@ -98,7 +98,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         return itemBuilder;
     }
-
     public void updateItemMeta(ItemStack itemStack, int ammo) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) return;

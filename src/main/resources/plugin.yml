@@ -1,10 +1,11 @@
-name: Lancaster
+name: Gunshell
 version: '${project.version}-${git.commit.id.describe-short}'
-main: com.jazzkuh.lancaster.LancasterPlugin
+website: 'https://www.spigotmc.org/resources/76350/'
+main: com.jazzkuh.gunshell.GunshellPlugin
 api-version: 1.13
-authors: [Jazzkuh]
-depend: [Server-Core]
+description: "Add guns, melee weapons and throwables to your Minecraft server."
+authors: [Jazzkuh, Esmaybe]
 softdepend: [WorldGuard]
 commands:
-  lancaster:
-    aliases: [lc]
+  gunshell:
+    aliases: [gs, gun, weapons, weapon, mtwapens, mtwapen]

@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jazzkuh</groupId>
-    <artifactId>Lancaster</artifactId>
-    <version>1.0</version>
+    <artifactId>Gunshell</artifactId>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Lancaster</name>
+    <name>Gunshell</name>
 
     <properties>
-        <project.codename>Lancaster</project.codename>
+        <project.codename>Gunshell</project.codename>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -82,8 +82,12 @@
 
     <repositories>
         <repository>
-            <id>purpur</id>
-            <url>https://repo.purpurmc.org/snapshots</url>
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
             <id>codemc</id>
@@ -96,21 +100,11 @@
     </repositories>
 
     <dependencies>
-        <!-- Purpur -->
         <dependency>
-            <groupId>org.purpurmc.purpur</groupId>
-            <artifactId>purpur-api</artifactId>
-            <version>1.19.2-R0.1-SNAPSHOT</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- API -->
-        <dependency>
-            <groupId>com.jazzkuh</groupId>
-            <artifactId>Server-Core</artifactId>
-            <version>1.0.1</version>
-            <systemPath>${project.basedir}/external/Server-Core-v1.0.1.jar</systemPath>
-            <scope>system</scope>
         </dependency>
         <dependency>
             <groupId>io.github.bananapuncher714</groupId>
@@ -157,6 +151,24 @@
         <!-- NMS -->
         <dependency>
             <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc.</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc...</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc....</groupId>
             <artifactId>spigot</artifactId>
             <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>

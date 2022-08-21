@@ -63,6 +63,8 @@ public class DamageAction extends AbstractAmmunitionAction {
                     new PlaceHolder("Name", livingEntity.getName()));
         }
 
+        damage = PluginUtils.getInstance().applyProtectionModifier(damage, rayTraceResult.isHeadshot(), livingEntity);
+
         PluginUtils.getInstance().performRecoil(livingEntity, 0F, this.getFireable().getKnockbackAmount());
 
         if (damage > livingEntity.getHealth()) {

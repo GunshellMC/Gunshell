@@ -5,12 +5,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.common.ErrorResult;
+import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -41,6 +43,22 @@ public class PluginUtils {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public double applyProtectionModifier(double damage, boolean isHeadShot, LivingEntity entity) {
+        if (!DefaultConfig.PROTECTION_DAMAGE_REDUCTION_ENABLED.asBoolean()) return damage;
+        if (entity.getEquipment() == null) return damage;
+
+        ItemStack stack = isHeadShot ? entity.getEquipment().getHelmet() : entity.getEquipment().getChestplate();
+        if (stack == null) return damage;
+
+        if (!stack.containsEnchantment(Enchantment.PROTECTION_PROJECTILE)) return damage;
+        int enchantmentLevel = stack.getEnchantmentLevel(Enchantment.PROTECTION_PROJECTILE);
+
+        int percentage = DefaultConfig.PROTECTION_DAMAGE_REDUCTION_AMOUNT.asInteger();
+        if (percentage == 0) percentage = 5;
+
+        return damage - ((damage / 100 * percentage) * enchantmentLevel);
     }
 
     public Optional<ItemStack> getItemWithNBTTags(Player player, String tag, List<String> values) {

@@ -9,7 +9,9 @@ import java.util.List;
 public enum DefaultConfig {
     CONFIG_VERSION("config-version", "1.0"),
     PER_WEAPON_COOLDOWN("per-weapon-cooldown", true),
-    HITBOX_INCREASE("hitbox-increase", 0.2);
+    HITBOX_INCREASE("hitbox-increase", 0.2),
+    PROTECTION_DAMAGE_REDUCTION_ENABLED("protection-damage-reduction.enabled", true),
+    PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5);
 
     private final @Getter String path;
     private final @Getter Object value;

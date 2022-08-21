@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.common.actions.melee;
 
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.common.actions.melee.abstraction.AbstractMeleeAction;
+import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
@@ -33,6 +34,8 @@ public class MeleeDamageAction extends AbstractMeleeAction {
         }
 
         double damage = this.getMelee().getDamage();
+        damage = PluginUtils.getInstance().applyProtectionModifier(damage, false, entity);
+
         if (damage > entity.getHealth()) {
             entity.setHealth(0D);
         } else {

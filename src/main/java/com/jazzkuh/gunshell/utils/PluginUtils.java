@@ -63,11 +63,9 @@ public class PluginUtils {
 
     public Optional<ItemStack> getItemWithNBTTags(Player player, String tag, List<String> values) {
         for (ItemStack item : player.getInventory().getContents()) {
-            if (item != null && NBTEditor.contains(item, tag)) {
-                if (values.stream().anyMatch(value -> NBTEditor.getString(item, tag).equals(value))) {
-                    return Optional.of(item);
-                }
-                return Optional.empty();
+            if (item == null || !NBTEditor.contains(item, tag)) continue;
+            if (values.stream().anyMatch(value -> NBTEditor.getString(item, tag).equals(value))) {
+                return Optional.of(item);
             }
         }
 

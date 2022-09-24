@@ -48,6 +48,7 @@ public class FlashbangThrowableAction extends AbstractThrowableAction {
                     && compatibilityManager.getWorldGuardExtension().isFlagState(player, livingEntity.getLocation(),
                     WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
 
+            if (livingEntity.hasMetadata("NPC")) continue;
             if (livingEntity instanceof Player) {
                 Player playerTarget = (Player) livingEntity;
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR

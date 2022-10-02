@@ -1,6 +1,5 @@
 package com.jazzkuh.gunshell.utils;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Color;
@@ -10,14 +9,16 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Easily create itemstacks, without messing your hands. <i>Note that if you do

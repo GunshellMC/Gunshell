@@ -3,8 +3,8 @@ package com.jazzkuh.gunshell.common.listeners;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.events.MeleeDamageEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
-import com.jazzkuh.gunshell.common.actions.melee.abstraction.MeleeActionImpl;
 import com.jazzkuh.gunshell.common.MeleeActionRegistry;
+import com.jazzkuh.gunshell.common.actions.melee.abstraction.MeleeActionImpl;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
@@ -73,9 +73,9 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (hasCooldown(cooldownKey, melee) || hasGrabCooldown(player.getUniqueId(), melee)) return;
 
-        MeleeDamageEvent meleeDamageEvent = new MeleeDamageEvent(player, melee);
-        if (meleeDamageEvent.isCancelled()) return;
+        MeleeDamageEvent meleeDamageEvent = new MeleeDamageEvent(player, entity, melee);
         Bukkit.getPluginManager().callEvent(meleeDamageEvent);
+        if (meleeDamageEvent.isCancelled()) return;
 
         GunshellPlugin.getInstance().getMeleeCooldownMap().put(cooldownKey, System.currentTimeMillis());
         PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);

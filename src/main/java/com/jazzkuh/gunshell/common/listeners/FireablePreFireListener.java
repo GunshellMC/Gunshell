@@ -2,13 +2,14 @@ package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
+import com.jazzkuh.gunshell.api.events.FireableDamageEvent;
 import com.jazzkuh.gunshell.api.events.FireableFireEvent;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
-import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AmmunitionActionImpl;
 import com.jazzkuh.gunshell.common.AmmunitionActionRegistry;
+import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AmmunitionActionImpl;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
@@ -17,7 +18,9 @@ import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -110,8 +113,8 @@ public class FireablePreFireListener implements Listener {
         if (hasCooldown(cooldownKey, fireable) || hasGrabCooldown(player.getUniqueId(), fireable)) return;
 
         FireableFireEvent fireableFireEvent = new FireableFireEvent(player, fireable);
-        if (fireableFireEvent.isCancelled()) return;
         Bukkit.getPluginManager().callEvent(fireableFireEvent);
+        if (fireableFireEvent.isCancelled()) return;
 
         /*
          * Perform the raytrace to find the target
@@ -178,6 +181,10 @@ public class FireablePreFireListener implements Listener {
             ChatUtils.sendMessage(player, "&cError: &4Ammunition action not found!");
             return;
         }
+
+        FireableDamageEvent fireableDamageEvent = new FireableDamageEvent(player, rayTraceResult, fireable);
+        Bukkit.getPluginManager().callEvent(fireableDamageEvent);
+        if (fireableDamageEvent.isCancelled()) return;
 
         ammunitionAction.fireAction(player, rayTraceResult, ammunition.getConfiguration());
     }

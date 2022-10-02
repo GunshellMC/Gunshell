@@ -14,7 +14,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.codemc.worldguardwrapper.flag.WrappedState;
 
 import java.util.ArrayList;

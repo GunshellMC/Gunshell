@@ -2,7 +2,6 @@ package com.jazzkuh.gunshell.compatibility;
 
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 

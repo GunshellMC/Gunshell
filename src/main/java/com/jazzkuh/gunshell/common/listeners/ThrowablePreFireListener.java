@@ -2,18 +2,14 @@ package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.events.ThrowablePreFireEvent;
-import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.ThrowableActionRegistry;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.ThrowableActionImpl;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +18,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThrowablePreFireListener implements Listener {
     @EventHandler

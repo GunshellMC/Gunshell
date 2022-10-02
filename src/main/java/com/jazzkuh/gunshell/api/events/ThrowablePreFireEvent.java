@@ -1,6 +1,5 @@
 package com.jazzkuh.gunshell.api.events;
 
-import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import lombok.Getter;
 import org.bukkit.entity.Player;

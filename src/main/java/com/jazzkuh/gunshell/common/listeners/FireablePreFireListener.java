@@ -62,7 +62,7 @@ public class FireablePreFireListener implements Listener {
         List<String> ammunitionKeys = fireable.getAmmunitionKeys();
         if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).isEmpty()) {
             MessagesConfig.ERROR_OUT_OF_AMMO.get(player);
-            player.playSound(player.getLocation(), fireable.getEmptySound(), 100, 1F);
+            player.playSound(player.getLocation(), fireable.getEmptySound(), fireable.getSoundVolume(), 1F);
             return;
         }
 
@@ -72,8 +72,8 @@ public class FireablePreFireListener implements Listener {
             GunshellPlugin.getInstance().getReloadingSet().add(player.getUniqueId());
 
             for (Player target : player.getLocation().getWorld().getPlayers()) {
-                if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
-                    target.playSound(player.getLocation(), fireable.getReloadSound(), 100, 1F);
+                if (target.getLocation().distance(player.getLocation()) <= fireable.getSoundRange()) {
+                    target.playSound(player.getLocation(), fireable.getReloadSound(), fireable.getSoundVolume(), 1F);
                 }
             }
 
@@ -155,8 +155,8 @@ public class FireablePreFireListener implements Listener {
         }
 
         for (Player target : player.getLocation().getWorld().getPlayers()) {
-            if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
-                target.playSound(player.getLocation(), fireable.getSound(), 100, 1F);
+            if (target.getLocation().distance(player.getLocation()) <= fireable.getSoundRange()) {
+                target.playSound(player.getLocation(), fireable.getSound(), fireable.getSoundVolume(), 1F);
             }
         }
 

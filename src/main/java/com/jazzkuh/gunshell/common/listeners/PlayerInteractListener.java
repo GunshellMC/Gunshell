@@ -44,8 +44,8 @@ public class PlayerInteractListener implements Listener {
                 case LEFT_CLICK_AIR: {
                     if (!fireable.isScopeEnabled()) return;
                     FireableToggleScopeEvent scopeEvent = new FireableToggleScopeEvent(player, fireable);
-                    if (scopeEvent.isCancelled()) return;
                     Bukkit.getPluginManager().callEvent(scopeEvent);
+                    if (scopeEvent.isCancelled()) return;
                     break;
                 }
                 case RIGHT_CLICK_BLOCK:

@@ -1,6 +1,8 @@
 package com.jazzkuh.gunshell.api.events;
 
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.api.objects.GunshellMelee;
+import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -8,14 +10,16 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class FireableToggleScopeEvent extends Event implements Cancellable {
+public class FireableDamageEvent extends Event implements Cancellable {
     private boolean cancelled;
     private final @Getter Player player;
+    private final @Getter GunshellRayTraceResult rayTraceResult;
     private final @Getter GunshellFireable fireable;
     private static final HandlerList handlers = new HandlerList();
 
-    public FireableToggleScopeEvent(Player player, @NotNull GunshellFireable fireable) {
+    public FireableDamageEvent(Player player, GunshellRayTraceResult rayTraceResult, @NotNull GunshellFireable fireable) {
         this.player = player;
+        this.rayTraceResult = rayTraceResult;
         this.fireable = fireable;
     }
 

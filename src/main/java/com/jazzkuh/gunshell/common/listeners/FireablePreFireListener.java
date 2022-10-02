@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
+import com.jazzkuh.gunshell.api.events.FireableDamageEvent;
 import com.jazzkuh.gunshell.api.events.FireableFireEvent;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
@@ -19,6 +20,7 @@ import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -110,8 +112,8 @@ public class FireablePreFireListener implements Listener {
         if (hasCooldown(cooldownKey, fireable) || hasGrabCooldown(player.getUniqueId(), fireable)) return;
 
         FireableFireEvent fireableFireEvent = new FireableFireEvent(player, fireable);
-        if (fireableFireEvent.isCancelled()) return;
         Bukkit.getPluginManager().callEvent(fireableFireEvent);
+        if (fireableFireEvent.isCancelled()) return;
 
         /*
          * Perform the raytrace to find the target
@@ -178,6 +180,10 @@ public class FireablePreFireListener implements Listener {
             ChatUtils.sendMessage(player, "&cError: &4Ammunition action not found!");
             return;
         }
+
+        FireableDamageEvent fireableDamageEvent = new FireableDamageEvent(player, rayTraceResult, fireable);
+        Bukkit.getPluginManager().callEvent(fireableDamageEvent);
+        if (fireableDamageEvent.isCancelled()) return;
 
         ammunitionAction.fireAction(player, rayTraceResult, ammunition.getConfiguration());
     }

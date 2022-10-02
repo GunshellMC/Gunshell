@@ -10,6 +10,7 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 public class ThrowablePreFireEvent extends Event implements Cancellable {
+    private boolean cancelled;
     private final @Getter Player player;
     private final @Getter GunshellThrowable throwable;
     private static final HandlerList handlers = new HandlerList();
@@ -30,11 +31,11 @@ public class ThrowablePreFireEvent extends Event implements Cancellable {
 
     @Override
     public boolean isCancelled() {
-        return false;
+        return cancelled;
     }
 
     @Override
-    public void setCancelled(boolean b) {
-
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 }

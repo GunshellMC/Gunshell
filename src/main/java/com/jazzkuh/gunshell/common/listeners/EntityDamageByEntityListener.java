@@ -73,9 +73,9 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (hasCooldown(cooldownKey, melee) || hasGrabCooldown(player.getUniqueId(), melee)) return;
 
-        MeleeDamageEvent meleeDamageEvent = new MeleeDamageEvent(player, melee);
-        if (meleeDamageEvent.isCancelled()) return;
+        MeleeDamageEvent meleeDamageEvent = new MeleeDamageEvent(player, entity, melee);
         Bukkit.getPluginManager().callEvent(meleeDamageEvent);
+        if (meleeDamageEvent.isCancelled()) return;
 
         GunshellPlugin.getInstance().getMeleeCooldownMap().put(cooldownKey, System.currentTimeMillis());
         PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);

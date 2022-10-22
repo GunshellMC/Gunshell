@@ -51,6 +51,10 @@ public class ExplosiveThrowableAction extends AbstractThrowableAction {
                 Player playerTarget = (Player) livingEntity;
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR
                         || playerTarget.getGameMode() == GameMode.CREATIVE) return;
+
+                if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
+                    compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
+                }
             }
 
             if (livingEntity.getLocation().getWorld() != null) {

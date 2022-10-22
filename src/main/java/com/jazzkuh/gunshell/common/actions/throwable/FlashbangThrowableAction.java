@@ -53,6 +53,9 @@ public class FlashbangThrowableAction extends AbstractThrowableAction {
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR
                         || playerTarget.getGameMode() == GameMode.CREATIVE) return;
 
+                if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
+                    compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
+                }
                 ((Player) livingEntity).playSound(player.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 100, 1F);
             }
 

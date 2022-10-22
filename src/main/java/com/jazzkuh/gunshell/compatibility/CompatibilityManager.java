@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.compatibility;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
+import com.jazzkuh.gunshell.compatibility.extensions.CombatTagPlusExtension;
 import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import com.jazzkuh.gunshell.compatibility.extensions.abstraction.ExtensionImpl;
 import lombok.Getter;
@@ -20,10 +21,14 @@ import java.util.Optional;
 public class CompatibilityManager {
     private static final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName();
     public static final @Getter String version = bukkitVersion.substring(bukkitVersion.lastIndexOf('.') + 1);
-    private @Getter HashMap<Extension, ExtensionImpl> extensions = new HashMap<>();
+    private final @Getter HashMap<Extension, ExtensionImpl> extensions = new HashMap<>();
 
     public WorldGuardExtension getWorldGuardExtension() {
         return new WorldGuardExtension();
+    }
+
+    public CombatTagPlusExtension getCombatTagPlusExtension() {
+        return new CombatTagPlusExtension();
     }
 
     public boolean isExtensionEnabled(Extension extension) {
@@ -33,6 +38,10 @@ public class CompatibilityManager {
     public void registerExtensions() {
         if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
             extensions.put(Extension.WORLDGUARD, getWorldGuardExtension());
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("CombatTagPlus") != null) {
+            extensions.put(Extension.COMBATTAGPLUS, new CombatTagPlusExtension());
         }
     }
 
@@ -121,6 +130,6 @@ public class CompatibilityManager {
     }
 
     public enum Extension {
-        WORLDGUARD
+        WORLDGUARD, COMBATTAGPLUS
     }
 }

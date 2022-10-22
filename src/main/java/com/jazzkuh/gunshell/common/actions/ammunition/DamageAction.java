@@ -44,6 +44,10 @@ public class DamageAction extends AbstractAmmunitionAction {
             if (playerTarget.getGameMode() == GameMode.SPECTATOR
                     || playerTarget.getGameMode() == GameMode.CREATIVE) return;
 
+            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
+                compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
+            }
+
             MessagesConfig.BULLET_HIT_BY_PLAYER.get(playerTarget,
                     new PlaceHolder("Name", player.getName()));
         }

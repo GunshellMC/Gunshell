@@ -6,7 +6,7 @@
 
     <groupId>com.jazzkuh</groupId>
     <artifactId>Gunshell</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>Gunshell</name>

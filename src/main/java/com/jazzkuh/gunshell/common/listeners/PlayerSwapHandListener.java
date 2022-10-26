@@ -8,6 +8,7 @@ import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -66,10 +67,19 @@ public class PlayerSwapHandListener implements Listener {
 
             MessagesConfig.RELOADING_START.get(player);
 
-            if (ammoItem.getAmount() > 1) {
-                ammoItem.setAmount(ammoItem.getAmount() - 1);
+            if (player.getInventory().getItemInOffHand().equals(ammoItem)) {
+                ItemStack offHand = player.getInventory().getItemInOffHand();
+                if (offHand.getAmount() > 1) {
+                    offHand.setAmount(offHand.getAmount() - 1);
+                } else {
+                    player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+                }
             } else {
-                player.getInventory().removeItem(ammoItem);
+                if (ammoItem.getAmount() > 1) {
+                    ammoItem.setAmount(ammoItem.getAmount() - 1);
+                } else {
+                    player.getInventory().removeItem(ammoItem);
+                }
             }
 
             Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {

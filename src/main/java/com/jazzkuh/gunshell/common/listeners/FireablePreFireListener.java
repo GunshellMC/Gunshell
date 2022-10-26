@@ -20,6 +20,7 @@ import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -79,10 +80,19 @@ public class FireablePreFireListener implements Listener {
 
             MessagesConfig.RELOADING_START.get(player);
 
-            if (ammoItem.getAmount() > 1) {
-                ammoItem.setAmount(ammoItem.getAmount() - 1);
+            if (player.getInventory().getItemInOffHand().equals(ammoItem)) {
+                ItemStack offHand = player.getInventory().getItemInOffHand();
+                if (offHand.getAmount() > 1) {
+                    offHand.setAmount(offHand.getAmount() - 1);
+                } else {
+                    player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+                }
             } else {
-                player.getInventory().removeItem(ammoItem);
+                if (ammoItem.getAmount() > 1) {
+                    ammoItem.setAmount(ammoItem.getAmount() - 1);
+                } else {
+                    player.getInventory().removeItem(ammoItem);
+                }
             }
 
             Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {

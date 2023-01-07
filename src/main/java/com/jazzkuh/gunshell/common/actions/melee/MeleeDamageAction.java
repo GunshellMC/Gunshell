@@ -3,6 +3,8 @@ package com.jazzkuh.gunshell.common.actions.melee;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.common.actions.melee.abstraction.AbstractMeleeAction;
+import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Bukkit;
@@ -33,6 +35,9 @@ public class MeleeDamageAction extends AbstractMeleeAction {
             if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
                 compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
             }
+
+            MessagesConfig.MELEE_HIT_BY_PLAYER.get(playerTarget,
+                    new PlaceHolder("Name", player.getName()));
         }
 
         if (entity.getLocation().getWorld() != null) {

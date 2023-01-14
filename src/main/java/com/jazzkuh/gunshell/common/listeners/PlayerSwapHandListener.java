@@ -65,7 +65,10 @@ public class PlayerSwapHandListener implements Listener {
                 }
             }
 
-            MessagesConfig.RELOADING_START.get(player);
+            MessagesConfig.RELOADING_START.get(player,
+                    new PlaceHolder("Durability", String.valueOf(durability)),
+                    new PlaceHolder("Ammo", String.valueOf(ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount)),
+                    new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
             if (player.getInventory().getItemInOffHand().equals(ammoItem)) {
                 ItemStack offHand = player.getInventory().getItemInOffHand();

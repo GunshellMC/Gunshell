@@ -110,7 +110,10 @@ public class FireablePreFireListener implements Listener {
                         new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
                 GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
-                MessagesConfig.RELOADING_FINISHED.get(player);
+                MessagesConfig.RELOADING_FINISHED.get(player,
+                        new PlaceHolder("Durability", String.valueOf(durability)),
+                        new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
+                        new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
             }, fireable.getReloadTime());
             return;
         }

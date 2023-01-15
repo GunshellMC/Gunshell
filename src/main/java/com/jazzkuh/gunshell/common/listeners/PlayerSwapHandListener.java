@@ -97,7 +97,10 @@ public class PlayerSwapHandListener implements Listener {
                         new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
                 GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
-                MessagesConfig.RELOADING_FINISHED.get(player);
+                MessagesConfig.RELOADING_FINISHED.get(player,
+                        new PlaceHolder("Durability", String.valueOf(durability)),
+                        new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
+                        new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));;
             }, fireable.getReloadTime());
         } else {
             GunshellAmmunition newAmmunition = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition()
@@ -111,7 +114,10 @@ public class PlayerSwapHandListener implements Listener {
 
             // Add the ammo to the player's inventory
             player.getInventory().addItem(ammoItem);
-            MessagesConfig.UNLOADING_FINISHED.get(player);
+            MessagesConfig.UNLOADING_FINISHED.get(player,
+                    new PlaceHolder("Durability", String.valueOf(durability)),
+                    new PlaceHolder("Ammo", String.valueOf(ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount)),
+                    new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));;
         }
     }
 }

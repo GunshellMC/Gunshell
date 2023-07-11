@@ -61,7 +61,7 @@ public class DemoMenuThrowableAction extends AbstractThrowableAction {
                         Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
             }
 
-            PluginUtils.getInstance().performRecoil(livingEntity, 0F, this.getThrowable().getKnockbackAmount());
+            PluginUtils.getInstance().performRecoil(livingEntity, player, 0F, this.getThrowable().getKnockbackAmount());
         }
     }
 }

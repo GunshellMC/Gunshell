@@ -15,6 +15,7 @@ import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.utils.ChatUtils;
+import com.jazzkuh.gunshell.utils.KnockbackUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
@@ -143,8 +144,7 @@ public class FireablePreFireListener implements Listener {
         PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);
         fireable.updateItemMeta(itemStack, ammo - 1);
 
-        PluginUtils.getInstance().performRecoil(player,
-                (float) fireable.getRecoilAmount(), fireable.getSelfKnockbackAmount());
+        KnockbackUtils.applySelfKnockback(player, fireable.getSelfKnockbackAmount());
 
         ParticleEffect particleEffect = new ParticleEffect(GunshellPlugin.getInstance().getEffectManager());
         particleEffect.particle = Particle.FLAME;

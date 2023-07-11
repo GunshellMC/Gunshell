@@ -93,7 +93,7 @@ public class PluginUtils {
         return new Location(player.getWorld(), x, y, z);
     }
 
-    public void performRecoil(LivingEntity livingEntity, float pitchIncrement, double knockback) {
+    public void performRecoil(LivingEntity livingEntity, Player player, float pitchIncrement, double knockback) {
         Location location = livingEntity.getLocation();
         if (pitchIncrement > 0) {
             float pitch = location.getPitch();
@@ -106,8 +106,8 @@ public class PluginUtils {
         }
 
         // Apply knockback
-        Vector vector = livingEntity.getLocation().getDirection().normalize().multiply(-knockback).setY(0);
-        livingEntity.setVelocity(vector);
+        double finalKnockback = ( knockback * 10 ) / 2;
+        KnockbackUtils.applyKnockBack(livingEntity, player, finalKnockback);
     }
 
     public ErrorResult getErrorResult(int port) {

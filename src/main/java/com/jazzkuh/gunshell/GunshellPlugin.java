@@ -89,7 +89,6 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         Bukkit.getPluginManager().registerEvents(new FireableToggleScopeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerRestoreModifiedListener(), this);
-        Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerArmorStandManipulateListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerEatListener(), this);

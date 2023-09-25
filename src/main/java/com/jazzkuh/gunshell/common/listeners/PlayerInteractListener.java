@@ -8,7 +8,7 @@ import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.worldguard.WorldGuardExtension;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -52,8 +52,8 @@ public class PlayerInteractListener implements Listener {
                 case RIGHT_CLICK_AIR: {
                     FireablePreFireEvent fireablePreFireEvent = new FireablePreFireEvent(player, fireable);
 
-                    if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
-                            && compatibilityManager.getWorldGuardExtension().isFlagState(player, player.getLocation(),
+                    if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
+                            && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
                             WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
                         fireablePreFireEvent.setCancelled(true);
                         MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);
@@ -77,8 +77,8 @@ public class PlayerInteractListener implements Listener {
 
             ThrowablePreFireEvent throwablePreFireEvent = new ThrowablePreFireEvent(player, throwable);
 
-            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
-                    && compatibilityManager.getWorldGuardExtension().isFlagState(player, player.getLocation(),
+            if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
+                    && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
                     WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
                 throwablePreFireEvent.setCancelled(true);
                 MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);

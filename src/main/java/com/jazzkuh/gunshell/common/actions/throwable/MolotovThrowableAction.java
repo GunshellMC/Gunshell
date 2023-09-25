@@ -5,7 +5,7 @@ import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.worldguard.WorldGuardExtension;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,8 +47,8 @@ public class MolotovThrowableAction extends AbstractThrowableAction {
         CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
         Set<Block> tempUndoList = new HashSet<>();
         for (Block block : blocks) {
-            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD) &&
-                    compatibilityManager.getWorldGuardExtension().isFlagState(player, block.getLocation(), WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) continue;
+            if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class) &&
+                    ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, block.getLocation(), WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) continue;
 
             if (block.getType() == Material.AIR) {
                 GunshellPlugin.getInstance().getUndoList().add(block);

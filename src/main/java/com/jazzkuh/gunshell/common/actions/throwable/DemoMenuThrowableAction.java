@@ -5,7 +5,8 @@ import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.combattagplus.CombatTagPlusExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.worldguard.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
@@ -39,8 +40,8 @@ public class DemoMenuThrowableAction extends AbstractThrowableAction {
 
         for (LivingEntity livingEntity : livingEntities) {
             CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
-            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
-                    && compatibilityManager.getWorldGuardExtension().isFlagState(player, livingEntity.getLocation(),
+            if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
+                    && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, livingEntity.getLocation(),
                     WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
 
             if (livingEntity instanceof Player) {
@@ -48,8 +49,9 @@ public class DemoMenuThrowableAction extends AbstractThrowableAction {
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR
                         || playerTarget.getGameMode() == GameMode.CREATIVE) return;
 
-                if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
-                    compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
+                if (compatibilityManager.isExtensionEnabled(CombatTagPlusExtension.class)) {
+                    CombatTagPlusExtension combatTagPlusExtension = (CombatTagPlusExtension) compatibilityManager.getExtension(CombatTagPlusExtension.class);
+                    combatTagPlusExtension.getTagManager().tag(playerTarget, player);
                 }
 
                 CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();

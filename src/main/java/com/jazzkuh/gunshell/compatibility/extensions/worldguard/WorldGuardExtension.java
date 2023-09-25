@@ -1,7 +1,8 @@
-package com.jazzkuh.gunshell.compatibility.extensions;
+package com.jazzkuh.gunshell.compatibility.extensions.worldguard;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
-import com.jazzkuh.gunshell.compatibility.extensions.abstraction.ExtensionImpl;
+import com.jazzkuh.gunshell.compatibility.framework.Extension;
+import com.jazzkuh.gunshell.compatibility.framework.ExtensionInfo;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +16,8 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
 
-public class WorldGuardExtension implements ExtensionImpl {
+@ExtensionInfo(name = "WorldGuardExtension", loadPlugin = "WorldGuard")
+public class WorldGuardExtension implements Extension {
     private final @Getter WorldGuardWrapper wrapper = WorldGuardWrapper.getInstance();
     private final @Getter HashMap<GunshellFlag, IWrappedFlag<WrappedState>> gunshellFlags = new HashMap<>();
 

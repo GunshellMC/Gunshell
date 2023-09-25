@@ -6,6 +6,7 @@ import com.jazzkuh.gunshell.common.actions.melee.abstraction.AbstractMeleeAction
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
+import com.jazzkuh.gunshell.compatibility.extensions.combattagplus.CombatTagPlusExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -32,8 +33,9 @@ public class MeleeDamageAction extends AbstractMeleeAction {
             if (playerTarget.getGameMode() == GameMode.SPECTATOR
                     || playerTarget.getGameMode() == GameMode.CREATIVE) return;
 
-            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
-                compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
+            if (compatibilityManager.isExtensionEnabled(CombatTagPlusExtension.class)) {
+                CombatTagPlusExtension combatTagPlusExtension = (CombatTagPlusExtension) compatibilityManager.getExtension(CombatTagPlusExtension.class);
+                combatTagPlusExtension.getTagManager().tag(playerTarget, player);
             }
 
             MessagesConfig.MELEE_HIT_BY_PLAYER.get(playerTarget,

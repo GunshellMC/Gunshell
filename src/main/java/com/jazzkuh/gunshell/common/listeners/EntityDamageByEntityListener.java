@@ -9,7 +9,7 @@ import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.worldguard.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
@@ -39,8 +39,8 @@ public class EntityDamageByEntityListener implements Listener {
         if (!NBTEditor.contains(itemStack, "gunshell_melee_key")) return;
 
         CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
-        if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
-                && compatibilityManager.getWorldGuardExtension().isFlagState(player, player.getLocation(),
+        if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
+                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
                 WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
             MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);
             return;
@@ -60,8 +60,8 @@ public class EntityDamageByEntityListener implements Listener {
         event.setDamage(0);
 
         // Deny if the attacker is outside a region but the entity is.
-        if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.WORLDGUARD)
-                && compatibilityManager.getWorldGuardExtension().isFlagState(player, entity.getLocation(),
+        if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
+                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
                 WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
 
         int durability = NBTEditor.getInt(itemStack, DURABILITY_KEY);

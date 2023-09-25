@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.ProxySelector;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -132,6 +133,8 @@ public class PluginUtils {
 
     private JsonObject getJSON(String url, String method) {
         try {
+            ProxySelector.setDefault(null);
+
             HttpURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
             connection.setConnectTimeout(5000);
             connection.setRequestMethod(method);

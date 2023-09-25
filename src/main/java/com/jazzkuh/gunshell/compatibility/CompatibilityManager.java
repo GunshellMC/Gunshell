@@ -2,9 +2,11 @@ package com.jazzkuh.gunshell.compatibility;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
-import com.jazzkuh.gunshell.compatibility.extensions.CombatTagPlusExtension;
-import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
-import com.jazzkuh.gunshell.compatibility.extensions.abstraction.ExtensionImpl;
+import com.jazzkuh.gunshell.compatibility.extensions.combattagplus.CombatTagPlusExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.nogunshellblacklist.NoGunshellBlacklistExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.worldguard.WorldGuardExtension;
+import com.jazzkuh.gunshell.compatibility.framework.Extension;
+import com.jazzkuh.gunshell.compatibility.framework.ExtensionInfo;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
@@ -15,52 +17,53 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class CompatibilityManager {
     private static final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName();
     public static final @Getter String version = bukkitVersion.substring(bukkitVersion.lastIndexOf('.') + 1);
-    private final @Getter HashMap<Extension, ExtensionImpl> extensions = new HashMap<>();
+    private final @Getter Set<Extension> extensions = new HashSet<>();
 
-    public WorldGuardExtension getWorldGuardExtension() {
-        return new WorldGuardExtension();
+    public CompatibilityManager() {
+        extensions.add(new CombatTagPlusExtension());
+        extensions.add(new WorldGuardExtension());
+        extensions.add(new NoGunshellBlacklistExtension());
     }
 
-    public CombatTagPlusExtension getCombatTagPlusExtension() {
-        return new CombatTagPlusExtension();
-    }
+    public void initialize(InitializationStage stage) {
+        for (Extension extension : extensions) {
+            if (!extension.getClass().isAnnotationPresent(ExtensionInfo.class)) continue;
+            ExtensionInfo info = extension.getClass().getAnnotation(ExtensionInfo.class);
 
-    public boolean isExtensionEnabled(Extension extension) {
-        return extensions.containsKey(extension);
-    }
+            if (!Bukkit.getPluginManager().isPluginEnabled(info.loadPlugin())) continue;
 
-    public void registerExtensions() {
-        if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
-            extensions.put(Extension.WORLDGUARD, getWorldGuardExtension());
-        }
-
-        if (Bukkit.getPluginManager().getPlugin("CombatTagPlus") != null) {
-            extensions.put(Extension.COMBATTAGPLUS, new CombatTagPlusExtension());
-        }
-    }
-
-    public void enableExtensions() {
-        for (ExtensionImpl extension : extensions.values()) {
-            extension.onEnable();
+            if (stage == InitializationStage.LOAD) {
+                extension.onLoad();
+                GunshellPlugin.getInstance().getLogger().info("Loaded extension " + info.name() + " for plugin " + info.loadPlugin());
+            } else if (stage == InitializationStage.ENABLE) {
+                extension.onEnable();
+                GunshellPlugin.getInstance().getLogger().info("Enabled extension " + info.name() + " for plugin " + info.loadPlugin());
+            } else if (stage == InitializationStage.DISABLE) {
+                extension.onDisable();
+                GunshellPlugin.getInstance().getLogger().info("Disabled extension " + info.name() + " for plugin " + info.loadPlugin());
+            }
         }
     }
 
-    public void loadExtensions() {
-        for (ExtensionImpl extension : extensions.values()) {
-            extension.onLoad();
-        }
+    public boolean isExtensionEnabled(Class<? extends Extension> extensionClass) {
+        if (!extensionClass.isAnnotationPresent(ExtensionInfo.class)) return false;
+        ExtensionInfo info =extensionClass.getAnnotation(ExtensionInfo.class);
+
+        return Bukkit.getPluginManager().isPluginEnabled(info.loadPlugin());
     }
 
-    public void disableExtensions() {
-        for (ExtensionImpl extension : extensions.values()) {
-            extension.onDisable();
+    public Extension getExtension(Class<? extends Extension> extensionClass) {
+        for (Extension extension : extensions) {
+            if (extension.getClass().equals(extensionClass)) return extension;
         }
+        return null;
     }
 
     public CompatibilityLayer getCompatibilityLayer() {
@@ -129,7 +132,9 @@ public class CompatibilityManager {
         }
     }
 
-    public enum Extension {
-        WORLDGUARD, COMBATTAGPLUS
+    public enum InitializationStage {
+        LOAD,
+        ENABLE,
+        DISABLE
     }
 }

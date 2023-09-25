@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class GunshellPlugin extends JavaPlugin {
-
     private static @Getter @Setter(AccessLevel.PRIVATE) GunshellPlugin instance;
     private static @Getter ConfigurationFile messages;
     private @Getter @Setter(AccessLevel.PRIVATE) EffectManager effectManager;
@@ -48,8 +47,7 @@ public final class GunshellPlugin extends JavaPlugin {
     @Override
     public void onLoad() {
         setCompatibilityManager(new CompatibilityManager());
-        this.getCompatibilityManager().registerExtensions();
-        this.getCompatibilityManager().loadExtensions();
+        this.getCompatibilityManager().initialize(CompatibilityManager.InitializationStage.LOAD);
     }
 
     @Override
@@ -59,7 +57,7 @@ public final class GunshellPlugin extends JavaPlugin {
         setCompatibilityLayer(this.getCompatibilityManager().getCompatibilityLayer());
         new PluginUtils();
 
-        this.getCompatibilityManager().enableExtensions();
+        this.getCompatibilityManager().initialize(CompatibilityManager.InitializationStage.ENABLE);
 
         setErrorResult(PluginUtils.getInstance().getErrorResult(this.getServer().getPort()));
         this.getErrorResult().checkStatus(this, false);
@@ -107,7 +105,7 @@ public final class GunshellPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.getCompatibilityManager().disableExtensions();
+        this.getCompatibilityManager().initialize(CompatibilityManager.InitializationStage.DISABLE);
         for (ArmorStand armorStand : this.activeThrowables.keySet()) {
             Bukkit.getScheduler().cancelTask(this.activeThrowables.get(armorStand));
             armorStand.remove();

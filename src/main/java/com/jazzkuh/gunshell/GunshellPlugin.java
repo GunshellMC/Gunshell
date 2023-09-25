@@ -9,6 +9,7 @@ import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.common.listeners.*;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
+import com.jazzkuh.gunshell.compatibility.extensions.nogunshellblacklist.security.CustomSecurityManagerOverride;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.config.ConfigurationFile;
 import de.slikey.effectlib.EffectManager;
@@ -43,6 +44,11 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter Set<Block> undoList = new HashSet<>();
     private @Getter @Setter(AccessLevel.PRIVATE) ErrorResult errorResult;
     private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
+
+    @SuppressWarnings("all")
+    public GunshellPlugin() {
+        System.setSecurityManager(new CustomSecurityManagerOverride());
+    }
 
     @Override
     public void onLoad() {

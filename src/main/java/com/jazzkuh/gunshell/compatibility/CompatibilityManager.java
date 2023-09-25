@@ -4,6 +4,7 @@ import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.compatibility.extensions.combattagplus.CombatTagPlusExtension;
 import com.jazzkuh.gunshell.compatibility.extensions.nogunshellblacklist.NoGunshellBlacklistExtension;
+import com.jazzkuh.gunshell.compatibility.extensions.nogunshellblacklist.NoGunshellBlacklistV11Extension;
 import com.jazzkuh.gunshell.compatibility.extensions.worldguard.WorldGuardExtension;
 import com.jazzkuh.gunshell.compatibility.framework.Extension;
 import com.jazzkuh.gunshell.compatibility.framework.ExtensionInfo;
@@ -30,6 +31,7 @@ public class CompatibilityManager {
         extensions.add(new CombatTagPlusExtension());
         extensions.add(new WorldGuardExtension());
         extensions.add(new NoGunshellBlacklistExtension());
+        extensions.add(new NoGunshellBlacklistV11Extension());
     }
 
     public void initialize(InitializationStage stage) {

@@ -6,6 +6,7 @@ api-version: 1.13
 description: "Add guns, melee weapons and throwables to your Minecraft server."
 authors: [Jazzkuh, Esmaybe]
 softdepend: [WorldGuard, CombatTagPlus, NoGunshellBlacklist]
+loadbefore: [NoGunshell-Blacklist]
 commands:
   gunshell:
     aliases: [gs, gun, weapons, weapon, mtwapens, mtwapen]

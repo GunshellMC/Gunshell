@@ -1,10 +1,15 @@
 package com.jazzkuh.gunshell.common;
 
 import com.jazzkuh.gunshell.api.enums.BuiltinAmmoActionType;
+import com.jazzkuh.gunshell.api.enums.BuiltinThrowableActionType;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.common.actions.ammunition.DamageAction;
+import com.jazzkuh.gunshell.common.actions.ammunition.DemoMenuAction;
+import com.jazzkuh.gunshell.common.actions.ammunition.EndCreditsAction;
 import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AbstractAmmunitionAction;
+import com.jazzkuh.gunshell.common.actions.throwable.DemoMenuThrowableAction;
+import com.jazzkuh.gunshell.common.actions.throwable.EndCreditsThrowableAction;
 
 import java.util.HashMap;
 import java.util.Map;

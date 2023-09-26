@@ -8,6 +8,7 @@ import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.common.listeners.*;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
+import com.jazzkuh.gunshell.utils.Metrics;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.config.ConfigurationFile;
 import de.slikey.effectlib.EffectManager;
@@ -55,6 +56,7 @@ public final class GunshellPlugin extends JavaPlugin {
         setCompatibilityLayer(this.getCompatibilityManager().getCompatibilityLayer());
         new PluginUtils();
 
+        new Metrics(this, 19900);
         this.getCompatibilityManager().initialize(CompatibilityManager.InitializationStage.ENABLE);
 
         setWeaponRegistry(new WeaponRegistry(this));

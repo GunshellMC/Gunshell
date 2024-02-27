@@ -100,6 +100,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
 
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
+        if (customModelData != 0) itemBuilder.setCustomModelData(customModelData);
         return itemBuilder;
     }
     public void updateItemMeta(ItemStack itemStack, int ammo) {

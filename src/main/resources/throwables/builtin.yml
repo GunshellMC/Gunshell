@@ -1,11 +1,9 @@
 grenade:
     name: "&9Grenade"
     lore:
-      - '&6Officieel Minetopia Wapen'
+      - '&8&oBe careful with this one! Might explode...'
     material: IRON_INGOT
-    nbt:
-      key: "mtcustom"
-      value: "grenade_3"
+    customModelData: 1
     damage: 16
     range: 5
     fuseTime: 4
@@ -15,11 +13,9 @@ grenade:
 molotov:
     name: "&cMolotov"
     lore:
-        - '&6Officieel Minetopia Wapen'
+        - '&8&oBe careful with this one! Might explode...'
     material: IRON_INGOT
-    nbt:
-        key: "mtcustom"
-        value: "grenade_1"
+    customModelData: 2
     fuseTime: 2
     cooldown: 5
     actionType: MOLOTOV
@@ -28,11 +24,9 @@ molotov:
 flashbang:
     name: "&9Flashbang"
     lore:
-        - '&6Officieel Minetopia Wapen'
+        - '&8&oBe careful with this one! Might explode...'
     material: IRON_INGOT
-    nbt:
-        key: "mtcustom"
-        value: "grenade_4"
+    customModelData: 2
     range: 4
     fuseTime: 2
     cooldown: 5
@@ -41,20 +35,20 @@ flashbang:
         duration: 10
         amplifier: 1
 
-dev_credit:
-    name: "&5Dev Credit"
+dev_credit_end:
+    name: "&5Dev Credit (End Credits)"
     lore:
-      - '&6Officieel Minetopia Wapen'
+      - '&8&oJokes from the developers!'
     material: REDSTONE_TORCH
     range: 6
     fuseTime: 4
     cooldown: 5
     knockbackAmount: 0.5
     actionType: END_CREDITS
-dev_credit2:
+dev_credit_demo:
     name: "&5Dev Credit (Demo Menu)"
     lore:
-      - '&6Officieel Minetopia Wapen'
+        - '&8&oJokes from the developers!'
     material: REDSTONE_TORCH
     range: 6
     fuseTime: 4

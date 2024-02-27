@@ -1,156 +1,119 @@
-revolver_ammo:
-  name: '&8Revolver Ammo'
-  lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
-    - '&7Ammo: &f<Ammo>'
-  material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 5
-  actionType: DAMAGE
 deserteagle_ammo:
   name: '&8Desert Eagle Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
+  ammo: 7
+  actionType: DAMAGE
+
+huntingrifle_ammo:
+  name: '&8Hunting Rifle Ammo'
+  lore:
+    - '&7Ammo: &f<Ammo>'
+  material: IRON_INGOT
   ammo: 5
   actionType: DAMAGE
-awg_ammo:
-  name: '&8AWG Ammo'
+
+doublebarreledshotgun_ammo:
+  name: '&8Double-Barreled Shotgun Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
+  ammo: 2
+  actionType: DAMAGE
+
+taser_ammo:
+  name: '&8Taser Ammo'
+  lore:
+    - '&7Ammo: &f<Ammo>'
+  material: IRON_INGOT
+  ammo: 1
+  actionType: DAMAGE
+
+glock_ammo:
+  name: '&8Glock Ammo'
+  lore:
+    - '&7Ammo: &f<Ammo>'
+  material: IRON_INGOT
   ammo: 15
   actionType: DAMAGE
-awp_ammo:
-  name: '&8AWP Ammo'
+
+mk7_ammo:
+  name: '&8MK7 Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 3
+  ammo: 20
   actionType: DAMAGE
-ballista_ammo:
-  name: '&8Ballista Ammo'
+
+mp7a1_ammo:
+  name: '&8MP7-A1 Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 8
+  ammo: 30
   actionType: DAMAGE
-fad_ammo:
-  name: '&8FAD Ammo'
+
+mcx_ammo:
+  name: '&8MCX Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 18
+  ammo: 25
   actionType: DAMAGE
-magnum44_ammo:
-  name: '&8Magnum44 Ammo'
+
+m58b_ammo:
+  name: '&8M58B Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 8
+  ammo: 20
   actionType: DAMAGE
-waltherp99_ammo:
-  name: '&8Walterp99 Ammo'
+
+m47d1_ammo:
+  name: '&8M47D1 Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
+  ammo: 20
+  actionType: DAMAGE
+
+g36c_ammo:
+  name: '&8G36C Ammo'
+  lore:
+    - '&7Ammo: &f<Ammo>'
+  material: IRON_INGOT
+  ammo: 30
+  actionType: DAMAGE
+
+mk18_ammo:
+  name: '&8MK18 Ammo'
+  lore:
+    - '&7Ammo: &f<Ammo>'
+  material: IRON_INGOT
+  ammo: 25
+  actionType: DAMAGE
+
+m1911_ammo:
+  name: '&8M1911 Ammo'
+  lore:
+    - '&7Ammo: &f<Ammo>'
+  material: IRON_INGOT
   ammo: 10
   actionType: DAMAGE
-glock19_ammo:
-  name: '&8Glock19 Ammo'
+
+mk2_ammo:
+  name: '&8MK2 Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
   ammo: 10
   actionType: DAMAGE
-mk14_ammo:
-  name: '&8MK14 Ammo'
+
+g45_ammo:
+  name: '&8G45 Ammo'
   lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
     - '&7Ammo: &f<Ammo>'
   material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 3
-  actionType: DAMAGE
-barret50_ammo:
-  name: '&8Barret50 Ammo'
-  lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
-    - '&7Ammo: &f<Ammo>'
-  material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 4
-  actionType: DAMAGE
-m16a4_ammo:
-  name: '&8M16A4 Ammo'
-  lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
-    - '&7Ammo: &f<Ammo>'
-  material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 15
-  actionType: DAMAGE
-m1a_ammo:
-  name: '&8M1A Ammo'
-  lore:
-    - '&6Officieel Minetopia Ammo.'
-    - ''
-    - '&7Ammo: &f<Ammo>'
-  material: IRON_INGOT
-  nbt:
-    key: mtcustom
-    value: revolver_bullets
-  ammo: 15
+  ammo: 12
   actionType: DAMAGE

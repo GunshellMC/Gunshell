@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.utils;
 
+import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Color;
@@ -334,9 +335,7 @@ public class ItemBuilder {
      * @param data The custom model data value.
      */
     public ItemBuilder setCustomModelData(Integer data) {
-        ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(data);
-        is.setItemMeta(im);
+        GunshellPlugin.getInstance().getCompatibilityLayer().setCustomModelData(is, data);
         return this;
     }
 

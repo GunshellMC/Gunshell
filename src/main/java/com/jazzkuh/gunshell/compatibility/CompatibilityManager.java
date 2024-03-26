@@ -14,6 +14,8 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
 
 import java.util.HashSet;
@@ -125,6 +127,11 @@ public class CompatibilityManager {
                 @Override
                 public boolean isPassable(Block block) {
                     return block.isEmpty();
+                }
+
+                @Override
+                public void setCustomModelData(ItemStack itemStack, int customModelData) {
+                    throw new UnsupportedOperationException("This server version is not supported by Gunshell");
                 }
             };
         }

@@ -14,6 +14,8 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.RayTraceResult;
 
 import java.util.Optional;
@@ -80,5 +82,14 @@ public class v1_16_R3 implements CompatibilityLayer {
     @Override
     public boolean isPassable(Block block) {
         return block.isPassable();
+    }
+
+    @Override
+    public void setCustomModelData(ItemStack itemStack, int customModelData) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) return;
+
+        itemMeta.setCustomModelData(customModelData);
+        itemStack.setItemMeta(itemMeta);
     }
 }

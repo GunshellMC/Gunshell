@@ -19,6 +19,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.codemc.worldguardwrapper.flag.WrappedState;
 
 public class DamageAction extends AbstractAmmunitionAction {
@@ -74,14 +75,11 @@ public class DamageAction extends AbstractAmmunitionAction {
         PluginUtils.getInstance().performRecoil(livingEntity, player, 0F, this.getFireable().getKnockbackAmount());
 
         if (damage > livingEntity.getHealth()) {
+            livingEntity.damage(0, player);
             livingEntity.setHealth(0D);
         } else {
-            EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
-                    EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK, damage);
+            livingEntity.damage(0, player);
             livingEntity.setHealth(livingEntity.getHealth() - damage);
-
-            livingEntity.setLastDamageCause(entityDamageByEntityEvent);
-            Bukkit.getPluginManager().callEvent(entityDamageByEntityEvent);
         }
     }
 }

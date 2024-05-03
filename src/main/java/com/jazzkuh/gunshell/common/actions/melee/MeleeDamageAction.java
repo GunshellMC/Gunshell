@@ -54,7 +54,7 @@ public class MeleeDamageAction extends AbstractMeleeAction {
         if (damage > entity.getHealth()) {
             entity.setHealth(0D);
 
-            GunshellDeathEvent gunshellDeathEvent = new GunshellDeathEvent(player);
+            GunshellDeathEvent gunshellDeathEvent = new GunshellDeathEvent(player, entity);
             Bukkit.getPluginManager().callEvent(gunshellDeathEvent);
         } else {
             EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, entity,

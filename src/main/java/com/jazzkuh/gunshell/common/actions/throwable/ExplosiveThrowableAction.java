@@ -70,7 +70,7 @@ public class ExplosiveThrowableAction extends AbstractThrowableAction {
             if (damage > livingEntity.getHealth()) {
                 livingEntity.setHealth(0D);
 
-                GunshellDeathEvent gunshellDeathEvent = new GunshellDeathEvent(player);
+                GunshellDeathEvent gunshellDeathEvent = new GunshellDeathEvent(player, livingEntity);
                 Bukkit.getPluginManager().callEvent(gunshellDeathEvent);
             } else {
                 EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,

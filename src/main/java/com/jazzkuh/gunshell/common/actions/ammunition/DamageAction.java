@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.common.actions.ammunition;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.events.GunshellDeathEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
@@ -19,7 +20,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.codemc.worldguardwrapper.flag.WrappedState;
 
 public class DamageAction extends AbstractAmmunitionAction {
@@ -75,11 +75,17 @@ public class DamageAction extends AbstractAmmunitionAction {
         PluginUtils.getInstance().performRecoil(livingEntity, player, 0F, this.getFireable().getKnockbackAmount());
 
         if (damage > livingEntity.getHealth()) {
-            livingEntity.damage(0, player);
             livingEntity.setHealth(0D);
+
+            GunshellDeathEvent gunshellDeathEvent = new GunshellDeathEvent(player);
+            Bukkit.getPluginManager().callEvent(gunshellDeathEvent);
         } else {
-            livingEntity.damage(0, player);
+            EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
+                    EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK, damage);
             livingEntity.setHealth(livingEntity.getHealth() - damage);
+
+            livingEntity.setLastDamageCause(entityDamageByEntityEvent);
+            Bukkit.getPluginManager().callEvent(entityDamageByEntityEvent);
         }
     }
 }

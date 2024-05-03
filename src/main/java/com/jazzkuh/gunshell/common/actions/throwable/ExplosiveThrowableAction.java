@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.common.actions.throwable;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.events.GunshellDeathEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
@@ -68,6 +69,9 @@ public class ExplosiveThrowableAction extends AbstractThrowableAction {
 
             if (damage > livingEntity.getHealth()) {
                 livingEntity.setHealth(0D);
+
+                GunshellDeathEvent gunshellDeathEvent = new GunshellDeathEvent(player);
+                Bukkit.getPluginManager().callEvent(gunshellDeathEvent);
             } else {
                 EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, livingEntity,
                         EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK, damage);

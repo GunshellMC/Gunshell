@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.common.actions.melee;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.events.GunshellDeathEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.common.actions.melee.abstraction.AbstractMeleeAction;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
@@ -52,6 +53,9 @@ public class MeleeDamageAction extends AbstractMeleeAction {
 
         if (damage > entity.getHealth()) {
             entity.setHealth(0D);
+
+            GunshellDeathEvent gunshellDeathEvent = new GunshellDeathEvent(player);
+            Bukkit.getPluginManager().callEvent(gunshellDeathEvent);
         } else {
             EntityDamageByEntityEvent entityDamageByEntityEvent = new EntityDamageByEntityEvent(player, entity,
                     EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK, damage);

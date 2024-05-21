@@ -26,6 +26,11 @@ public class v1_20_R3 implements CompatibilityLayer {
         RayTraceResult result = player.getWorld()
                 .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), entity ->
                         entity != player);
+
+        if (DefaultConfig.RAYTRACE_PARTICLE_ENABLED.asBoolean()) {
+            spawnParticleLine(result == null ? null : result.getHitPosition(), player, (int) range);
+        }
+
         if (result == null) {
             return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
         }

@@ -38,6 +38,11 @@ public class v1_12_R1 implements CompatibilityLayer {
         Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
 
         RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), null);
+
+        if (DefaultConfig.RAYTRACE_PARTICLE_ENABLED.asBoolean()) {
+            spawnParticleLine(result == null ? null : result.getHitPosition(), player, (int) range);
+        }
+
         if (result == null) {
             return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
         }

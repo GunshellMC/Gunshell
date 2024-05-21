@@ -11,7 +11,8 @@ public enum DefaultConfig {
     PER_WEAPON_COOLDOWN("per-weapon-cooldown", true),
     HITBOX_INCREASE("hitbox-increase", 0.2),
     PROTECTION_DAMAGE_REDUCTION_ENABLED("protection-damage-reduction.enabled", true),
-    PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5);
+    PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5),
+    RAYTRACE_PARTICLE_ENABLED("raytrace-particle.enabled", true);
 
     private final @Getter String path;
     private final @Getter Object value;

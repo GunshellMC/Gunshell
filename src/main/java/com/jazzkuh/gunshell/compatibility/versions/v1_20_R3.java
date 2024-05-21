@@ -77,7 +77,7 @@ public class v1_20_R3 implements CompatibilityLayer {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         org.bukkit.inventory.ItemStack itemStack = XMaterial.AIR.parseItem();
         if (!forRemoval) {
-            itemStack = XMaterial.PUMPKIN.parseItem();
+            itemStack = XMaterial.CARVED_PUMPKIN.parseItem();
         }
 
         craftPlayer.getHandle().b.a(new PacketPlayOutSetSlot(0, 0, 5,

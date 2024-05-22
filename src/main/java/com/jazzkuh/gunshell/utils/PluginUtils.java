@@ -83,20 +83,24 @@ public class PluginUtils {
         return new Location(player.getWorld(), x, y, z);
     }
 
-    public void performRecoil(LivingEntity livingEntity, Player player, float pitchIncrement, double knockback) {
-        Location location = livingEntity.getLocation();
+    public void recoil(Player player, float pitchIncrement, double knockback) {
+        Location location = player.getLocation();
         if (pitchIncrement > 0) {
             float pitch = location.getPitch();
             location.setPitch(pitch - pitchIncrement);
 
             // Use a cause other than PLUGIN or COMMAND because essentials sucks lol.
-            Vector playerVelocity = livingEntity.getVelocity();
-            livingEntity.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
-            livingEntity.setVelocity(playerVelocity);
+            Vector playerVelocity = player.getVelocity();
+            player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            player.setVelocity(playerVelocity);
         }
 
+        KnockbackUtils.applySelfKnockback(player, knockback);
+    }
+
+    public void playerKnockBack(LivingEntity livingEntity, Player player, double knockback) {
         // Apply knockback
-        double finalKnockback = ( knockback * 10 ) / 2;
+        double finalKnockback = (knockback * 10) / 2;
         KnockbackUtils.applyKnockBack(livingEntity, player, finalKnockback);
     }
 }

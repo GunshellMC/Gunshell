@@ -198,6 +198,8 @@ public class FireablePreFireListener implements Listener {
             return;
         }
 
+        PluginUtils.getInstance().recoil(player, (float) fireable.getRecoilAmount(), fireable.getSelfKnockbackAmount());
+
         FireableDamageEvent fireableDamageEvent = new FireableDamageEvent(player, rayTraceResult, fireable);
         Bukkit.getPluginManager().callEvent(fireableDamageEvent);
         if (fireableDamageEvent.isCancelled()) return;

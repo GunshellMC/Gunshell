@@ -63,7 +63,7 @@ public class EndCreditsThrowableAction extends AbstractThrowableAction {
                         Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
             }
 
-            PluginUtils.getInstance().performRecoil(livingEntity, player, 0F, this.getThrowable().getKnockbackAmount());
+            PluginUtils.getInstance().playerKnockBack(livingEntity, player, this.getThrowable().getKnockbackAmount());
         }
     }
 }

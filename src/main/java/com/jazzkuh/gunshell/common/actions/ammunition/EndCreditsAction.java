@@ -63,6 +63,6 @@ public class EndCreditsAction extends AbstractAmmunitionAction {
         MessagesConfig.BULLET_HIT_OTHER.get(player,
                 new PlaceHolder("Name", livingEntity.getName()));
 
-        PluginUtils.getInstance().performRecoil(livingEntity, player, 0F, this.getFireable().getKnockbackAmount());
+        PluginUtils.getInstance().playerKnockBack(livingEntity, player, this.getFireable().getKnockbackAmount());
     }
 }

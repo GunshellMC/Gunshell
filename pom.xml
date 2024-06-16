@@ -147,7 +147,7 @@
         <dependency>
             <groupId>de.slikey</groupId>
             <artifactId>effectlib</artifactId>
-            <version>10.3</version>
+            <version>10.3.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -159,7 +159,8 @@
         <dependency>
             <groupId>org.codemc.worldguardwrapper</groupId>
             <artifactId>worldguardwrapper</artifactId>
-            <version>1.2.0-SNAPSHOT</version>
+            <version>1.2.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.Byteflux.CombatTagPlus</groupId>

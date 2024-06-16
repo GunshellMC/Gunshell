@@ -5,7 +5,7 @@ import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
@@ -81,6 +81,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.scopePumpkinBlurEnabled = configuration.getBoolean("scope.pumpkinBlurEnabled", false);
         this.scopeAmplifier = configuration.getInt("scope.amplifier", 8);
     }
+
     @Override
     public ItemBuilder getItem(int durability) {
         double attackSpeed = -4 + 1 / this.getGrabCooldown();

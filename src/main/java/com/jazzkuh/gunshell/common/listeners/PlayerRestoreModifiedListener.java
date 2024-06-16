@@ -4,7 +4,7 @@ import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

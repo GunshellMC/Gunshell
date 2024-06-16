@@ -23,8 +23,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public class CompatibilityManager {
-    private static final String bukkitVersion = Bukkit.getServer().getClass().getPackage().getName();
-    public static final @Getter String version = bukkitVersion.substring(bukkitVersion.lastIndexOf('.') + 1);
+    public static final @Getter String minecraftVersion = Bukkit.getServer().getBukkitVersion().split("-")[0];
+    public static final @Getter String version = "v" + minecraftVersion.replace(".", "_");
     private final @Getter Set<Extension> extensions = new HashSet<>();
 
     public CompatibilityManager() {
@@ -72,7 +72,7 @@ public class CompatibilityManager {
             GunshellPlugin.getInstance().getLogger().info("Using compatibility layer for version " + version);
             return (CompatibilityLayer) nmsClass.getConstructors()[0].newInstance();
         } catch (Exception ignored) {
-            GunshellPlugin.getInstance().getLogger().warning("Your server version (" + version + ") is not supported by Gunshell. " +
+            GunshellPlugin.getInstance().getLogger().warning("Your server version (" + minecraftVersion + ") is not supported by Gunshell. " +
                     "Loading a fallback compatibility layer but this may cause issues so you are advised to update your server to the latest version.");
             return new CompatibilityLayer() {
                 @Override

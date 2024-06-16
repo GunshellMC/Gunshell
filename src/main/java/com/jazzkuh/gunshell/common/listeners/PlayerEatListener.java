@@ -1,7 +1,7 @@
 package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftSnowball;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;

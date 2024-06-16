@@ -21,7 +21,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +30,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class v1_12_R1 implements CompatibilityLayer {
+public class v1_12_2 implements CompatibilityLayer {
     @Override
     public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
         Location start = player.getEyeLocation();
@@ -431,6 +430,5 @@ public class v1_12_R1 implements CompatibilityLayer {
 
     @Override
     public void setCustomModelData(ItemStack itemStack, int customModelData) {
-        return;
     }
 }

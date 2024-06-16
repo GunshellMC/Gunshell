@@ -2,7 +2,6 @@ package com.jazzkuh.gunshell.utils;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -16,10 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Easily create itemstacks, without messing your hands. <i>Note that if you do
@@ -341,17 +337,18 @@ public class ItemBuilder {
 
     public ItemBuilder setAttackSpeed(Double amount) {
         try {
-            NBTEditor.NBTCompound compound = NBTEditor.getNBTCompound(is);
             if (CompatibilityManager.getVersion().equals("v1_12_R1")) {
-                compound.set("generic.attackSpeed", "tag", "AttributeModifiers", null, "AttributeName");
-                compound.set("AttackSpeed", "tag", "AttributeModifiers", 0, "Name");
-                compound.set("mainhand", "tag", "AttributeModifiers", 0, "Slot");
-                compound.set(0, "tag", "AttributeModifiers", 0, "Operation");
-                compound.set(amount, "tag", "AttributeModifiers", 0, "Amount");
-                compound.set(new int[]{0, 0, 0, 0}, "tag", "AttributeModifiers", 0, "UUID");
-                compound.set(99L, "tag", "AttributeModifiers", 0, "UUIDMost");
-                compound.set(77530600L, "tag", "AttributeModifiers", 0, "UUIDLeast");
-                ItemStack itemStack = NBTEditor.getItemFromTag(compound);
+                Map<String, Object> map = new HashMap<>() {{
+                    put("AttributeName", "generic.attackSpeed");
+                    put("Name", "AttackSpeed");
+                    put("Amount", amount);
+                    put("Operation", 0);
+                    put("UUIDLeast", 77530600L);
+                    put("UUIDMost", 99L);
+                    put("Slot", "mainhand");
+                }};
+
+                ItemStack itemStack = NBTEditor.set(is, List.of(map), "AttributeModifiers");
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 is.setItemMeta(itemMeta);
             } else {

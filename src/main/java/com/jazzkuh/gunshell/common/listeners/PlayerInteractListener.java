@@ -9,7 +9,7 @@ import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.compatibility.extensions.worldguard.WorldGuardExtension;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

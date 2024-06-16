@@ -5,7 +5,7 @@ import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;

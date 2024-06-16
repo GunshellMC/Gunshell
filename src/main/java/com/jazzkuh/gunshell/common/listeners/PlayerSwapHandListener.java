@@ -6,7 +6,7 @@ import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.PluginUtils;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

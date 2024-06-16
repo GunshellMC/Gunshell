@@ -2,7 +2,7 @@ package com.jazzkuh.gunshell.utils;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

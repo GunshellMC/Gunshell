@@ -18,7 +18,7 @@ import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.KnockbackUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import de.slikey.effectlib.effect.ParticleEffect;
-import io.github.bananapuncher714.nbteditor.NBTEditor;
+import com.jazzkuh.gunshell.utils.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;

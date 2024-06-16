@@ -1,8 +1,10 @@
 package com.jazzkuh.gunshell.common.configuration;
 
+import com.cryptomorin.xseries.particles.Particles;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 
 import java.util.List;
 
@@ -12,7 +14,7 @@ public enum DefaultConfig {
     HITBOX_INCREASE("hitbox-increase", 0.2),
     PROTECTION_DAMAGE_REDUCTION_ENABLED("protection-damage-reduction.enabled", true),
     PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5),
-    RAYTRACE_PARTICLE_ENABLED("raytrace-particle.enabled", true);
+    RAYTRACE_PARTICLE_ENABLED("raytrace-particle.enabled", false);
 
     private final @Getter String path;
     private final @Getter Object value;

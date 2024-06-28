@@ -352,10 +352,7 @@ public class ItemBuilder {
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 is.setItemMeta(itemMeta);
             } else {
-                ItemMeta itemMeta = is.getItemMeta();
-                itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-                        new AttributeModifier("AttackSpeed", amount, AttributeModifier.Operation.ADD_NUMBER));
-                is.setItemMeta(itemMeta);
+                throw new UnsupportedOperationException("Attack speed is not supported in this version.");
             }
         } catch (Exception ignored) {
         }

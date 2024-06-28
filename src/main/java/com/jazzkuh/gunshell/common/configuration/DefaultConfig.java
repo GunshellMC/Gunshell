@@ -40,10 +40,6 @@ public enum DefaultConfig {
         return GunshellPlugin.getInstance().getConfig().getDouble(this.getPath());
     }
 
-    public Location asLocation() {
-        return GunshellPlugin.getInstance().getConfig().getLocation(this.getPath());
-    }
-
     public List<String> asList() {
         return GunshellPlugin.getInstance().getConfig().getStringList(this.getPath());
     }

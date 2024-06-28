@@ -39,7 +39,7 @@ public class ExplosiveThrowableAction extends AbstractThrowableAction {
         double damage = getThrowable().getDamage();
 
         for (Block block : blocks) {
-            block.getWorld().createExplosion(block.getLocation(), 0F, false, false);
+            block.getWorld().createExplosion(block.getLocation(), 0F, false);
         }
 
         for (LivingEntity livingEntity : livingEntities) {

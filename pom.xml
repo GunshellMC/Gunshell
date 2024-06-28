@@ -6,7 +6,7 @@
 
     <groupId>com.jazzkuh</groupId>
     <artifactId>Gunshell</artifactId>
-    <version>1.7.1</version>
+    <version>1.7.1-Legacy</version>
     <packaging>jar</packaging>
 
     <name>Gunshell</name>
@@ -101,17 +101,13 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <repository>
-            <id>craftville-repository</id>
-            <url>https://nexus.craftville.net/repository/public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -145,9 +141,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.slikey</groupId>
-            <artifactId>effectlib</artifactId>
-            <version>10.3.2</version>
+            <groupId>com.elmakers.mine.bukkit</groupId>
+            <artifactId>EffectLib</artifactId>
+            <version>9.4</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -175,30 +171,6 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc.</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc..</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.19.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc...</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.20.6-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc....</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.21-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -316,14 +316,7 @@ public class v1_12_2 implements CompatibilityLayer {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (!(obj instanceof org.bukkit.util.RayTraceResult)) return false;
-            org.bukkit.util.RayTraceResult other = (org.bukkit.util.RayTraceResult) obj;
-            if (!hitPosition.equals(other.getHitPosition())) return false;
-            if (!Objects.equals(hitBlock, other.getHitBlock())) return false;
-            if (!Objects.equals(hitBlockFace, other.getHitBlockFace())) return false;
-            if (!Objects.equals(hitEntity, other.getHitEntity())) return false;
-            return true;
+            return this == obj;
         }
 
         @Override

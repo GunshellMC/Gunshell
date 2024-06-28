@@ -141,13 +141,13 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>11.0.0</version>
+            <version>11.2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.slikey</groupId>
-            <artifactId>effectlib</artifactId>
-            <version>10.3.2</version>
+            <groupId>com.github.elBukkit</groupId>
+            <artifactId>EffectLib</artifactId>
+            <version>master-6da42ce94b-1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

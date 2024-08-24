@@ -1,17 +1,20 @@
 package com.jazzkuh.gunshell.compatibility;
 
+import com.cryptomorin.xseries.particles.XParticle;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
+import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import de.slikey.effectlib.effect.ParticleEffect;
 import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+
+import java.util.Optional;
 
 public interface CompatibilityLayer {
     GunshellRayTraceResult performRayTrace(LivingEntity player, double range);
@@ -31,13 +34,16 @@ public interface CompatibilityLayer {
             hitLocation = vector.toLocation(player.getWorld());
         }
 
+        Optional<XParticle> particle = XParticle.of(DefaultConfig.PARTICLE_TRAIL.asString());
+        if (particle.isEmpty()) return;
+
         Location playerLocation = PluginUtils.getInstance().getRightHandLocation((Player) player);
 
         Vector directionVector = hitLocation.toVector().subtract(playerLocation.toVector()).normalize();
         for (double i = 0; i < playerLocation.distance(hitLocation); i += 0.2) {
             Location particleLocation = playerLocation.clone().add(directionVector.clone().multiply(i));
             ParticleEffect particleEffect = new ParticleEffect(GunshellPlugin.getInstance().getEffectManager());
-            particleEffect.particle = Particle.REDSTONE;
+            particleEffect.particle = particle.get().get();
             particleEffect.color = Color.WHITE;
             particleEffect.particleSize = 1;
             particleEffect.particleCount = 1;

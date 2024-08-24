@@ -14,7 +14,9 @@ public enum DefaultConfig {
     HITBOX_INCREASE("hitbox-increase", 0.2),
     PROTECTION_DAMAGE_REDUCTION_ENABLED("protection-damage-reduction.enabled", true),
     PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5),
-    RAYTRACE_PARTICLE_ENABLED("raytrace-particle.enabled", false);
+    RAYTRACE_PARTICLE_ENABLED("raytrace-particle.enabled", false),
+    SMART_AMMO_LOADING("smart-ammo-loading", false),
+    PARTICLE_TRAIL("particle-trail", "REDSTONE");
 
     private final @Getter String path;
     private final @Getter Object value;

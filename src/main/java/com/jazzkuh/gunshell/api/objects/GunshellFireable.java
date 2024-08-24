@@ -1,15 +1,20 @@
 package com.jazzkuh.gunshell.api.objects;
 
+import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.interfaces.GunshellWeaponImpl;
+import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.NBTEditor;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,6 +23,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class GunshellFireable implements GunshellWeaponImpl {
+    private final String GUN_AMMO_KEY = "gunshell_weapon_ammo";
+    private final String GUN_AMMOTYPE_KEY = "gunshell_weapon_ammotype";
+
+    private final String AMMUNITION_KEY = "gunshell_ammunition_key";
+    private final String AMMUNITION_AMMO_KEY = "gunshell_ammunition_ammo";
+
     private final @NotNull @Getter String key;
     private final @NotNull @Getter ConfigurationSection configuration;
 
@@ -120,5 +131,86 @@ public class GunshellFireable implements GunshellWeaponImpl {
     @Override
     public ItemStack getItemStack(int durability) {
         return getItem(durability).toItemStack();
+    }
+
+    public void reload(Player player, ItemStack itemStack, int durability) {
+        ItemStack ammoItem = PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).get();
+        int ammoAmount = NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY);
+        GunshellPlugin.getInstance().getReloadingSet().add(player.getUniqueId());
+
+        for (Player target : player.getLocation().getWorld().getPlayers()) {
+            if (target.getLocation().distance(player.getLocation()) <= this.getSoundRange()) {
+                target.playSound(player.getLocation(), this.getReloadSound(), this.getSoundVolume(), 1F);
+            }
+        }
+
+        MessagesConfig.RELOADING_START.get(player,
+                new PlaceHolder("Durability", String.valueOf(durability)),
+                new PlaceHolder("Ammo", String.valueOf(ammoAmount > this.getMaxAmmo() ? this.getMaxAmmo() : ammoAmount)),
+                new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())));
+
+        int neededAmmo = this.getMaxAmmo();
+        int maxAmmoOnItem = NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY);
+
+        if (neededAmmo > maxAmmoOnItem && DefaultConfig.SMART_AMMO_LOADING.asBoolean()) {
+            ammoAmount = takeAmmoSmart(player, this, ammunitionKeys);
+        } else {
+            takeAmmoSingle(player, ammoItem);
+        }
+
+        int finalAmmoAmount = ammoAmount > this.getMaxAmmo() ? this.getMaxAmmo() : ammoAmount;
+        Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
+            PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, finalAmmoAmount);
+            PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMOTYPE_KEY, NBTEditor.getString(ammoItem, AMMUNITION_KEY));
+            this.updateItemMeta(itemStack, finalAmmoAmount);
+
+            MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
+                    new PlaceHolder("Durability", String.valueOf(durability)),
+                    new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
+                    new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())));
+
+            GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
+            MessagesConfig.RELOADING_FINISHED.get(player,
+                    new PlaceHolder("Durability", String.valueOf(durability)),
+                    new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
+                    new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())));
+        }, this.getReloadTime());
+    }
+
+    private int takeAmmoSmart(Player player, GunshellFireable fireable, List<String> ammunitionKeys) {
+        List<ItemStack> ammoItems = PluginUtils.getInstance().getItemsWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).get();
+        int neededAmmo = fireable.getMaxAmmo();
+
+        int gatheredAmmo = 0;
+        for (ItemStack ammoItem : ammoItems) {
+            int ammoInClip = NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY);
+            while (gatheredAmmo < neededAmmo) {
+                takeAmmoSingle(player, ammoItem);
+                gatheredAmmo += ammoInClip;
+
+                if (gatheredAmmo >= neededAmmo) {
+                    return gatheredAmmo;
+                }
+            }
+        }
+
+        return gatheredAmmo;
+    }
+
+    private void takeAmmoSingle(Player player, ItemStack ammoItem) {
+        if (player.getInventory().getItemInOffHand().equals(ammoItem)) {
+            ItemStack offHand = player.getInventory().getItemInOffHand();
+            if (offHand.getAmount() > 1) {
+                offHand.setAmount(offHand.getAmount() - 1);
+            } else {
+                player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
+            }
+        } else {
+            if (ammoItem.getAmount() > 1) {
+                ammoItem.setAmount(ammoItem.getAmount() - 1);
+            } else {
+                player.getInventory().removeItem(ammoItem);
+            }
+        }
     }
 }

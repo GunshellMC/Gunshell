@@ -131,7 +131,7 @@ public class GunshellCMD extends AbstractCommand {
         }
     }
 
-    @Subcommand(name = "getammo", usage = "<ammoType> [player]", permission = true,
+    @Subcommand(name = "getammo", usage = "<ammoType> [player|ammo]", permission = true,
             aliases = "ammo", description = "Get ammo from the config files.")
     public void onGetAmmo(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
@@ -152,7 +152,11 @@ public class GunshellCMD extends AbstractCommand {
 
         if (args.length > 2) {
             Player target = Bukkit.getPlayer(args[2]);
-            if (target == null) {
+            if (target == null && PluginUtils.getInstance().isValidInteger(args[2])) {
+                ((Player) sender).getInventory().addItem(ammunition.getItem(Integer.parseInt(args[2])).toItemStack());
+                MessagesConfig.SUCCESSFULLY_ADDED_AMMO_TO_INVENTORY.get(sender);
+                return;
+            } else if (target == null) {
                 MessagesConfig.ERROR_PLAYER_NOT_FOUND.get(sender);
                 return;
             }

@@ -39,10 +39,11 @@ public class FireablePreFireListener implements Listener {
     private final String DURABILITY_KEY = "gunshell_weapon_durability";
 
     private final String AMMUNITION_KEY = "gunshell_ammunition_key";
-    private final String AMMUNITION_AMMO_KEY = "gunshell_ammunition_ammo";
 
     @EventHandler
     public void onFireablePreFire(FireablePreFireEvent event) {
+        if (event.isCancelled()) return;
+
         Player player = event.getPlayer();
         GunshellFireable fireable = event.getFireable();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
@@ -69,53 +70,7 @@ public class FireablePreFireListener implements Listener {
         }
 
         if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).isPresent()) {
-            ItemStack ammoItem = PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).get();
-            int ammoAmount = NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY);
-            GunshellPlugin.getInstance().getReloadingSet().add(player.getUniqueId());
-
-            for (Player target : player.getLocation().getWorld().getPlayers()) {
-                if (target.getLocation().distance(player.getLocation()) <= fireable.getSoundRange()) {
-                    target.playSound(player.getLocation(), fireable.getReloadSound(), fireable.getSoundVolume(), 1F);
-                }
-            }
-
-            MessagesConfig.RELOADING_START.get(player,
-                    new PlaceHolder("Durability", String.valueOf(durability)),
-                    new PlaceHolder("Ammo", String.valueOf(ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount)),
-                    new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
-
-            if (player.getInventory().getItemInOffHand().equals(ammoItem)) {
-                ItemStack offHand = player.getInventory().getItemInOffHand();
-                if (offHand.getAmount() > 1) {
-                    offHand.setAmount(offHand.getAmount() - 1);
-                } else {
-                    player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-                }
-            } else {
-                if (ammoItem.getAmount() > 1) {
-                    ammoItem.setAmount(ammoItem.getAmount() - 1);
-                } else {
-                    player.getInventory().removeItem(ammoItem);
-                }
-            }
-
-            Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
-                int finalAmmoAmount = ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount;
-                PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, finalAmmoAmount);
-                PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMOTYPE_KEY, NBTEditor.getString(ammoItem, AMMUNITION_KEY));
-                fireable.updateItemMeta(itemStack, finalAmmoAmount);
-
-                MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
-                        new PlaceHolder("Durability", String.valueOf(durability)),
-                        new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
-                        new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
-
-                GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
-                MessagesConfig.RELOADING_FINISHED.get(player,
-                        new PlaceHolder("Durability", String.valueOf(durability)),
-                        new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
-                        new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
-            }, fireable.getReloadTime());
+            fireable.reload(player, itemStack, durability);
             return;
         }
 

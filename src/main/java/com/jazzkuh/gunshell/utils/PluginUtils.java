@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +61,18 @@ public class PluginUtils {
         }
 
         return Optional.empty();
+    }
+
+    public Optional<List<ItemStack>> getItemsWithNBTTags(Player player, String tag, List<String> values) {
+        List<ItemStack> items = new ArrayList<>();
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null || !NBTEditor.contains(item, tag)) continue;
+            if (values.stream().anyMatch(value -> NBTEditor.getString(item, tag).equals(value))) {
+                items.add(item);
+            }
+        }
+
+        return items.isEmpty() ? Optional.empty() : Optional.of(items);
     }
 
     public void applyNBTTag(ItemStack itemStack, String key, Object value) {

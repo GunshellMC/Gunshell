@@ -179,12 +179,13 @@ public class GunshellFireable implements GunshellWeaponImpl {
 
     private int takeAmmoSmart(Player player, GunshellFireable fireable, List<String> ammunitionKeys) {
         List<ItemStack> ammoItems = PluginUtils.getInstance().getItemsWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).get();
-        int neededAmmo = fireable.getMaxAmmo();
+        int neededAmmo = ammoItems.stream().map(ammoItem -> NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY)).reduce(0, Integer::sum);
+        if (neededAmmo > fireable.getMaxAmmo()) neededAmmo = fireable.getMaxAmmo();
 
         int gatheredAmmo = 0;
         for (ItemStack ammoItem : ammoItems) {
             int ammoInClip = NBTEditor.getInt(ammoItem, AMMUNITION_AMMO_KEY);
-            while (gatheredAmmo < neededAmmo) {
+            while (gatheredAmmo < neededAmmo && ammoItem.getAmount() > 0) {
                 takeAmmoSingle(player, ammoItem);
                 gatheredAmmo += ammoInClip;
 

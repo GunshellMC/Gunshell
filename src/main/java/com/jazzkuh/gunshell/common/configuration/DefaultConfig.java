@@ -15,8 +15,8 @@ public enum DefaultConfig {
     PROTECTION_DAMAGE_REDUCTION_ENABLED("protection-damage-reduction.enabled", true),
     PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5),
     RAYTRACE_PARTICLE_ENABLED("raytrace-particle.enabled", false),
-    SMART_AMMO_LOADING("smart-ammo-loading", false),
-    PARTICLE_TRAIL("particle-trail", "REDSTONE");
+    PARTICLE_TRAIL("raytrace-particle.trail", "CRIT"),
+    SMART_AMMO_LOADING("smart-ammo-loading", false);
 
     private final @Getter String path;
     private final @Getter Object value;

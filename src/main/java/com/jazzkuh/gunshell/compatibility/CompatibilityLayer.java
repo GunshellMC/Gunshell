@@ -44,13 +44,13 @@ public interface CompatibilityLayer {
             Location particleLocation = playerLocation.clone().add(directionVector.clone().multiply(i));
             ParticleEffect particleEffect = new ParticleEffect(GunshellPlugin.getInstance().getEffectManager());
             particleEffect.particle = particle.get().get();
-            particleEffect.color = Color.WHITE;
             particleEffect.particleSize = 1;
             particleEffect.particleCount = 1;
             particleEffect.iterations = 1;
             particleEffect.particleOffsetX = 0F;
             particleEffect.particleOffsetY = 0F;
             particleEffect.particleOffsetZ = 0F;
+
             particleEffect.setLocation(particleLocation);
             particleEffect.start();
         }

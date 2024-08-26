@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.common.listeners;
 
+import com.cryptomorin.xseries.particles.XParticle;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
 import com.jazzkuh.gunshell.api.events.FireableDamageEvent;
@@ -102,7 +103,7 @@ public class FireablePreFireListener implements Listener {
         KnockbackUtils.applySelfKnockback(player, fireable.getSelfKnockbackAmount());
 
         ParticleEffect particleEffect = new ParticleEffect(GunshellPlugin.getInstance().getEffectManager());
-        particleEffect.particle = Particle.FLAME;
+        particleEffect.particle = XParticle.of(DefaultConfig.SHOOT_PARTICLE.asString()).orElse(XParticle.FLAME).get();
         particleEffect.particleSize = 1;
         particleEffect.particleCount = 8;
         particleEffect.iterations = 1;
@@ -142,7 +143,7 @@ public class FireablePreFireListener implements Listener {
             GunshellPlugin.getInstance().getModifiedPlayerMap().remove(player.getUniqueId());
         }
 
-        if (rayTraceResult.getOptionalBlock().isPresent()) {
+        if (rayTraceResult.getOptionalBlock().isPresent() && DefaultConfig.ENABLE_BLOCK_BREAK_PARTICLES.asBoolean()) {
             Block block = rayTraceResult.getOptionalBlock().get();
             block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
         }

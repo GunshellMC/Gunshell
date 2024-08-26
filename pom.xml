@@ -145,9 +145,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.elBukkit</groupId>
-            <artifactId>EffectLib</artifactId>
-            <version>master-6da42ce94b-1</version>
+            <groupId>de.slikey</groupId>
+            <artifactId>effectlib</artifactId>
+            <version>10.3.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -171,12 +171,6 @@
         </dependency>
 
         <!-- NMS -->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.spigotmc.</groupId>
             <artifactId>spigot</artifactId>

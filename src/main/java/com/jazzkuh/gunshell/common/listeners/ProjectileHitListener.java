@@ -1,14 +1,10 @@
 package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
-import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftSnowball;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
@@ -23,8 +19,6 @@ public class ProjectileHitListener implements Listener {
             if (count - 1 <= 0) return;
 
             Snowball bouncyGrenade = grenade.getWorld().spawn(grenade.getLocation(), Snowball.class);
-            ((CraftSnowball) bouncyGrenade).getHandle()
-                    .a(CraftItemStack.asNMSCopy(new ItemStack(Material.STICK)), 1.0F);
             bouncyGrenade.setMetadata("gunshell_grenade_bounce",
                     new FixedMetadataValue(GunshellPlugin.getInstance(), count-1));
 

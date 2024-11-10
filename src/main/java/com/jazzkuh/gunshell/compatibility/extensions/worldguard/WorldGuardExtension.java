@@ -24,6 +24,7 @@ public class WorldGuardExtension implements Extension {
     @Override
     public void onEnable() {
         GunshellPlugin.getInstance().getLogger().info("WorldGuard compatibility layer enabled!");
+        this.onLoad();
     }
 
     @Override

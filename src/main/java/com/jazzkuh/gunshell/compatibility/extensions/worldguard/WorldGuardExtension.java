@@ -37,7 +37,8 @@ public class WorldGuardExtension implements Extension {
         try {
             this.registerFlags();
         } catch (Exception exception) {
-            GunshellPlugin.getInstance().getLogger().warning("Failed to register WorldGuard flags!");
+            GunshellPlugin.getInstance().getLogger().warning("Failed to register WorldGuard flags: " + exception.getMessage());
+            exception.printStackTrace();
         }
     }
 

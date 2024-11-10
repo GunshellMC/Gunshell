@@ -23,10 +23,10 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
        name: Gunshell
-       path: ./build/libs/Gunshell-*.jar
+       path: ./target/Gunshell-*.jar
     - name: sends the jarfile to the discord
       uses: sinshutu/upload-to-discord@master
       env:

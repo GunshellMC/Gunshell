@@ -4,7 +4,8 @@ website: 'https://www.spigotmc.org/resources/76350/'
 main: com.jazzkuh.gunshell.GunshellPlugin
 api-version: 1.13
 description: "Add guns, melee weapons and throwables to your Minecraft server."
-authors: [Jazzkuh, Esmaybe]
+authors: [Jazzkuh, Esmaybe, Dominik]
+depend: [WorldGuard]
 softdepend: [WorldGuard, CombatTagPlus]
 commands:
   gunshell:

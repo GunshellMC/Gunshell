@@ -38,15 +38,10 @@ public class CompatibilityManager {
 
             if (stage == InitializationStage.LOAD) {
                 extension.onLoad();
-                GunshellPlugin.getInstance().getLogger().info("Loaded extension for this plugin");
             } else if (stage == InitializationStage.ENABLE) {
                 extension.onEnable();
-                GunshellPlugin.getInstance().getLogger().info("Enabled extension for this plugin");
             } else if (stage == InitializationStage.DISABLE) {
                 extension.onDisable();
-                GunshellPlugin.getInstance().getLogger().info("Disabled extension for this plugin");
-            } else {
-                extension.onLoad();
             }
         }
     }

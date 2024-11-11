@@ -6,7 +6,6 @@ api-version: 1.13
 load: STARTUP
 description: "Add guns, melee weapons and throwables to your Minecraft server."
 authors: [Jazzkuh, Esmaybe, Dominik]
-depend: [WorldGuard]
 softdepend: [WorldGuard, CombatTagPlus]
 commands:
   gunshell:

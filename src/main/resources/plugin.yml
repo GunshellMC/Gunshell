@@ -3,6 +3,7 @@ version: '${project.version}-${git.commit.id.describe-short}'
 website: 'https://www.spigotmc.org/resources/76350/'
 main: com.jazzkuh.gunshell.GunshellPlugin
 api-version: 1.13
+load: STARTUP
 description: "Add guns, melee weapons and throwables to your Minecraft server."
 authors: [Jazzkuh, Esmaybe, Dominik]
 depend: [WorldGuard]

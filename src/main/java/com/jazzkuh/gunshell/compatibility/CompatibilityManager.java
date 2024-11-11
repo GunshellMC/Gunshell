@@ -34,14 +34,20 @@ public class CompatibilityManager {
 
     public void initialize(InitializationStage stage) {
         for (Extension extension : extensions) {
+            if (!extension.getClass().isAnnotationPresent(ExtensionInfo.class)) continue;
             ExtensionInfo info = extension.getClass().getAnnotation(ExtensionInfo.class);
+
+            if (!Bukkit.getPluginManager().isPluginEnabled(info.loadPlugin())) continue;
 
             if (stage == InitializationStage.LOAD) {
                 extension.onLoad();
+                GunshellPlugin.getInstance().getLogger().info("Loaded extension " + info.name() + " for plugin " + info.loadPlugin());
             } else if (stage == InitializationStage.ENABLE) {
                 extension.onEnable();
+                GunshellPlugin.getInstance().getLogger().info("Enabled extension " + info.name() + " for plugin " + info.loadPlugin());
             } else if (stage == InitializationStage.DISABLE) {
                 extension.onDisable();
+                GunshellPlugin.getInstance().getLogger().info("Disabled extension " + info.name() + " for plugin " + info.loadPlugin());
             }
         }
     }

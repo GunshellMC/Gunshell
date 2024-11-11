@@ -34,10 +34,7 @@ public class CompatibilityManager {
 
     public void initialize(InitializationStage stage) {
         for (Extension extension : extensions) {
-            if (!extension.getClass().isAnnotationPresent(ExtensionInfo.class)) continue;
             ExtensionInfo info = extension.getClass().getAnnotation(ExtensionInfo.class);
-
-            if (!Bukkit.getPluginManager().isPluginEnabled(info.loadPlugin())) continue;
 
             if (stage == InitializationStage.LOAD) {
                 extension.onLoad();
@@ -48,6 +45,8 @@ public class CompatibilityManager {
             } else if (stage == InitializationStage.DISABLE) {
                 extension.onDisable();
                 GunshellPlugin.getInstance().getLogger().info("Disabled extension " + info.name() + " for plugin " + info.loadPlugin());
+            } else {
+                extension.onLoad();
             }
         }
     }

@@ -14,7 +14,7 @@ jobs:
     if: "!contains(github.event.commits[0].message, '[ci-skip]')"
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up JDK 21
       uses: actions/setup-java@v2
       with:
@@ -26,7 +26,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
        name: Gunshell
-       path: ./build/libs/Gunshell-*.jar
+       path: ./target/Gunshell-*.jar
     - name: sends the jarfile to the discord
       uses: sinshutu/upload-to-discord@master
       env:

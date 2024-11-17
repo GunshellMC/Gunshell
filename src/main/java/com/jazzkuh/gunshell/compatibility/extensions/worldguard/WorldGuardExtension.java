@@ -1,25 +1,31 @@
 package com.jazzkuh.gunshell.compatibility.extensions.worldguard;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.compatibility.extensions.worldguard.utils.WorldGuardUtils;
 import com.jazzkuh.gunshell.compatibility.framework.Extension;
 import com.jazzkuh.gunshell.compatibility.framework.ExtensionInfo;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.codemc.worldguardwrapper.WorldGuardWrapper;
-import org.codemc.worldguardwrapper.flag.IWrappedFlag;
-import org.codemc.worldguardwrapper.flag.WrappedState;
-import org.codemc.worldguardwrapper.region.IWrappedRegion;
 
 import java.util.HashMap;
-import java.util.Optional;
-import java.util.Set;
 
 @ExtensionInfo(name = "WorldGuardExtension", loadPlugin = "WorldGuard")
 public class WorldGuardExtension implements Extension {
-    private final @Getter WorldGuardWrapper wrapper = WorldGuardWrapper.getInstance();
-    private final @Getter HashMap<GunshellFlag, IWrappedFlag<WrappedState>> gunshellFlags = new HashMap<>();
+    private final @Getter HashMap<GunshellFlag, Flag<?>> gunshellFlags = new HashMap<>();
+
+    @Override
+    public void onLoad() {
+        try {
+            this.registerFlags();
+        } catch (Exception exception) {
+            GunshellPlugin.getInstance().getLogger().warning("Failed to register WorldGuard flags!");
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -31,44 +37,40 @@ public class WorldGuardExtension implements Extension {
         GunshellPlugin.getInstance().getLogger().info("WorldGuard compatibility layer disabled!");
     }
 
-    @Override
-    public void onLoad() {
-        try {
-            this.registerFlags();
-        } catch (Exception exception) {
-            GunshellPlugin.getInstance().getLogger().warning("Failed to register WorldGuard flags!");
-        }
-    }
-
     private void registerFlags() {
         for (GunshellFlag gunshellFlag : GunshellFlag.values()) {
-            Optional<IWrappedFlag<WrappedState>> wrappedFlag = wrapper.registerFlag(gunshellFlag.getFlagString(), WrappedState.class);
-            if (wrappedFlag.isPresent()) {
-                gunshellFlags.put(gunshellFlag, wrappedFlag.get());
+            try {
+                Flag<?> worldGuardFlag = WorldGuardUtils.registerStateFlag(gunshellFlag.getFlagString(), gunshellFlag.isDefaultState());
+                gunshellFlags.put(gunshellFlag, worldGuardFlag);
                 Bukkit.getLogger().info("[Gunshell] Registered WorldGuard flag: " + gunshellFlag.getFlagString());
-            } else {
+            } catch (Exception exception) {
                 Bukkit.getLogger().warning("[Gunshell] Failed to register WorldGuard flag: " + gunshellFlag.getFlagString());
             }
         }
     }
 
-    public boolean isFlagState(Player player, Location location, GunshellFlag gunshellFlag, WrappedState flagState) {
-        Set<IWrappedRegion> regions = wrapper.getRegions(location);
-        Optional<IWrappedFlag<WrappedState>> flag = wrapper.getFlag(gunshellFlag.getFlagString(), WrappedState.class);
-        if (flag.isEmpty() || regions.size() == 0) return false;
+    public boolean isFlagState(Location location, GunshellFlag gunshellFlag, boolean state) {
+        ProtectedRegion region = WorldGuardUtils.getProtectedRegion(location, priority -> priority >= 0);
+        if (region == null) return false;
 
-        WrappedState state = flag.map(mappedFlag -> wrapper.queryFlag(player, location, mappedFlag)
-                        .orElse(WrappedState.ALLOW)).orElse(WrappedState.ALLOW);
-        return state == flagState;
+        Flag<?> flag = gunshellFlags.get(gunshellFlag);
+        if (flag == null) return false;
+        if (!(flag instanceof StateFlag)) return false;
+
+        StateFlag stateFlag = (StateFlag) flag;
+        StateFlag.State flagState = WorldGuardUtils.getRegionFlag(region, stateFlag);
+        if (flagState == null) return false;
+
+        StateFlag.State neededState = state ? StateFlag.State.ALLOW : StateFlag.State.DENY;
+        return flagState == neededState;
     }
 
+    @AllArgsConstructor
+    @Getter
     public enum GunshellFlag {
-        GUNSHELL_USE_WEAPONS("gunshell-use-weapons");
+        GUNSHELL_USE_WEAPONS("gunshell-use-weapons", true);
 
-        private final @Getter String flagString;
-
-        GunshellFlag(String flagString) {
-            this.flagString = flagString;
-        }
+        private final String flagString;
+        private final boolean defaultState;
     }
 }

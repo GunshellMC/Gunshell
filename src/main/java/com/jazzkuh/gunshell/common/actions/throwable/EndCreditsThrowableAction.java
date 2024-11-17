@@ -18,7 +18,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.codemc.worldguardwrapper.flag.WrappedState;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -41,8 +40,8 @@ public class EndCreditsThrowableAction extends AbstractThrowableAction {
         for (LivingEntity livingEntity : livingEntities) {
             CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
             if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
-                    && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, livingEntity.getLocation(),
-                    WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
+                    && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(livingEntity.getLocation(),
+                    WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, false)) return;
 
             if (livingEntity instanceof Player) {
                 Player playerTarget = (Player) livingEntity;

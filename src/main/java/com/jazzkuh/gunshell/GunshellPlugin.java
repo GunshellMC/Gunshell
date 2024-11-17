@@ -45,13 +45,13 @@ public final class GunshellPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        setInstance(this);
         setCompatibilityManager(new CompatibilityManager());
         this.getCompatibilityManager().initialize(CompatibilityManager.InitializationStage.LOAD);
     }
 
     @Override
     public void onEnable() {
-        setInstance(this);
         setEffectManager(new EffectManager(this));
         setCompatibilityLayer(this.getCompatibilityManager().getCompatibilityLayer());
         new PluginUtils();

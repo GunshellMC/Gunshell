@@ -19,7 +19,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.codemc.worldguardwrapper.flag.WrappedState;
 
 public class PlayerInteractListener implements Listener {
     @EventHandler
@@ -53,8 +52,8 @@ public class PlayerInteractListener implements Listener {
                     FireablePreFireEvent fireablePreFireEvent = new FireablePreFireEvent(player, fireable);
 
                     if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
-                            && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
-                            WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
+                            && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player.getLocation(),
+                            WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, false)) {
                         fireablePreFireEvent.setCancelled(true);
                         MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);
                         return;
@@ -78,8 +77,8 @@ public class PlayerInteractListener implements Listener {
             ThrowablePreFireEvent throwablePreFireEvent = new ThrowablePreFireEvent(player, throwable);
 
             if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
-                    && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
-                    WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
+                    && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player.getLocation(),
+                    WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, false)) {
                 throwablePreFireEvent.setCancelled(true);
                 MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);
                 return;

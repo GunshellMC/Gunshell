@@ -17,7 +17,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.codemc.worldguardwrapper.flag.WrappedState;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -48,7 +47,7 @@ public class MolotovThrowableAction extends AbstractThrowableAction {
         Set<Block> tempUndoList = new HashSet<>();
         for (Block block : blocks) {
             if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class) &&
-                    ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, block.getLocation(), WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) continue;
+                    ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(block.getLocation(), WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, false)) continue;
 
             if (block.getType() == Material.AIR) {
                 GunshellPlugin.getInstance().getUndoList().add(block);

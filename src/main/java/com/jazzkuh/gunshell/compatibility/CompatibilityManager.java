@@ -37,7 +37,7 @@ public class CompatibilityManager {
             if (!extension.getClass().isAnnotationPresent(ExtensionInfo.class)) continue;
             ExtensionInfo info = extension.getClass().getAnnotation(ExtensionInfo.class);
 
-            if (!Bukkit.getPluginManager().isPluginEnabled(info.loadPlugin())) continue;
+            if (Bukkit.getPluginManager().getPlugin(info.loadPlugin()) == null) continue;
 
             if (stage == InitializationStage.LOAD) {
                 extension.onLoad();

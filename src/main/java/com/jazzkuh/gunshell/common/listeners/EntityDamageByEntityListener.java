@@ -22,7 +22,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.codemc.worldguardwrapper.flag.WrappedState;
 
 import java.util.UUID;
 
@@ -40,8 +39,8 @@ public class EntityDamageByEntityListener implements Listener {
 
         CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
         if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
-                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
-                WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) {
+                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player.getLocation(),
+                WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, false)) {
             MessagesConfig.ERROR_CANNOT_USE_GUNSHELL_WEAPONS_HERE.get(player);
             return;
         }
@@ -61,8 +60,8 @@ public class EntityDamageByEntityListener implements Listener {
 
         // Deny if the attacker is outside a region but the entity is.
         if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
-                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, player.getLocation(),
-                WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
+                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player.getLocation(),
+                WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, false)) return;
 
         int durability = NBTEditor.getInt(itemStack, DURABILITY_KEY);
 

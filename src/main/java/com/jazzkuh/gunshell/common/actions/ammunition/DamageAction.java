@@ -20,7 +20,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.codemc.worldguardwrapper.flag.WrappedState;
 
 public class DamageAction extends AbstractAmmunitionAction {
     public DamageAction(GunshellFireable fireable, GunshellAmmunition ammunition) {
@@ -38,8 +37,8 @@ public class DamageAction extends AbstractAmmunitionAction {
 
         CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
         if (compatibilityManager.isExtensionEnabled(WorldGuardExtension.class)
-                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(player, livingEntity.getLocation(),
-                WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, WrappedState.DENY)) return;
+                && ((WorldGuardExtension) compatibilityManager.getExtension(WorldGuardExtension.class)).isFlagState(livingEntity.getLocation(),
+                WorldGuardExtension.GunshellFlag.GUNSHELL_USE_WEAPONS, false)) return;
 
         if (livingEntity instanceof Player) {
             Player playerTarget = (Player) livingEntity;

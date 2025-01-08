@@ -1,6 +1,6 @@
 # Gunshell
 
-![Gunshell Banner](https://i.imgur.com/R2NBe8B.png)
+![Gunshell Banner](https://docs.gunshell.nl/gunshell_banner.png)
 
 <div style="text-align: center;">
 

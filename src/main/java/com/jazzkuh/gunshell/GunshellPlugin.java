@@ -1,20 +1,32 @@
 package com.jazzkuh.gunshell;
 
+import com.jazzkuh.commandlib.common.resolvers.Resolvers;
+import com.jazzkuh.commandlib.spigot.SpigotCommandLoader;
 import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
+import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
+import com.jazzkuh.gunshell.api.objects.GunshellFireable;
+import com.jazzkuh.gunshell.api.objects.GunshellMelee;
+import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.WeaponRegistry;
-import com.jazzkuh.gunshell.common.commands.GunshellCMD;
+import com.jazzkuh.gunshell.common.commands.GunshellCommand;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.common.listeners.*;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
+import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.Metrics;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.utils.command.resolvers.AmmoResolver;
+import com.jazzkuh.gunshell.utils.command.resolvers.FireableResolver;
+import com.jazzkuh.gunshell.utils.command.resolvers.MeleeResolver;
+import com.jazzkuh.gunshell.utils.command.resolvers.ThrowableResolver;
 import com.jazzkuh.gunshell.utils.config.ConfigurationFile;
 import de.slikey.effectlib.EffectManager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -71,7 +83,13 @@ public final class GunshellPlugin extends JavaPlugin {
         MessagesConfig.init();
         messages.saveConfig();
 
-        new GunshellCMD().register(this);
+        SpigotCommandLoader.setFormattingProvider((commandException, message) -> Component.text(ChatUtils.color(message)));
+        Resolvers.register(GunshellFireable.class, new FireableResolver());
+        Resolvers.register(GunshellAmmunition.class, new AmmoResolver());
+        Resolvers.register(GunshellMelee.class, new MeleeResolver());
+        Resolvers.register(GunshellThrowable.class, new ThrowableResolver());
+
+        new GunshellCommand().register(this);
 
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new FireablePreFireListener(), this);

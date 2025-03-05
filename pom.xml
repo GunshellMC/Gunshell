@@ -160,6 +160,12 @@
             <version>23.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.Jazzkuh.CommandLibrary</groupId>
+            <artifactId>spigot</artifactId>
+            <version>a5a2dec4a5</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- WorldGuard -->
         <dependency>

@@ -102,8 +102,8 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
-            <id>craftville-repository</id>
-            <url>https://nexus.craftville.net/repository/public/</url>
+            <id>sillystudios-repository-releases</id>
+            <url>https://repo.sillystudios.dev/releases</url>
         </repository>
         <repository>
             <id>enginehub</id>
@@ -149,9 +149,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.slikey</groupId>
-            <artifactId>effectlib</artifactId>
-            <version>10.3.2</version>
+            <groupId>com.elmakers.mine.bukkit</groupId>
+            <artifactId>EffectLib</artifactId>
+            <version>10.3-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

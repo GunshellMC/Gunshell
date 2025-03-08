@@ -6,7 +6,6 @@ import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import de.slikey.effectlib.effect.ParticleEffect;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;

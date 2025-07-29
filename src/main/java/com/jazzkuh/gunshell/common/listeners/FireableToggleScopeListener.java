@@ -20,8 +20,8 @@ public class FireableToggleScopeListener implements Listener {
 
         if (GunshellPlugin.getInstance().getModifiedPlayerMap().containsKey(player.getUniqueId())
                 && GunshellPlugin.getInstance().getModifiedPlayerMap().get(player.getUniqueId()) == PlayerTempModification.SCOPED) {
-            if (player.hasPotionEffect(PotionEffectType.SLOW)) {
-                player.removePotionEffect(PotionEffectType.SLOW);
+            if (player.hasPotionEffect(PotionEffectType.SLOWNESS)) {
+                player.removePotionEffect(PotionEffectType.SLOWNESS);
             }
             if (fireable.isScopePumpkinBlurEnabled()) {
                 compatibilityLayer.sendPumpkinEffect(player, true);
@@ -30,7 +30,7 @@ public class FireableToggleScopeListener implements Listener {
         } else {
             int scopeAmplifier = fireable.getScopeAmplifier();
             GunshellPlugin.getInstance().getModifiedPlayerMap().put(player.getUniqueId(), PlayerTempModification.SCOPED);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000000, scopeAmplifier, true));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 1000000, scopeAmplifier, true));
             if (fireable.isScopePumpkinBlurEnabled()) {
                 compatibilityLayer.sendPumpkinEffect(player, false);
             }

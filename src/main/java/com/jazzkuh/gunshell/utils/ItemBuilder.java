@@ -335,30 +335,16 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setAttackSpeed(Double amount) {
-        try {
-            if (CompatibilityManager.getVersion().equals("v1_12_R1")) {
-                Map<String, Object> map = new HashMap<>() {{
-                    put("AttributeName", "generic.attackSpeed");
-                    put("Name", "AttackSpeed");
-                    put("Amount", amount);
-                    put("Operation", 0);
-                    put("UUIDLeast", 77530600L);
-                    put("UUIDMost", 99L);
-                    put("Slot", "mainhand");
-                }};
+    public ItemBuilder setItemModel(String itemModel) {
+        GunshellPlugin.getInstance().getCompatibilityLayer().setItemModel(is, itemModel);
+        return this;
+    }
 
-                ItemStack itemStack = NBTEditor.set(is, List.of(map), "AttributeModifiers");
-                ItemMeta itemMeta = itemStack.getItemMeta();
-                is.setItemMeta(itemMeta);
-            } else {
-                ItemMeta itemMeta = is.getItemMeta();
-                itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-                        new AttributeModifier("AttackSpeed", amount, AttributeModifier.Operation.ADD_NUMBER));
-                is.setItemMeta(itemMeta);
-            }
-        } catch (Exception ignored) {
-        }
+    public ItemBuilder setAttackSpeed(Double amount) {
+        ItemMeta itemMeta = is.getItemMeta();
+        itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED,
+                new AttributeModifier("AttackSpeed", amount, AttributeModifier.Operation.ADD_NUMBER));
+        is.setItemMeta(itemMeta);
         return this;
     }
 

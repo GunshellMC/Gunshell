@@ -43,8 +43,8 @@ public class PluginUtils {
         ItemStack stack = isHeadShot ? entity.getEquipment().getHelmet() : entity.getEquipment().getChestplate();
         if (stack == null) return damage;
 
-        if (!stack.containsEnchantment(Enchantment.PROTECTION_PROJECTILE)) return damage;
-        int enchantmentLevel = stack.getEnchantmentLevel(Enchantment.PROTECTION_PROJECTILE);
+        if (!stack.containsEnchantment(Enchantment.PROJECTILE_PROTECTION)) return damage;
+        int enchantmentLevel = stack.getEnchantmentLevel(Enchantment.PROJECTILE_PROTECTION);
 
         int percentage = DefaultConfig.PROTECTION_DAMAGE_REDUCTION_AMOUNT.asInteger();
         if (percentage == 0) percentage = 5;

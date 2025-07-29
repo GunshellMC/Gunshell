@@ -25,6 +25,8 @@ public interface CompatibilityLayer {
 
     void setCustomModelData(ItemStack itemStack, int customModelData);
 
+    void setItemModel(ItemStack itemStack, String itemModel);
+
     default void spawnParticleLine(Vector vector, LivingEntity player, int range) {
         if (!(player instanceof Player)) return;
 

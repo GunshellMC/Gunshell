@@ -28,6 +28,7 @@ public class GunshellMelee {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
+    private final @Getter String itemModel;
     private @Getter @Setter double damage;
     private final @Getter double cooldown;
     private final @Getter double grabCooldown;
@@ -44,6 +45,7 @@ public class GunshellMelee {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
+        this.itemModel = configuration.getString("itemModel");
         this.damage = configuration.getDouble("damage", 5);
         this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
         this.grabCooldown = configuration.getDouble("grabCooldown", 1);
@@ -64,6 +66,7 @@ public class GunshellMelee {
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         if (customModelData != 0) itemBuilder.setCustomModelData(customModelData);
+        if (itemModel != null) itemBuilder.setItemModel(itemModel);
         return itemBuilder;
     }
 

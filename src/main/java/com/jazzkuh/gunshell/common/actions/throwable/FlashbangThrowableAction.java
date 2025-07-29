@@ -35,7 +35,7 @@ public class FlashbangThrowableAction extends AbstractThrowableAction {
         ArrayList<Block> blocks = this.getBlocksAroundCenter(location, getThrowable().getRange());
 
         for (Block block : blocks) {
-            block.getWorld().spawnParticle(Particle.SMOKE_LARGE, block.getLocation(), 1);
+            block.getWorld().spawnParticle(Particle.LARGE_SMOKE, block.getLocation(), 1);
         }
 
         int duration = configuration.getInt("options.duration", 10) * 20; // Tick based

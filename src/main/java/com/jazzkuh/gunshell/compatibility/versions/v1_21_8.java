@@ -7,9 +7,10 @@ import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import net.minecraft.network.protocol.game.PacketPlayOutSetSlot;
 import org.bukkit.FluidCollisionMode;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -20,7 +21,7 @@ import org.bukkit.util.RayTraceResult;
 
 import java.util.Optional;
 
-public class v1_20_4 implements CompatibilityLayer {
+public class v1_21_8 implements CompatibilityLayer {
     @Override
     public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
         RayTraceResult result = player.getWorld()
@@ -63,24 +64,24 @@ public class v1_20_4 implements CompatibilityLayer {
     @Override
     public void showEndCreditScene(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.e, 1f);
-        ((CraftPlayer) player).getHandle().c.a(gameStateChange);
+        ((CraftPlayer) player).getHandle().f.a(gameStateChange);
     }
 
     @Override
     public void showDemoMenu(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.f, 0f);
-        ((CraftPlayer) player).getHandle().c.a(gameStateChange);
+        ((CraftPlayer) player).getHandle().f.a(gameStateChange);
     }
 
     @Override
     public void sendPumpkinEffect(Player player, boolean forRemoval) {
         CraftPlayer craftPlayer = (CraftPlayer) player;
-        org.bukkit.inventory.ItemStack itemStack = XMaterial.AIR.parseItem();
+        ItemStack itemStack = XMaterial.AIR.parseItem();
         if (!forRemoval) {
             itemStack = XMaterial.CARVED_PUMPKIN.parseItem();
         }
 
-        craftPlayer.getHandle().c.a(new PacketPlayOutSetSlot(0, 0, 5,
+        craftPlayer.getHandle().f.a(new PacketPlayOutSetSlot(0, 0, 5,
                 CraftItemStack.asNMSCopy(itemStack)));
     }
 
@@ -95,6 +96,19 @@ public class v1_20_4 implements CompatibilityLayer {
         if (itemMeta == null) return;
 
         itemMeta.setCustomModelData(customModelData);
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    @Override
+    public void setItemModel(ItemStack itemStack, String itemModel) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) return;
+
+        String[] split = itemModel.split(":");
+        if (split.length != 2) throw new IllegalArgumentException("Item model must be in the format namespace:key");
+
+        NamespacedKey key = new NamespacedKey(split[0], split[1]);
+        itemMeta.setItemModel(key);
         itemStack.setItemMeta(itemMeta);
     }
 }

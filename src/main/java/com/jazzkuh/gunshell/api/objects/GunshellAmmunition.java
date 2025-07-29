@@ -26,6 +26,7 @@ public class GunshellAmmunition {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
+    private final @Getter String itemModel;
     private @Setter @Getter int ammo;
     private @Setter @Getter String actionType;
 
@@ -40,6 +41,7 @@ public class GunshellAmmunition {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
+        this.itemModel = configuration.getString("itemModel");
         this.ammo = configuration.getInt("ammo", 8);
         this.actionType = configuration.getString("actionType", BuiltinAmmoActionType.DAMAGE.toString()).toUpperCase();
     }
@@ -59,6 +61,7 @@ public class GunshellAmmunition {
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         if (customModelData != 0) itemBuilder.setCustomModelData(customModelData);
+        if (itemModel != null) itemBuilder.setItemModel(itemModel);
         return itemBuilder;
     }
 

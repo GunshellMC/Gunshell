@@ -39,6 +39,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
+    private final @Getter String itemModel;
     private @Getter @Setter int damage;
     private @Getter @Setter int headshotDamage;
     private @Getter @Setter int range;
@@ -71,6 +72,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
+        this.itemModel = configuration.getString("itemModel");
         this.damage = configuration.getInt("damage", 5);
         this.headshotDamage = configuration.getInt("headshotDamage", this.damage);
         this.range = configuration.getInt("range", 10);
@@ -113,6 +115,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         if (customModelData != 0) itemBuilder.setCustomModelData(customModelData);
+        if (itemModel != null) itemBuilder.setItemModel(itemModel);
         return itemBuilder;
     }
     public void updateItemMeta(ItemStack itemStack, int ammo) {

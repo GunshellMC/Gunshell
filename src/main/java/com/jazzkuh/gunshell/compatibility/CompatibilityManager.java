@@ -133,6 +133,11 @@ public class CompatibilityManager {
                 public void setCustomModelData(ItemStack itemStack, int customModelData) {
                     throw new UnsupportedOperationException("This server version is not supported by Gunshell");
                 }
+
+                @Override
+                public void setItemModel(ItemStack itemStack, String itemModel) {
+                    throw new UnsupportedOperationException("This server version is not supported by Gunshell");
+                }
             };
         }
     }

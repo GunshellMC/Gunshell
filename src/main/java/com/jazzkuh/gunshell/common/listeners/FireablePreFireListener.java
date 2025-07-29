@@ -134,8 +134,8 @@ public class FireablePreFireListener implements Listener {
 
         if (GunshellPlugin.getInstance().getModifiedPlayerMap().containsKey(player.getUniqueId())
                 && GunshellPlugin.getInstance().getModifiedPlayerMap().get(player.getUniqueId()) == PlayerTempModification.SCOPED) {
-            if (player.hasPotionEffect(PotionEffectType.SLOW)) {
-                player.removePotionEffect(PotionEffectType.SLOW);
+            if (player.hasPotionEffect(PotionEffectType.SLOWNESS)) {
+                player.removePotionEffect(PotionEffectType.SLOWNESS);
             }
             if (fireable.isScopePumpkinBlurEnabled()) {
                 compatibilityLayer.sendPumpkinEffect(player, true);

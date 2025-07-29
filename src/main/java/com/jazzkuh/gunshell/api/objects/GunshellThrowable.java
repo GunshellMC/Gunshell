@@ -24,6 +24,7 @@ public class GunshellThrowable {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
+    private final @Getter String itemModel;
     private final @Getter int damage;
     private final @Getter int range;
     private final @Getter int fuseTime;
@@ -42,6 +43,7 @@ public class GunshellThrowable {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
+        this.itemModel = configuration.getString("itemModel");
         this.damage = configuration.getInt("damage", 5);
         this.range = configuration.getInt("range", 10);
         this.fuseTime = configuration.getInt("fuseTime", 1) * 20; // convert to ticks
@@ -60,6 +62,7 @@ public class GunshellThrowable {
         if (hideItemFlags) itemBuilder.setItemFlag(ItemFlag.values());
         if (nbtKey != null && nbtValue != null) itemBuilder.setNBT(nbtKey, nbtValue);
         if (customModelData != 0) itemBuilder.setCustomModelData(customModelData);
+        if (itemModel != null) itemBuilder.setItemModel(itemModel);
         return itemBuilder;
     }
 

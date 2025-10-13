@@ -64,13 +64,13 @@ public class v1_21_8 implements CompatibilityLayer {
     @Override
     public void showEndCreditScene(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.e, 1f);
-        ((CraftPlayer) player).getHandle().f.a(gameStateChange);
+        ((CraftPlayer) player).getHandle().g.a(gameStateChange);
     }
 
     @Override
     public void showDemoMenu(Player player) {
         PacketPlayOutGameStateChange gameStateChange = new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.f, 0f);
-        ((CraftPlayer) player).getHandle().f.a(gameStateChange);
+        ((CraftPlayer) player).getHandle().g.a(gameStateChange);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class v1_21_8 implements CompatibilityLayer {
             itemStack = XMaterial.CARVED_PUMPKIN.parseItem();
         }
 
-        craftPlayer.getHandle().f.a(new PacketPlayOutSetSlot(0, 0, 5,
+        craftPlayer.getHandle().g.a(new PacketPlayOutSetSlot(0, 0, 5,
                 CraftItemStack.asNMSCopy(itemStack)));
     }
 

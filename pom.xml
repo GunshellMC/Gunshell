@@ -6,7 +6,7 @@
 
     <groupId>com.jazzkuh</groupId>
     <artifactId>Gunshell</artifactId>
-    <version>1.7.2</version>
+    <version>1.7.3</version>
     <packaging>jar</packaging>
 
     <name>Gunshell</name>
@@ -125,13 +125,13 @@
         <dependency>
             <groupId>com.saicone.rtag</groupId>
             <artifactId>rtag</artifactId>
-            <version>1.5.4</version>
+            <version>1.5.14</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.saicone.rtag</groupId>
             <artifactId>rtag-item</artifactId>
-            <version>1.5.4</version>
+            <version>1.5.14</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -149,7 +149,7 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>11.2.0</version>
+            <version>13.6.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -167,7 +167,7 @@
         <dependency>
             <groupId>com.github.Jazzkuh.CommandLibrary</groupId>
             <artifactId>spigot</artifactId>
-            <version>a5a2dec4a5</version>
+            <version>911ac96b67</version>
             <scope>compile</scope>
         </dependency>
 
@@ -198,6 +198,12 @@
             <groupId>org.spigotmc..</groupId>
             <artifactId>spigot</artifactId>
             <version>1.21.7-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc...</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -83,6 +83,7 @@ public final class GunshellPlugin extends JavaPlugin {
         MessagesConfig.init();
         messages.saveConfig();
 
+        SpigotCommandLoader.loadResolvers();
         SpigotCommandLoader.setFormattingProvider((commandException, message) -> Component.text(ChatUtils.color(message)));
         Resolvers.register(GunshellFireable.class, new FireableResolver());
         Resolvers.register(GunshellAmmunition.class, new AmmoResolver());

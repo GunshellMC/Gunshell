@@ -51,7 +51,7 @@ public class CompatibilityManager {
 
     public boolean isExtensionEnabled(Class<? extends Extension> extensionClass) {
         if (!extensionClass.isAnnotationPresent(ExtensionInfo.class)) return false;
-        ExtensionInfo info =extensionClass.getAnnotation(ExtensionInfo.class);
+        ExtensionInfo info = extensionClass.getAnnotation(ExtensionInfo.class);
 
         return Bukkit.getPluginManager().isPluginEnabled(info.loadPlugin());
     }

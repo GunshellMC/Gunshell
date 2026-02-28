@@ -15,6 +15,7 @@ import org.codemc.worldguardwrapper.region.IWrappedRegion;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @ExtensionInfo(name = "WorldGuardExtension", loadPlugin = "WorldGuard")
 public class WorldGuardExtension implements Extension {
@@ -54,12 +55,14 @@ public class WorldGuardExtension implements Extension {
 
     public boolean isFlagState(Player player, Location location, GunshellFlag gunshellFlag, WrappedState flagState) {
         Set<IWrappedRegion> regions = wrapper.getRegions(location);
-        Optional<IWrappedFlag<WrappedState>> flag = wrapper.getFlag(gunshellFlag.getFlagString(), WrappedState.class);
-        if (flag.isEmpty() || regions.size() == 0) return false;
-
-        WrappedState state = flag.map(mappedFlag -> wrapper.queryFlag(player, location, mappedFlag)
-                        .orElse(WrappedState.ALLOW)).orElse(WrappedState.ALLOW);
-        return state == flagState;
+        return !regions.stream().filter(rg -> rg.getId().startsWith("spawn")).collect(Collectors.toList()).isEmpty();
+//
+//        Optional<IWrappedFlag<WrappedState>> flag = wrapper.getFlag(gunshellFlag.getFlagString(), WrappedState.class);
+//        if (flag.isEmpty() || regions.isEmpty()) return false;
+//
+//        WrappedState state = flag.map(mappedFlag -> wrapper.queryFlag(player, location, mappedFlag)
+//                        .orElse(WrappedState.ALLOW)).orElse(WrappedState.ALLOW);
+//        return state == flagState;
     }
 
     public enum GunshellFlag {

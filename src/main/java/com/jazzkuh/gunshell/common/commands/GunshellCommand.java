@@ -20,6 +20,7 @@ public class GunshellCommand extends ExtendedAnnotationCommand {
     @Main
     @Alias("gs")
     public void main(CommandSender sender) {
+        Player player = (Player) sender;
         if (!sender.hasPermission("gunshell.commands.gunshell")) {
             this.onInfo(sender);
             return;
